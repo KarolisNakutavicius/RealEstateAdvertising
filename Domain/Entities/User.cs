@@ -4,18 +4,11 @@ namespace Domain.Entities
 {
     internal class User : IAggregateRoot
     {
-        public IList<Advertisment> SavedAdvertisments { get; set; } = new List<Advertisment>();
+        public IList<int> SavedAdsIds { get; set; } = new List<int>();
 
-        public IList<Advertisment> PublishedAdvertisments { get; set; } = new List<Advertisment>();
-
-        public void SaveAdvertisment(Advertisment advertisment)
+        public void SaveAdvertisment(int advertismentId)
         {
-            SavedAdvertisments.Add(advertisment);
-        }
-
-        public void Publish(Advertisment advertisment)
-        {
-            PublishedAdvertisments.Add(advertisment);
+            SavedAdsIds.Add(advertismentId);
         }
     }
 }
