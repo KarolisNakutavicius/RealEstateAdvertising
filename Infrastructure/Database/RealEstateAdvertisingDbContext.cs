@@ -4,8 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database
 {
-    internal class RealEstateAdvertisingDbContext : DbContext
+    public class RealEstateAdvertisingDbContext : DbContext
     {
+        public RealEstateAdvertisingDbContext(DbContextOptions<RealEstateAdvertisingDbContext> options)
+            : base(options)
+        {
+
+        }
         public DbSet<User> Users { get; set; }
 
         public DbSet<Advertisment> Advertisments { get; set; }
