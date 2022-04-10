@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace Domain.Entities
 {
     public class Building
     {
+        public int Id { get; set; }
         public BuildingCategory Category { get; private set; }
 
         public Address Address { get; private set; }

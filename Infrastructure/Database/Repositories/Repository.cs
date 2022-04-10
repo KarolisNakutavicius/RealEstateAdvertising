@@ -1,7 +1,7 @@
 ﻿using Domain.Entities.Contracts;
 using Domain.Services.Contracts;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Database.Repositories
 {
     public class Repository<T> : IRepository<T> where T : IAggregateRoot
     {

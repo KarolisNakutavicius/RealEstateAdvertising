@@ -4,11 +4,7 @@ namespace Domain.Entities
 {
     public class Advertisment : IAggregateRoot
     {
-
-        protected Advertisment()
-        {
-            // constructor when materializing from db
-        }
+        public int Id { get; set; }
 
         public Building Building { get; private set; }
 
