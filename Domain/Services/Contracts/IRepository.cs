@@ -2,7 +2,7 @@
 
 namespace Domain.Services.Contracts
 {
-    internal interface IRepository<T> where T : IAggregateRoot
+    public interface IRepository<T> where T : IAggregateRoot
     {
         // Query methods 
         IQueryable<T> GetAll(bool noTracking = false);

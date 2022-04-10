@@ -15,6 +15,7 @@ namespace Domain.Entities
             City = city;
             Zip = zip;
         }
+
         public string Street { get; private set; }
         public string Number { get; private set; }
         public string City { get; private set; }
