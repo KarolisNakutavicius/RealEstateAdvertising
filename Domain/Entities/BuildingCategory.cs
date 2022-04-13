@@ -1,7 +1,6 @@
-﻿namespace Domain.Entities
+﻿namespace Domain.Entities;
+
+public class BuildingCategory
 {
-    public class BuildingCategory
-    {
-        public int Id { get; set; }
-    }
+    public int Id { get; set; }
 }

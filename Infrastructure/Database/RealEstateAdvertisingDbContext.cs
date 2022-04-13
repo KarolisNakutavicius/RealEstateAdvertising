@@ -13,7 +13,7 @@ namespace Infrastructure.Database
         }
         public DbSet<User> Users { get; set; }
 
-        public DbSet<Advertisment> Advertisments { get; set; }
+        public DbSet<Advertisement> Advertisments { get; set; }
 
         public DbSet<Building> Buildings { get; set; }
 
@@ -24,7 +24,7 @@ namespace Infrastructure.Database
             base.OnModelCreating(builder);
 
             builder.Entity<User>(entityBuilder => entityBuilder.BuildModel());
-            builder.Entity<Advertisment>(entityBuilder => entityBuilder.BuildModel());
+            builder.Entity<Advertisement>(entityBuilder => entityBuilder.BuildModel());
             builder.Entity<Building>(entityBuilder => entityBuilder.BuildModel());
             builder.Entity<BuildingCategory>(entityBuilder => entityBuilder.BuildModel());
         }

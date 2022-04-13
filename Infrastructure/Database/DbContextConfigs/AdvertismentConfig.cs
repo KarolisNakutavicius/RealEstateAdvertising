@@ -11,7 +11,7 @@ namespace Infrastructure.Database.DbContextConfigs
 {
     internal static class AdvertismentConfig
     {
-        internal static void BuildModel(this EntityTypeBuilder<Advertisment> builder)
+        internal static void BuildModel(this EntityTypeBuilder<Advertisement> builder)
         {
             builder.Property(u => u.Id)
             .ValueGeneratedOnAdd()
