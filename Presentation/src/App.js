@@ -2,7 +2,22 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
+var neededData;
+
 export default function App() {
+
+  function login() {
+    // Simple POST request with a JSON body using fetch
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: 'React POST Request Example' })
+    };
+    fetch('https://localhost:7049/api/posts', requestOptions)
+        .then(response => response.json())
+        .then(data => neededData = data);
+  } 
+  
   return (
     <>
       <div className='flexbox-container-center'>
@@ -20,4 +35,3 @@ export default function App() {
     </>
   )
 }
-
