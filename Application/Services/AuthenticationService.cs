@@ -16,7 +16,7 @@ namespace Application.Services
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
 
-        public AuthenticationService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AuthenticationService(UserManager<User> userManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _configuration = configuration;
