@@ -1,4 +1,8 @@
-﻿namespace Application.DTOs
+﻿using Application.DTOs.ViewModels;
+using System.Net;
+using System.Text.Json.Serialization;
+
+namespace Application.DTOs
 {
     public class Result<T>
     {
@@ -6,7 +10,7 @@
 
         public bool Success { get; set; }
 
-        public string Error { get; set; } = string.Empty;
+        public IList<ErrorResponse> Errors { get; set; }
 
         public static Result<T> Ok(T data)
         {         
@@ -15,7 +19,12 @@
 
         public static Result<T> Fail(string error)
         {
-            return new Result<T>() { Success = false, Error = error };
+            return new Result<T>() { Success = false, Errors = new List<ErrorResponse>() { new ErrorResponse { Error = error } } };
+        }
+
+        public static Result<T> Fail(IList<string> errors)
+        {
+            return new Result<T>() { Success = false, Errors = errors.Select(e => new ErrorResponse { Error = e }).ToList() };
         }
     }
 }

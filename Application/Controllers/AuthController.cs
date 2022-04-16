@@ -1,4 +1,6 @@
 ﻿using Application.DTOs.InputModels;
+using Application.DTOs.ViewModels;
+using Application.Extensions;
 using Application.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,9 +20,9 @@ namespace Application.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] AuthenticateRequest request)
         {
-            var result = await _authService.Login(request);                      
+            var result = await _authService.Login(request);
 
-            return result.Success ? Ok(result.Data) : BadRequest(result.Error);
+            return result.ToHttpResponse();
         }
 
         [HttpPost("register")]
@@ -28,7 +30,7 @@ namespace Application.Controllers
         {
             var result = await _authService.Register(request);
 
-            return result.Success ? Ok(result.Data) : BadRequest(result.Error);
+            return result.ToHttpResponse();
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Application.Services
 
             if (!result.Succeeded)
             {
-                return Result<AuthenticateResponse>.Fail(result.Errors.First().Description);
+                return Result<AuthenticateResponse>.Fail(result.Errors.Select(e => e.Description).ToList());
             }
 
             return await Login(request);
