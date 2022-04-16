@@ -1,3 +1,4 @@
+using Application;
 using Domain;
 using Infrastructure;
 
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddApplicationModule();
 builder.Services.AddDomainModule();
 builder.Services.AddInfrastructureModule(builder.Configuration);
 

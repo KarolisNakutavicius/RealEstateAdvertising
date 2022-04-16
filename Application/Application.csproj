@@ -11,14 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\InputModels\" />
-    <Folder Include="DTOs\ViewModels\" />
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>
