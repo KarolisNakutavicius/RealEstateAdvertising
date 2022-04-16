@@ -8,12 +8,12 @@ export default function App() {
 
     async function handleLogin(e) {
 
-    // Simple POST request with a JSON body using fetch
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: 'React POST Request Example' })
     };
+    
     await fetch('/api/User/login', requestOptions)
         .then(response => {
             return response.json();

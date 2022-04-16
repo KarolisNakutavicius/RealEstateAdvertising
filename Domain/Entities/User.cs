@@ -1,10 +1,10 @@
 ﻿using Domain.Entities.Contracts;
+using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Entities;
 
-public class User : IAggregateRoot
+public class User : IdentityUser, IAggregateRoot
 {
-    public int Id { get; set; }
 
     //public IList<int> SavedAdsIds { get; set; } = new List<int>();
 

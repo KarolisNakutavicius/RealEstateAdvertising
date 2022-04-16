@@ -2,18 +2,22 @@
 
 public class Address
 {
-    public Address(string street, string number, string city, string zip)
+    public static Address CreateNew(string street, string number, string city, string zip)
     {
-        Street = street;
-        Number = number;
-        City = city;
-        Zip = zip;
+        return new Address
+        {
+            Street = street,
+            Number = number,
+            City = city,
+            Zip = zip,
+        };
+
     }
 
-    public string Street { get; }
-    public string Number { get; }
-    public string City { get; }
-    public string Zip { get; }
+    public string Street { get; private set; }
+    public string Number { get; private set; }
+    public string City { get; private set; }
+    public string Zip { get; private set; }
 
     public override bool Equals(object obj)
     {
@@ -22,7 +26,7 @@ public class Address
         if (obj == null || GetType() != obj.GetType())
             return false;
 
-        var other = (Address) obj;
+        var other = (Address)obj;
         return string.Equals(Street, other.Street) &&
                string.Equals(Number, other.Number) &&
                string.Equals(City, other.City) &&
