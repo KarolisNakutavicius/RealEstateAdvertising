@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Layout from './components/Layout';
+import Layout from './Components/Layout';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { render } from "react-dom";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Home from "./components/Home";
+import Login from "./Components/Login";
+import Register from "./Components/Register";
+import Home from "./Components/Home";
 
 const rootElement = document.getElementById("root");
 render(
