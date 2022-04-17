@@ -43,7 +43,7 @@ export default class ValidationHelper {
 
           return (
             <div className="alert alert-danger" role="alert">
-                Passwords are not equal.
+                Passwords don't match
             </div>
         );
         }
