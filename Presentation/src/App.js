@@ -1,44 +1,42 @@
-import React from 'react'
+import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
+import './styles/App.css'
+import { Routes, Route, Link, Outlet } from "react-router-dom";
 
-var neededData;
-
-export default function App() {
-
-    async function handleLogin(e) {
-
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: 'React POST Request Example' })
-    };
-    
-    await fetch('/api/User/login', requestOptions)
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            neededData = data
-        });
-
-    console.log(neededData.title);
-  } 
-  
-  return (
-    <>
-      <div className='flexbox-container-center'>
-        <div style={{textAlign: 'center'}} className="center-children-margin">
-          <h4> Please login or register to continue </h4>
-          <input type="text" placeholder="Email" className="center-horizontal" style={{marginTop: '30px'}}></input>
-          <input placeholder="Password" type="password" className="center-horizontal"></input>
-          <label style={{color: 'red', display: 'none'}}>Erorr</label>
-                  <div>
-                      <button type="button" className="btn btn-primary" style={{ marginRight: '20px' }} onClick={handleLogin}>Login</button>
-            <button className="btn btn-secondary">Register</button>
+export default class App extends Component {
+  render() {
+    return (
+      <div>
+        <nav className="navbar navbar-expand navbar-dark bg-dark">
+          <Link to={"/"} className="navbar-brand">
+            Home
+          </Link>
+          <div className="navbar-nav mr-auto">
+            <li className="nav-item">
+              <Link to={"/home"} className="nav-link">
+                Home
+              </Link>
+            </li>
           </div>
+            <div className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link to={"/login"} className="nav-link">
+                  Login
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/register"} className="nav-link">
+                  Sign Up
+                </Link>
+              </li>
+            </div>
+        </nav>
+
+        <div className="container mt-3">
+<Outlet/>
         </div>
       </div>
-    </>
-  )
+    )
+  }
 }
