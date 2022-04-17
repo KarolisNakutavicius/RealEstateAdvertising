@@ -45,25 +45,26 @@ export default class Register extends Component {
       successful: false
     });
     this.form.validateAll();
-    if (this.checkBtn.context._errors.length === 0) {
-      AuthService.register(
-        this.state.email,
-        this.state.password
-      ).then(
-        response => {
-          this.setState({
-            message: response,
-            successful: true
-          });
-        },
-        error => {
-          this.setState({
-            successful: false,
-            message: error
-          });
-        }
-      );
+    if (this.checkBtn.context._errors.length !== 0) {
+      return;
     }
+    AuthService.register(
+      this.state.email,
+      this.state.password
+    ).then(
+      response => {
+        this.setState({
+          message: response,
+          successful: true
+        });
+      },
+      error => {
+        this.setState({
+          successful: false,
+          message: error
+        });
+      }
+    );
   }
   render() {
     return (
@@ -116,12 +117,17 @@ export default class Register extends Component {
                   />
                 </div>
                 <div className="form-group mt-3">
-                  <button className="btn btn-primary btn-block">Sign Up</button>
+                  <CheckButton className="btn btn-primary btn-block"
+                    ref={c => {
+                      this.checkBtn = c;
+                    }}
+                  >Sign Up
+                  </CheckButton>
                 </div>
               </div>
             )}
             {this.state.message && (
-              <div className="form-group">
+              <div className="form-group mt-3">
                 <div
                   className={
                     this.state.successful
@@ -134,12 +140,7 @@ export default class Register extends Component {
                 </div>
               </div>
             )}
-            <CheckButton
-              style={{ display: "none" }}
-              ref={c => {
-                this.checkBtn = c;
-              }}
-            />
+
           </Form>
         </div>
       </div>
