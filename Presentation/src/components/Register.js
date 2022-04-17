@@ -3,7 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import ValidationHelper from '../Helpers/ValidationHelper'
-import AuthService from '../Services/authService'
+import AuthService from '../Services/AuthService'
 
 export default class Register extends Component {
   constructor(props) {

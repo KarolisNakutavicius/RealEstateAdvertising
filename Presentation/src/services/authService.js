@@ -1,19 +1,10 @@
 import axios from "axios";
+import * as Constants from '../Constants/Common'
 
 class AuthService {
 
   login(email, password) {
-    return axios
-      .post('auth/login', {
-        username: email,
-        password
-      })
-      .then(response => {
-        if (response.data.accessToken) {
-          localStorage.setItem("user", JSON.stringify(response.data));
-        }
-        return response.data;
-      });
+
   }
 
   logout() {
@@ -33,20 +24,28 @@ class AuthService {
           await response.json().then(data => {
             throw data[0].error;
           },
-          error =>
-          {
-            throw response.statusText;
-          }
+            error => {
+              throw response.statusText;
+            }
           )
         }
 
-        // save token
-        return "User registered successfully"
+        this.#setTokenToStorage(response);
+
+        return Constants.successRegistered;
       })
   }
 
   getCurrentUser() {
-    return JSON.parse(localStorage.getItem('user'));;
+    return localStorage.getItem(Constants.tokenKey);
+  }
+
+  #setTokenToStorage(response) {
+    response.json().then(data => {
+      if (data.token) {
+        localStorage.setItem(Constants.tokenKey, data.token)
+      }
+    })
   }
 
 }
