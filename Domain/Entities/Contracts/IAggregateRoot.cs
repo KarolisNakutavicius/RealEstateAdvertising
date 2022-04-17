@@ -1,6 +1,5 @@
-﻿namespace Domain.Entities.Contracts
+﻿namespace Domain.Entities.Contracts;
+
+public interface IAggregateRoot
 {
-    public interface IAggregateRoot
-    {
-    }
 }
