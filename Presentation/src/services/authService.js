@@ -20,16 +20,22 @@ class AuthService {
       localStorage.removeItem("user");
     }
     
-    register(email, password) {
-      return axios.post('auth/register', {
-        email,
-        password
-      });
+    async register(email, password) {
+
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ Email: email, Password: password })
+      };
+  
+      var x = await fetch('/api/Auth/register', requestOptions);
+
+      return x;
     }
 
     getCurrentUser() {
       return JSON.parse(localStorage.getItem('user'));;
     }
+
   }
-  
   export default new AuthService();

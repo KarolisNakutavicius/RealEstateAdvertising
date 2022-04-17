@@ -8,6 +8,9 @@ import AuthService from '../services/authService'
 export default class Register extends Component {
   constructor(props) {
     super(props);
+
+    // binding to context (need some more research here)
+    // https://stackoverflow.com/questions/31045716/react-this-setstate-is-not-a-function
     this.handleRegister = this.handleRegister.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
@@ -44,7 +47,6 @@ export default class Register extends Component {
     this.form.validateAll();
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.register(
-        this.state.username,
         this.state.email,
         this.state.password
       ).then(
