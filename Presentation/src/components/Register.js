@@ -52,20 +52,14 @@ export default class Register extends Component {
       ).then(
         response => {
           this.setState({
-            message: response.data.message,
+            message: response,
             successful: true
           });
         },
         error => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
           this.setState({
             successful: false,
-            message: resMessage
+            message: error
           });
         }
       );
