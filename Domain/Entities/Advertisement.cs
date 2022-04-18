@@ -8,13 +8,13 @@ public class Advertisement : IAggregateRoot
 
     public Building Building { get; private set; }
 
-    public int OwnerUserId { get; set; }
+    public User Owner { get; set; }
 
-    public static Advertisement CreateNew(int ownerId)
+    public static Advertisement CreateNew(User owner)
     {
         return new Advertisement
         {
-            OwnerUserId = ownerId,
+            Owner = owner,
             Building = Building.CreateNew()
         };
     }

@@ -1,14 +1,14 @@
 ﻿using Domain.Enums;
 
-namespace Application.DTOs.InputModels
+namespace Application.DTOs.ViewModels
 {
-    public class CreateAdvertisementRequest
+    public class AdvertismentResponse
     {
         public string Name { get; set; }
 
         public bool IsRent { get; set; }
 
-        public BuildingType Type {get;set;}
+        public BuildingType Type { get; set; }
 
         public string Description { get; set; }
 
