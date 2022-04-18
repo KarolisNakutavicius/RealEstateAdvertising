@@ -35,7 +35,7 @@ class AuthService {
           )
         }
 
-        this.#setTokenToStorage(response);
+        await this.#setTokenToStorage(response);
 
         return `${isRegister ? Constants.successRegistered : Constants.successLogin }`;
   });
@@ -45,8 +45,8 @@ class AuthService {
     return localStorage.getItem(Constants.tokenKey);
   }
 
-  #setTokenToStorage(response) {
-    response.json().then(data => {
+  async #setTokenToStorage(response) {
+    await response.json().then(data => {
       if (data.token) {
         localStorage.setItem(Constants.tokenKey, data.token)
       }

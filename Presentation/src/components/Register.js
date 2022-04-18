@@ -57,6 +57,7 @@ export default class Register extends Component {
           message: response,
           successful: true
         });
+        this.props.authenticationUpdated();
       },
       error => {
         this.setState({

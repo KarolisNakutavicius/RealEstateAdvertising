@@ -10,14 +10,7 @@ import Home from "./Components/Home";
 const rootElement = document.getElementById("root");
 render(
   <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path={"/home"} element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Route>
-    </Routes>
+  <Layout/>
   </BrowserRouter>,
   rootElement
 );

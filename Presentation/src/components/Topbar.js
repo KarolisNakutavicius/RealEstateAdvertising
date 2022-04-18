@@ -7,28 +7,15 @@ export default class Topbar extends Component {
     constructor(props) {
         super(props);
         this.logOut = this.logOut.bind(this);
-        this.state = {
-            currentUser: undefined,
-        };
-    }
-
-    componentDidMount() {
-        const user = AuthService.getCurrentUser();
-        if (user) {
-            this.setState({
-                currentUser: user,
-            });
-        }
     }
 
     logOut() {
         AuthService.logout();
-        this.setState({
-            currentUser: undefined,
-        });
+        this.props.authenticationUpdated();
     }
 
     render() {
+        var currentUser = AuthService.getCurrentUser()
         return (
             <nav className="navbar navbar-expand navbar-dark bg-dark">
                 <div className="navbar-nav mr-auto">
@@ -39,8 +26,8 @@ export default class Topbar extends Component {
                     </li>
                 </div>
 
-                <div style={{ position: "absolute", right: "40px"}}>
-                    {this.state.currentUser ?
+                <div style={{ position: "absolute", right: "40px" }}>
+                    {currentUser ?
                         (<div className="navbar-nav ml-auto">
                             <li className="nav-item">
                                 <a className="nav-link" role="button" onClick={this.logOut}>
