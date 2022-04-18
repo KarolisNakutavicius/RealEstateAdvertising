@@ -32,19 +32,22 @@ export default class Layout extends Component {
 
   render() {
     return (
+
       <div>
-        <Topbar authenticationUpdated={this.handleAuthenticationUpdated}/>
+        <Topbar authenticationUpdated={this.handleAuthenticationUpdated} />
         <div className="container mt-3">
           <Routes>
             <Route index element={<Home />} />
             <Route path={"/home"} element={<Home />} />
             <Route path="*" element={<Navigate to="/home" replace />} />
-            {!this.state.currentUser && (
-              <>
-                <Route path="/login" element={<Login authenticationUpdated={this.handleAuthenticationUpdated}/>} />
-                <Route path="/register" element={<Register authenticationUpdated={this.handleAuthenticationUpdated} />} />
-              </>
-            )}
+            <Route path="/login" element={
+              !this.state.currentUser
+                ? (<Login authenticationUpdated={this.handleAuthenticationUpdated} />)
+                : (<Navigate to="/home" replace />)} />
+            <Route path="/register" element={
+              !this.state.currentUser
+                ? (<Register authenticationUpdated={this.handleAuthenticationUpdated} />)
+                : (<Navigate to="/home" replace />)} />
           </Routes>
         </div>
       </div>
