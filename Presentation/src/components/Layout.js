@@ -8,6 +8,7 @@ import Register from "./Register";
 import Home from "./Home";
 import { Routes, Route, Navigate } from "react-router-dom";
 import AuthService from '../Services/AuthService';
+import { ErrorBoundary } from 'react-error-boundary'
 
 export default class Layout extends Component {
 
@@ -30,7 +31,18 @@ export default class Layout extends Component {
     this.handleAuthenticationUpdated();
   }
 
+
   render() {
+
+    function ErrorFallback({ error, resetErrorBoundary }) {
+      return (
+        <div role="alert">
+          <p>Something went wrong:</p>
+          <pre>{error.message}</pre>
+          <button onClick={resetErrorBoundary}>Try again</button>
+        </div>
+      )
+    }
     return (
 
       <div>
@@ -42,11 +54,19 @@ export default class Layout extends Component {
             <Route path="*" element={<Navigate to="/home" replace />} />
             <Route path="/login" element={
               !this.state.currentUser
-                ? (<Login authenticationUpdated={this.handleAuthenticationUpdated} />)
+                ? (
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <Login authenticationUpdated={this.handleAuthenticationUpdated} />
+                  </ErrorBoundary>
+                )
                 : (<Navigate to="/home" replace />)} />
             <Route path="/register" element={
               !this.state.currentUser
-                ? (<Register authenticationUpdated={this.handleAuthenticationUpdated} />)
+                ? (
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <Register authenticationUpdated={this.handleAuthenticationUpdated} />
+                  </ErrorBoundary>
+                )
                 : (<Navigate to="/home" replace />)} />
           </Routes>
         </div>
