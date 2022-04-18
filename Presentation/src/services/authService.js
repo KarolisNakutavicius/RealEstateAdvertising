@@ -3,7 +3,7 @@ import * as Constants from '../Constants/Common'
 class AuthService {
 
   logout() {
-    localStorage.removeItem("user");
+    localStorage.removeItem(Constants.tokenKey);
   }
 
   async login(email, password) {
