@@ -23,14 +23,14 @@ namespace Application.Services
 
         public async Task<User> GetCurrentUser()
         {
-            var identity = (ClaimsIdentity)_httpContextAccessor.HttpContext.User.Identity;
+            var identity = (ClaimsIdentity)_httpContextAccessor.HttpContext?.User.Identity!;
 
             if (!identity?.IsAuthenticated ?? false)
             {
                 throw new AuthenticationException();
             }
 
-            string userId = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            string userId = identity!.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? throw new AuthenticationException();
 
             return await _userManager.FindByIdAsync(userId);
         }

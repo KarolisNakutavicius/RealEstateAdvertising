@@ -15,7 +15,7 @@ namespace Infrastructure.Database
 
         public DbSet<User> Users { get; set; }
 
-        public DbSet<Advertisement> Advertisments { get; set; }
+        public DbSet<Advertisement> Advertisements { get; set; }
 
         public DbSet<Building> Buildings { get; set; }
 

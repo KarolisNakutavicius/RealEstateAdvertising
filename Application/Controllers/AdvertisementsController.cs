@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.InputModels;
 using Application.DTOs.ViewModels;
+using Application.Extensions;
+using Application.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,29 +11,29 @@ namespace Application.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class AdvertismentsController : ControllerBase
+    public class AdvertsmentsController : ControllerBase
     {
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateAdvertisementRequest request)
+        private readonly IAdvertisementService _advertisementService;
+
+        public AdvertsmentsController(IAdvertisementService advertisementService)
         {
-            return Ok(request);
+            _advertisementService = advertisementService;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateAdvertisementRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _advertisementService.CreateNewAdvertisement(request, cancellationToken);
+
+            return result.ToHttpResponse();
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] bool userOnly = true)
+        public async Task<IActionResult> Get(CancellationToken cancellationToken)
         {
-            return Ok(new List<AdvertismentResponse>()
-                {
-                new AdvertismentResponse()
-                {
-                    City = "City",
-                    Description = "Desc",
-                    Name = "Pagiegiai",
-                    Number = 56,
-                    Size = 99
-                }
-            }
-            );
+            var result = await _advertisementService.GetAllUsersAdvertisements(cancellationToken);
+
+            return Ok(result);
         }
     }
 }
