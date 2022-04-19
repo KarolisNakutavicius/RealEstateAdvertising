@@ -11,11 +11,11 @@ namespace Application.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class AdvertsmentsController : ControllerBase
+    public class Advertisements : ControllerBase
     {
         private readonly IAdvertisementService _advertisementService;
 
-        public AdvertsmentsController(IAdvertisementService advertisementService)
+        public Advertisements(IAdvertisementService advertisementService)
         {
             _advertisementService = advertisementService;
         }

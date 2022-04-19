@@ -11,11 +11,10 @@ namespace Application.Services
 {
     public class ContextService : IContextService
     {
-        private readonly HttpContextAccessor _httpContextAccessor;
-
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly UserManager<User> _userManager;
 
-        public ContextService(HttpContextAccessor httpContextAccessor, UserManager<User> userManager)
+        public ContextService(IHttpContextAccessor httpContextAccessor, UserManager<User> userManager)
         {
             _httpContextAccessor = httpContextAccessor;
             _userManager = userManager;

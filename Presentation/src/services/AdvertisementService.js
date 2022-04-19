@@ -8,7 +8,7 @@ class AdvertisementService {
             body: JSON.stringify(request)
         };
 
-        return await fetch(`/api/Advertisments`, requestOptions)
+        return await fetch(`/api/Advertisements`, requestOptions)
             .then(async response => {
                 if (response.status !== 200) {
                     await response.json().then(data => {
@@ -31,7 +31,7 @@ class AdvertisementService {
             headers: { 'Content-Type': 'application/json', 'Authorization': AuthService.getAuthHeader() }
         };
 
-        return await fetch(`/api/Advertisments`, requestOptions)
+        return await fetch(`/api/Advertisements`, requestOptions)
             .then(async response => {
                 if (response.status !== 200) {
                     await response.json().then(data => {
