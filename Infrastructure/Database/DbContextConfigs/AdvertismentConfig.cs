@@ -22,7 +22,7 @@ namespace Infrastructure.Database.DbContextConfigs
             builder.HasOne(u => u.Building);
 
             builder.HasOne(u => u.Owner)
-                .WithOne();
+                .WithMany();
         }
     }
 }

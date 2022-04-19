@@ -3,6 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import ValidationHelper from '../Helpers/ValidationHelper'
+import AdvertisementService from '../Services/AdvertisementService';
 
 export default class AddAdvertisement extends Component {
 
@@ -47,15 +48,17 @@ export default class AddAdvertisement extends Component {
     var request = 
     {
       Name: this.state.name,
-      IsRent: this.state.purpose,
+      IsRent: !!this.state.purpose,
       Type:this.state.type,
       Size:this.state.size,
       City:this.state.city,
       Street:this.state.street,
       Number: this.state.number,
-      Zip: this.state.Zip,
+      Zip: this.state.zip,
       Description:this.state.description,
     }
+
+    AdvertisementService.createNewAdvertisement(request);
   }
 
   onChangeName(e) {
