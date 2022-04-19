@@ -24,6 +24,16 @@ export default class Topbar extends Component {
                             Home
                         </Link>
                     </li>
+                    <li className="nav-item">
+                        <Link to={"/my-advertisements"} className="nav-link">
+                            My advertisements
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to={"/add-advertisement"} className="nav-link">
+                            Sell/Rent
+                        </Link>
+                    </li>
                 </div>
 
                 <div style={{ position: "absolute", right: "40px" }}>

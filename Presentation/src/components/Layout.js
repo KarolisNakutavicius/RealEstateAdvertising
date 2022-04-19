@@ -6,6 +6,8 @@ import Topbar from './Topbar';
 import Login from "./Login";
 import Register from "./Register";
 import Home from "./Home";
+import AddAdvertisement from './AddAdvertisement';
+import MyAdvertisments from './MyAdvertisments';
 import { Routes, Route, Navigate } from "react-router-dom";
 import AuthService from '../Services/AuthService';
 import { ErrorBoundary } from 'react-error-boundary'
@@ -51,6 +53,8 @@ export default class Layout extends Component {
           <Routes>
             <Route index element={<Home />} />
             <Route path={"/home"} element={<Home />} />
+            <Route path={"/my-advertisements"} element={<MyAdvertisments/>}/>
+            <Route path={"/add-advertisement"} element={<AddAdvertisement/>}/>
             <Route path="*" element={<Navigate to="/home" replace />} />
             <Route path="/login" element={
               !this.state.currentUser
