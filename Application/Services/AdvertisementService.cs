@@ -46,6 +46,7 @@ internal class AdvertisementService : IAdvertisementService
         var user = await _contextService.GetCurrentUser();
 
         var advertisements = await _advertisementRepository.GetAll(a => a.Owner.Id == user.Id)
+            .Include(a => a.Building)
             .Select(c => c.ToResponse())
             .ToListAsync(cancellationToken);
 

@@ -24,6 +24,8 @@ export default class Topbar extends Component {
                             Home
                         </Link>
                     </li>
+                    {currentUser && (
+                        <>
                     <li className="nav-item">
                         <Link to={"/my-advertisements"} className="nav-link">
                             My advertisements
@@ -34,6 +36,7 @@ export default class Topbar extends Component {
                             Sell/Rent
                         </Link>
                     </li>
+                    </>)}
                 </div>
 
                 <div style={{ position: "absolute", right: "40px" }}>

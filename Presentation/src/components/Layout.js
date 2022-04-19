@@ -53,8 +53,22 @@ export default class Layout extends Component {
           <Routes>
             <Route index element={<Home />} />
             <Route path={"/home"} element={<Home />} />
-            <Route path={"/my-advertisements"} element={<MyAdvertisments/>}/>
-            <Route path={"/add-advertisement"} element={<AddAdvertisement/>}/>
+            <Route path={"/my-advertisements"} element={
+              this.state.currentUser
+                ? (
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <MyAdvertisments />
+                  </ErrorBoundary>
+                )
+                : (<Navigate to="/home" replace />)} />
+            <Route path={"/add-advertisement"} element={
+              this.state.currentUser
+                ? (
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <AddAdvertisement />
+                  </ErrorBoundary>
+                )
+                : (<Navigate to="/home" replace />)} />
             <Route path="*" element={<Navigate to="/home" replace />} />
             <Route path="/login" element={
               !this.state.currentUser

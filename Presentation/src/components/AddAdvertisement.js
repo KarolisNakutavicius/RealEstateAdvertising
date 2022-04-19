@@ -25,8 +25,8 @@ export default class AddAdvertisement extends Component {
       name:"",
       purpose:0,
       type:0,
-      size:1,
-      city:"Vilnius",
+      size:0,
+      city:"",
       number:undefined,
       street:"",
       zip:"",
@@ -154,7 +154,7 @@ export default class AddAdvertisement extends Component {
                 <>
 <div>
               <div className="form-group">
-                <label>Name</label>
+                <label>Title</label>
                 <Input
                   type="text"
                   className="form-control"
