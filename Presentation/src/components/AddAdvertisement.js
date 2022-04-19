@@ -58,7 +58,22 @@ export default class AddAdvertisement extends Component {
       Description:this.state.description,
     }
 
-    AdvertisementService.createNewAdvertisement(request);
+    AdvertisementService.createNewAdvertisement(request).then(
+      response =>
+      {
+        this.setState({
+          message:response,
+          successful:true
+        });
+      },
+      error =>
+      {
+        this.setState({
+          message:error,
+          successful:false
+        });
+      }
+    )
   }
 
   onChangeName(e) {
@@ -135,7 +150,9 @@ export default class AddAdvertisement extends Component {
             ref={c => {
               this.form = c;
             }}>
-            <div>
+              {!this.state.successful && (
+                <>
+<div>
               <div className="form-group">
                 <label>Name</label>
                 <Input
@@ -235,6 +252,8 @@ export default class AddAdvertisement extends Component {
                 </CheckButton>
               </div>
             </div>
+                </>
+              )}
             {this.state.message && (
               <div className="form-group mt-3">
                 <div
