@@ -19,5 +19,7 @@ namespace Application.DTOs.InputModels
         public string Zip { get; set; }
 
         public int Size { get; set; }
+
+        public decimal Price { get; set; }
     }
 }
