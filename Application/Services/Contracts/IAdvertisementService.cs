@@ -10,4 +10,6 @@ public interface IAdvertisementService
         CancellationToken cancellationToken);
 
     Task<IList<AdvertisementResponse>> GetAllUsersAdvertisements(CancellationToken cancellationToken);
+
+    Task<IList<AdvertisementResponse>> GetAll(CancellationToken cancellationToken);
 }

@@ -25,7 +25,7 @@ export default class MyAdvertisments extends Component {
     }
 
     this.setState({
-      message: "You don't have any advertisments posted"
+      message: "You don't have any advertisements posted"
     })
   }
 
@@ -37,7 +37,7 @@ export default class MyAdvertisments extends Component {
         )}
         <div className='d-flex justify-content-start flex-wrap'>
           {this.state.advertisements.map(ad => {
-            return <Advertisment ad={ad} />
+            return <Advertisment ad={ad} isPersonal={false}/>
           })}
         </div>
       </>

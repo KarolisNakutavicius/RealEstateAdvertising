@@ -14,7 +14,11 @@ export default class Advertisment extends Component {
                     
                     <label className='mt-5' style={{position:"relative", right:"0px"}}><b>{this.props.ad.price}</b> €</label>
 
-                    <p className="card-text mt-3">{this.props.ad.description}</p>
+                    {this.props.isPersonal && (
+                        <label className='mt-3'><em>Owner: {this.props.ad.ownerEmail} </em></label>
+                    )}
+
+                    <p className="card-text mt-4">{this.props.ad.description}</p>
                 </div>
             </div>
         )

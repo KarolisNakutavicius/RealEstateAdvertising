@@ -31,6 +31,29 @@ class AdvertisementService {
             headers: { 'Content-Type': 'application/json', 'Authorization': AuthService.getAuthHeader() }
         };
 
+        return await fetch(`/api/Advertisements/mine`, requestOptions)
+            .then(async response => {
+                if (response.status !== 200) {
+                    await response.json().then(data => {
+                        throw data[0].error;
+                    },
+                        error => {
+                            throw response.statusText;
+                        }
+                    )
+                }
+
+                return await response.json();
+            });
+    }
+
+    async getAllAdvertisments()
+    {
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Authorization': AuthService.getAuthHeader() }
+        };
+
         return await fetch(`/api/Advertisements`, requestOptions)
             .then(async response => {
                 if (response.status !== 200) {

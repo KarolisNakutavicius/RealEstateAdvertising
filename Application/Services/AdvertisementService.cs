@@ -7,6 +7,7 @@ using Domain.Entities;
 using Domain.Services.Contracts;
 using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Authentication;
 
 namespace Application.Services;
 
@@ -54,6 +55,28 @@ internal class AdvertisementService : IAdvertisementService
 
         var advertisements = await _advertisementRepository.GetAll(a => a.Owner.Id == user.Id)
             .Include(a => a.Building)
+            .Select(c => c.ToResponse())
+            .ToListAsync(cancellationToken);
+
+        return advertisements;
+    }
+
+    public async Task<IList<AdvertisementResponse>> GetAll(CancellationToken cancellationToken)
+    {
+        User user = null;
+
+        try
+        {
+            user = await _contextService.GetCurrentUser();
+        }
+        catch(AuthenticationException)
+        {
+
+        }
+
+        var advertisements = await _advertisementRepository.GetAll(a => user == null || a.Owner.Id != user.Id)
+            .Include(a => a.Building)
+            .Include(a => a.Owner)
             .Select(c => c.ToResponse())
             .ToListAsync(cancellationToken);
 

@@ -27,5 +27,7 @@ namespace Application.DTOs.ViewModels
         public decimal Price { get; set; }
 
         public byte[] Image { get; set; }
+
+        public string OwnerEmail { get; set; }
     }
 }

@@ -20,7 +20,8 @@ namespace Application.Extensions.Response
                 Zip = advertisement.Building.Address.Zip,
                 Price = advertisement.Price,
                 Image = advertisement.Image,
-                Street = advertisement.Building.Address.Street
+                Street = advertisement.Building.Address.Street,
+                OwnerEmail = advertisement.Owner.Email
             };
         }
     }

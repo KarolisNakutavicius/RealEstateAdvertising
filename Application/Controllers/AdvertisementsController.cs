@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Application.Controllers
 {
 
-    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class Advertisements : ControllerBase
@@ -21,6 +20,7 @@ namespace Application.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create([FromForm] CreateAdvertisementRequest request, CancellationToken cancellationToken)
         {
             var result = await _advertisementService.CreateNewAdvertisement(request, cancellationToken);
@@ -28,10 +28,20 @@ namespace Application.Controllers
             return result.ToHttpResponse();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get(CancellationToken cancellationToken)
+        [HttpGet("mine")]
+        [Authorize]
+        public async Task<IActionResult> GetCurrentUserAds(CancellationToken cancellationToken)
         {
             var result = await _advertisementService.GetAllUsersAdvertisements(cancellationToken);
+
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> GetAllAds(CancellationToken cancellationToken)
+        {
+            var result = await _advertisementService.GetAll(cancellationToken);
 
             return Ok(result);
         }
