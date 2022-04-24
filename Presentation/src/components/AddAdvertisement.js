@@ -22,6 +22,8 @@ export default class AddAdvertisement extends Component {
     this.onNumberChange = this.onNumberChange.bind(this);
     this.onDescriptionChange = this.onDescriptionChange.bind(this);
     this.onZipChange = this.onZipChange.bind(this);
+    this.onPriceChange = this.onPriceChange.bind(this);
+  
 
     this.state = {
       name: "",
@@ -33,6 +35,7 @@ export default class AddAdvertisement extends Component {
       street: "",
       zip: "",
       description: "",
+      price:0,
       successful: false,
       message: ""
     };
@@ -138,6 +141,14 @@ export default class AddAdvertisement extends Component {
       });
   }
 
+  onPriceChange(e)
+  {
+    this.setState(
+      {
+        price: e.target.value
+      });
+  }
+
   render() {
     return (
       <div className="col-md-12">
@@ -148,11 +159,11 @@ export default class AddAdvertisement extends Component {
               this.form = c;
             }}>
             {!this.state.successful && (
-              <>
+              <>              
                 <div>
-                  <div className="form-group">
-                    <label>Title</label>
-                    <Input
+                  <div className="form-group text-center" style={{padding:"0 100px 0 100px"}}>
+                    <h5 className='mt-3'>Title</h5>
+                    <Input                      
                       type="text"
                       className="form-control"
                       name="text"
@@ -161,15 +172,17 @@ export default class AddAdvertisement extends Component {
                       validations={[ValidationHelper.required]}
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="Type">Purpose</label>
-                    <select className='form-select' onChange={this.onPurposeChange} value={this.state.purpose}>
-                      <option value="0">Sell</option>
-                      <option value="1">Rent</option>
-                    </select>
-                  </div>
 
-                  <Row>
+                  <h4 className='mt-4'>Information</h4>
+
+                  <div className="d-flex justify-content-between">
+                    <div className="form-group">
+                      <label htmlFor="Type">Purpose</label>
+                      <select className='form-select' onChange={this.onPurposeChange} value={this.state.purpose}>
+                        <option value="0">Sell</option>
+                        <option value="1">Rent</option>
+                      </select>
+                    </div>
                     <div className="form-group col-4">
                       <label htmlFor="Type">Type</label>
                       <select id='Type' className='form-select' onChange={this.onTypeChange} value={this.state.type}>
@@ -180,7 +193,6 @@ export default class AddAdvertisement extends Component {
                         <option value="5">SpecialPurpose</option>
                       </select>
                     </div>
-
                     <div className="form-group col-2">
                       <label htmlFor='size'>Size (in m²)</label>
                       <Input onChange={this.onSizeChange} value={this.state.size}
@@ -190,19 +202,16 @@ export default class AddAdvertisement extends Component {
                         validations={[ValidationHelper.required]}
                       />
                     </div>
-
                     <div className="form-group col-2">
                       <label htmlFor='price'>Price (in €)</label>
-                      <Input onChange={this.onSizeChange} value={this.state.size}
-                        type="number" min="1"
+                      <Input onChange={this.onPriceChange} value={this.state.price}
+                        type="number" min="1" step="0.01"
                         className="form-control"
                         id='price'
                         validations={[ValidationHelper.required]}
                       />
                     </div>
-
-                  </Row>
-
+                  </div>
 
                   <h4 className='mt-4'>Address</h4>
 
