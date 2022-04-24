@@ -21,6 +21,8 @@ public class CreateAdvertisementRequest
 
     public string Street { get; set; } = string.Empty;
 
+
+    [RegularExpression("([0-9]+)", ErrorMessage = "Please enter valid size")]
     public int Size { get; set; }
 
     [RegularExpression("([0-9]+)", ErrorMessage = "Please enter valid price")]

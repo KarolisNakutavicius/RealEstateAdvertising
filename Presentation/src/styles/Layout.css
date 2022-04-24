@@ -27,3 +27,13 @@ label {
     -webkit-border-radius: 50%;
     border-radius: 50%;
   }
+
+  div input
+  {
+    margin-top:6px
+  }
+
+  div select
+  {
+    margin-top:6px
+  }
