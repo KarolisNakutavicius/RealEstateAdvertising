@@ -12,7 +12,7 @@ class AdvertisementService {
             .then(async response => {
                 if (response.status !== 200) {
                     await response.json().then(data => {
-                        throw data.errors.Files
+                        throw data.errors[0];
                     },
                         error => {
                             throw response.statusText;

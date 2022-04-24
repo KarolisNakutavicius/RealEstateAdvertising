@@ -29,7 +29,14 @@ internal class AdvertisementService : IAdvertisementService
 
             var address = Address.CreateNew(request.Street, request.Number, request.City, request.Zip);
             var building = Building.CreateNew(address, request.Type, request.Size);
-            var advertisement = Advertisement.CreateNew(user, building, request.Name, request.IsRent, request.Price, request.Description);
+
+
+            var file = request.Files.First();
+            using MemoryStream ms = new MemoryStream();
+            await file.CopyToAsync(ms);
+            var imageBytes = ms.ToArray();
+
+            var advertisement = Advertisement.CreateNew(user, building, imageBytes, request.Name, request.IsRent, request.Price, request.Description);
 
             var result = await _advertisementRepository.Save(advertisement, cancellationToken);
 

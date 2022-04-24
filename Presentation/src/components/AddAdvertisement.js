@@ -61,10 +61,8 @@ export default class AddAdvertisement extends Component {
     request.append('Zip', this.state.zip)
     request.append('Price', this.state.price)
     request.append('Description', this.state.description)
-
-		for(var i=0;i<this.state.selectedImages.length;i++) {
-			request.append('Files', this.state.selectedImages[i]);	
-		}
+    request.append('Files', this.state.selectedImages[0])
+    
 
     AdvertisementService.createNewAdvertisement(request).then(
       response => {
@@ -296,7 +294,7 @@ export default class AddAdvertisement extends Component {
                   <label htmlFor='image'>
                       <h4 className='mt-4'>Images</h4>
                     </label>
-                    <Input type="file" className="form-control-file mt-2" id="image" multiple onChange={this.onSelectedImageChange}/>
+                    <Input type="file" className="form-control-file mt-2" id="image" onChange={this.onSelectedImageChange}/>
                   </div>
 
                   <div className="form-group mt-4">
