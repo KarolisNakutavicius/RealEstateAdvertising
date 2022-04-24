@@ -1,16 +1,26 @@
-﻿using Domain.ValueObjects;
+﻿using Domain.Enums;
+using Domain.ValueObjects;
 
 namespace Domain.Entities;
 
 public class Building
 {
-    public int Id { get; set; }
-    public BuildingCategory Category { get; private set; }
+    public int Id { get; init; }
 
-    public Address Address { get; private set; }
+    public BuildingType Category { get; init; }
 
-    public static Building CreateNew()
+    public int Size { get; init; }
+
+    public Address Address { get; init; } = new Address();
+
+    public static Building CreateNew(Address address, BuildingType category, int size)
     {
-        return new Building();
+        return new Building()
+        {
+            Address = address,
+            Category = category,
+            Size = size
+            
+        };
     }
 }

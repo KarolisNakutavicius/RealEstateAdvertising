@@ -20,6 +20,9 @@ namespace Infrastructure.Database.DbContextConfigs
             builder.HasKey(u => u.Id);
 
             builder.HasOne(u => u.Building);
+
+            builder.HasOne(u => u.Owner)
+                .WithMany();
         }
     }
 }

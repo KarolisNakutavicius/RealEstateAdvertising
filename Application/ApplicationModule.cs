@@ -7,7 +7,11 @@ namespace Application
     {
         public static IServiceCollection AddApplicationModule(this IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IAdvertisementService, AdvertisementService>();         
+            services.AddScoped<IContextService, ContextService>();
 
             return services;
         }

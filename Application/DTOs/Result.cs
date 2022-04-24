@@ -10,7 +10,7 @@ namespace Application.DTOs
 
         public bool Success { get; set; }
 
-        public IList<ErrorResponse> Errors { get; set; }
+        public IList<ErrorResponse> Errors { get; set; } = new List<ErrorResponse>();
 
         public static Result<T> Ok(T data)
         {         

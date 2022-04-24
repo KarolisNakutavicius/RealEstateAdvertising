@@ -45,6 +45,15 @@ class AuthService {
     return localStorage.getItem(Constants.tokenKey);
   }
 
+  getAuthHeader() {
+    const user = localStorage.getItem(Constants.tokenKey);
+    if (user) {
+      return 'Bearer ' + user;
+    } else {
+      return {};
+    }
+  }
+
   async #setTokenToStorage(response) {
     await response.json().then(data => {
       if (data.token) {

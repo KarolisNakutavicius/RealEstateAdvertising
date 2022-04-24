@@ -4,6 +4,7 @@ using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Database.Migrations
 {
     [DbContext(typeof(RealEstateAdvertisingDbContext))]
-    partial class RealEstateAdvertisingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220419045119_OwnerAdd")]
+    partial class OwnerAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,23 +35,9 @@ namespace Infrastructure.Database.Migrations
                     b.Property<int>("BuildingId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsRent")
-                        .HasColumnType("bit");
-
                     b.Property<string>("OwnerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -57,7 +45,7 @@ namespace Infrastructure.Database.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Advertisements");
+                    b.ToTable("Advertisments");
                 });
 
             modelBuilder.Entity("Domain.Entities.Building", b =>
@@ -68,13 +56,12 @@ namespace Infrastructure.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Size")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Buildings");
                 });
@@ -311,6 +298,12 @@ namespace Infrastructure.Database.Migrations
 
             modelBuilder.Entity("Domain.Entities.Building", b =>
                 {
+                    b.HasOne("Domain.Entities.BuildingCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.OwnsOne("Domain.ValueObjects.Address", "Address", b1 =>
                         {
                             b1.Property<int>("BuildingId")
@@ -320,8 +313,9 @@ namespace Infrastructure.Database.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<int>("Number")
-                                .HasColumnType("int");
+                            b1.Property<string>("Number")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Street")
                                 .IsRequired()
@@ -341,6 +335,8 @@ namespace Infrastructure.Database.Migrations
 
                     b.Navigation("Address")
                         .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

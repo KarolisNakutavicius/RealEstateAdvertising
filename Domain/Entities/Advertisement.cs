@@ -4,18 +4,29 @@ namespace Domain.Entities;
 
 public class Advertisement : IAggregateRoot
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    public Building Building { get; private set; }
+    public bool IsRent { get; init; }
 
-    public int OwnerUserId { get; set; }
+    public decimal Price { get; set; }
 
-    public static Advertisement CreateNew(int ownerId)
+    public string Description { get; set; } = string.Empty;
+
+    public string Title { get; set; } = string.Empty;
+
+    public Building Building { get; private init; } = new Building();
+
+    public User Owner { get; set; } = new User();
+
+    public static Advertisement CreateNew(User owner, Building building, string title, bool isRent, decimal price, string description)
     {
         return new Advertisement
         {
-            OwnerUserId = ownerId,
-            Building = Building.CreateNew()
+            Title = title,
+            Owner = owner,
+            Building = building,
+            IsRent = isRent,
+            Description = description
         };
     }
 }
