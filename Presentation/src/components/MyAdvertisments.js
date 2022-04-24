@@ -4,32 +4,43 @@ import Advertisment from './Advertisment';
 
 export default class MyAdvertisments extends Component {
 
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
 
     this.state = {
-      advertisements:[]
+      advertisements: [],
+      message:'Loading ...'
     }
   }
 
-  async componentDidMount()
-  {
+  async componentDidMount() {
     var ads = await AdvertisementService.getMyAdvertisments();
 
-    if(ads)
-    {
+    if (ads.length > 0) {
       this.setState({
-        advertisements:ads
+        advertisements: ads
       })
+      
+      return;
     }
+
+    this.setState({
+      message: "You don't have any advertisments posted"
+    })
   }
 
   render() {
     return (
-      this.state.advertisements.map(ad => {
-          return <Advertisment ad={ad}/>
-        })
+      <>
+        {this.state.advertisements.length == 0 && (
+          <h3>{this.state.message}</h3>
+        )}
+        <div className='d-flex justify-content-start flex-wrap'>
+          {this.state.advertisements.map(ad => {
+            return <Advertisment ad={ad} />
+          })}
+        </div>
+      </>
     )
   }
 }
