@@ -21,7 +21,7 @@ namespace Application.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateAdvertisementRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Create([FromForm] CreateAdvertisementRequest request, CancellationToken cancellationToken)
         {
             var result = await _advertisementService.CreateNewAdvertisement(request, cancellationToken);
 

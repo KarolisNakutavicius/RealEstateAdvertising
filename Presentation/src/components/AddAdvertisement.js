@@ -23,20 +23,22 @@ export default class AddAdvertisement extends Component {
     this.onDescriptionChange = this.onDescriptionChange.bind(this);
     this.onZipChange = this.onZipChange.bind(this);
     this.onPriceChange = this.onPriceChange.bind(this);
+    this.onSelectedImageChange = this.onSelectedImageChange.bind(this)
   
 
     this.state = {
-      name: "",
+      name: "Geras namas Vilniaus centre",
       purpose: 0,
-      type: 0,
-      size: 0,
-      city: "",
-      number: undefined,
-      street: "",
-      zip: "",
-      description: "",
-      price:0,
+      type: 1,
+      size: 44,
+      city: "Vilnius",
+      number: 4,
+      street: "Latvių g.",
+      zip: "086111",
+      description: "Nu jau žiauriai puikus namelis yra čia",
+      price:260000,
       successful: false,
+      selectedImages: null,
       message: ""
     };
   }
@@ -49,18 +51,20 @@ export default class AddAdvertisement extends Component {
       return;
     }
 
-    var request =
-    {
-      Name: this.state.name,
-      IsRent: !!this.state.purpose,
-      Type: this.state.type,
-      Size: this.state.size,
-      City: this.state.city,
-      Street: this.state.street,
-      Number: this.state.number,
-      Zip: this.state.zip,
-      Description: this.state.description,
-    }
+    var request = new FormData();
+    request.append('Name', this.state.name)
+    request.append('IsRent', !!this.state.purpose)
+    request.append('Type', this.state.type)
+    request.append('Size', this.state.size)
+    request.append('City', this.state.city)
+    request.append('Number', this.state.number)
+    request.append('Zip', this.state.zip)
+    request.append('Price', this.state.price)
+    request.append('Description', this.state.description)
+
+		for(var i=0;i<this.state.selectedImages.length;i++) {
+			request.append('Files', this.state.selectedImages[i]);	
+		}
 
     AdvertisementService.createNewAdvertisement(request).then(
       response => {
@@ -149,6 +153,14 @@ export default class AddAdvertisement extends Component {
       });
   }
 
+  onSelectedImageChange(e)
+  {
+    this.setState(
+      {
+        selectedImages: e.target.files
+      });
+  }
+
   render() {
     return (
       <div className="col-md-12">
@@ -234,7 +246,7 @@ export default class AddAdvertisement extends Component {
                       <label for="street">Street</label>
                       <Input
                         id="street"
-                        value={this.state.stret}
+                        value={this.state.street}
                         onChange={this.onStreetChange}
                         type="text"
                         className="form-control"
@@ -284,7 +296,7 @@ export default class AddAdvertisement extends Component {
                   <label htmlFor='image'>
                       <h4 className='mt-4'>Images</h4>
                     </label>
-                    <Input type="file" className="form-control-file mt-2" id="image" multiple/>
+                    <Input type="file" className="form-control-file mt-2" id="image" multiple onChange={this.onSelectedImageChange}/>
                   </div>
 
                   <div className="form-group mt-4">

@@ -27,4 +27,6 @@ public class CreateAdvertisementRequest
 
     [RegularExpression("([0-9]+)", ErrorMessage = "Please enter valid price")]
     public decimal Price { get; set; }
+
+    public IList<IFormFile> Files { get; set; }
 }
