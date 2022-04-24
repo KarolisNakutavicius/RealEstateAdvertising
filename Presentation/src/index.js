@@ -10,7 +10,7 @@ import Home from "./Components/Home";
 const rootElement = document.getElementById("root");
 render(
   <BrowserRouter>
-  <Layout/>
+    <Layout/>
   </BrowserRouter>,
   rootElement
 );

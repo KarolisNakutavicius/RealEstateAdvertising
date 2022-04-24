@@ -1,15 +1,19 @@
 import React, { Component } from 'react'
 import AdvertisementService from '../Services/AdvertisementService'
 import Advertisment from './Advertisment';
+import Filters from './Filters';
 
 export default class Home extends Component {
 
   constructor(props) {
     super(props);
+    this.onFiltersChange = this.onFiltersChange.bind(this)
+
+    this.filtersRef = React.createRef()
 
     this.state = {
       advertisements: [],
-      message:'Loading ...'
+      message: 'Loading ...'
     }
   }
 
@@ -20,7 +24,7 @@ export default class Home extends Component {
       this.setState({
         advertisements: ads
       })
-      
+
       return;
     }
 
@@ -28,19 +32,29 @@ export default class Home extends Component {
       message: "There are no advertisements posted yet"
     })
   }
+  
+  onFiltersChange(e){
+    const filters = this.filtersRef.current;
+
+    console.log(filters.state.minPrice);
+    console.log(filters.state.maxPrice)
+  }
 
   render() {
     return (
-      <>
-      {this.state.advertisements.length == 0 && (
-        <h3>{this.state.message}</h3>
-      )}
-      <div className='d-flex justify-content-start flex-wrap'>
-        {this.state.advertisements.map(ad => {
-          return <Advertisment ad={ad} isPersonal={true} />
-        })}
-      </div>
-    </>
+      <>       
+
+       <Filters ref={this.filtersRef} filtersChanged={this.onFiltersChange}/>
+
+        {this.state.advertisements.length == 0 && (
+          <h3>{this.state.message}</h3>
+        )}
+        <div className='mt-4 d-flex justify-content-start flex-wrap'>
+          {this.state.advertisements.map(ad => {
+            return <Advertisment ad={ad} isPersonal={true} />
+          })}
+        </div>
+      </>
     )
   }
 }

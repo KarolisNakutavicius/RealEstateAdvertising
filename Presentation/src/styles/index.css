@@ -49,3 +49,7 @@ html, body{
   margin-right:auto;
   margin-top: 12px;
 }
+
+.your-class input{
+  float:left;
+}
