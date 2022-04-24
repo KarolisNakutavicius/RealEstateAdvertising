@@ -94,7 +94,7 @@ export default class AddAdvertisement extends Component {
   onTypeChange(e){
     this.setState(
       {
-        type: e.target.value
+        type: parseInt(e.target.value)
       }); 
   }
 

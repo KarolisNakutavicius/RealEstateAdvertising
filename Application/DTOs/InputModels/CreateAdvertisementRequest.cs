@@ -1,4 +1,5 @@
 ﻿using Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Application.DTOs.InputModels;
 
@@ -22,5 +23,6 @@ public class CreateAdvertisementRequest
 
     public int Size { get; set; }
 
+    [RegularExpression("([0-9]+)", ErrorMessage = "Please enter valid price")]
     public decimal Price { get; set; }
 }
