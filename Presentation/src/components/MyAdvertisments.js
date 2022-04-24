@@ -27,6 +27,10 @@ export default class MyAdvertisments extends Component {
 
   render() {
     return (
+      // {this.state.advertisements.length == 0 && (
+      //   <h1>You don't have any advertisments posted</h1>
+      // )}
+      
       this.state.advertisements.map(ad => {
           return <Advertisment ad={ad}/>
         })

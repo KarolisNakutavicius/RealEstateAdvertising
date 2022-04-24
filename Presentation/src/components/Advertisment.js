@@ -4,7 +4,7 @@ export default class Advertisment extends Component {
     render() {
         return (
             <div className="card" style={{width:"18rem"}}>
-                <img className="card-img-top" src={require('../Images/perfect-home.jpg')} alt="Card image cap" />
+                <img className="card-img-top" src={`data:image/png;base64,${this.props.ad.image}`} alt="Image cannot be loaded" />
                 <div className="card-body">
                     <h5 className="card-title">{this.props.ad.name}</h5>
                     <label>City : {this.props.ad.city}</label>

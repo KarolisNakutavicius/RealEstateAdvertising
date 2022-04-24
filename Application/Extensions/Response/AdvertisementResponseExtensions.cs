@@ -18,7 +18,8 @@ namespace Application.Extensions.Response
                 Size = advertisement.Building.Size,
                 Type = advertisement.Building.Category,
                 Zip = advertisement.Building.Address.Zip,
-                Price = advertisement.Price
+                Price = advertisement.Price,
+                Image = advertisement.Image
             };
         }
     }
