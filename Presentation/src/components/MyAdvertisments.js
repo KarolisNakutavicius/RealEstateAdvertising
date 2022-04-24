@@ -16,7 +16,7 @@ export default class MyAdvertisments extends Component {
   async componentDidMount() {
     var ads = await AdvertisementService.getMyAdvertisments();
 
-    if (ads) {
+    if (ads.length > 0) {
       this.setState({
         advertisements: ads
       })
@@ -33,9 +33,9 @@ export default class MyAdvertisments extends Component {
     return (
       <>
         {this.state.advertisements.length == 0 && (
-          <h3>message</h3>
+          <h3>{this.state.message}</h3>
         )}
-        <div className='d-flex'>
+        <div className='d-flex justify-content-start flex-wrap'>
           {this.state.advertisements.map(ad => {
             return <Advertisment ad={ad} />
           })}

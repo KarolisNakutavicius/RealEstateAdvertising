@@ -29,6 +29,7 @@ public class Advertisement : IAggregateRoot
             Title = title,
             Owner = owner,
             Building = building,
+            Price = price,
             IsRent = isRent,
             Description = description
         };

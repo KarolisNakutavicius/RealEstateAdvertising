@@ -58,6 +58,7 @@ export default class AddAdvertisement extends Component {
     request.append('Size', this.state.size)
     request.append('City', this.state.city)
     request.append('Number', this.state.number)
+    request.append('Street', this.state.street)
     request.append('Zip', this.state.zip)
     request.append('Price', this.state.price)
     request.append('Description', this.state.description)

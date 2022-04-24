@@ -18,6 +18,8 @@ namespace Application.DTOs.ViewModels
 
         public string City { get; set; } = string.Empty;
 
+        public string Street { get; set; }
+
         public string Zip { get; set; } = string.Empty;
 
         public int Size { get; set; }

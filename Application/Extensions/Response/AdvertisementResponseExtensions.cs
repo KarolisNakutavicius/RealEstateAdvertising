@@ -19,7 +19,8 @@ namespace Application.Extensions.Response
                 Type = advertisement.Building.Category,
                 Zip = advertisement.Building.Address.Zip,
                 Price = advertisement.Price,
-                Image = advertisement.Image
+                Image = advertisement.Image,
+                Street = advertisement.Building.Address.Street
             };
         }
     }

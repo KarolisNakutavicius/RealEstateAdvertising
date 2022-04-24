@@ -31,7 +31,14 @@ namespace Application.Services
 
             string userId = identity!.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? throw new AuthenticationException();
 
-            return await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new AuthenticationException();
+            }
+
+            return user;
         }
     }
 }
