@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.ValueObjects;
 using Infrastructure.Database.DbContextConfigs;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,8 @@ namespace Infrastructure.Database
 
         public DbSet<BuildingCategory> BuildingCategories { get; set; }
 
+        public DbSet<City> Cities { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -28,6 +31,7 @@ namespace Infrastructure.Database
             builder.Entity<Advertisement>(entityBuilder => entityBuilder.BuildModel());
             builder.Entity<Building>(entityBuilder => entityBuilder.BuildModel());
             builder.Entity<BuildingCategory>(entityBuilder => entityBuilder.BuildModel());
+            builder.Entity<City>(entityBuilder => entityBuilder.BuildModel());
         }
     }
 }

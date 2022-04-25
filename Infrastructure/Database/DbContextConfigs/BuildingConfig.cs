@@ -19,7 +19,10 @@ namespace Infrastructure.Database.DbContextConfigs
 
             builder.HasKey(u => u.Id);
 
-            builder.OwnsOne(u => u.Address);
+            builder.OwnsOne(u => u.Address, a =>
+            {
+                a.HasOne(u => u.City).WithMany();
+            });
         }
     }
 }

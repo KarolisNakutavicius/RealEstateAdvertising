@@ -1,13 +1,15 @@
-﻿namespace Domain.ValueObjects;
+﻿using Domain.Entities;
+
+namespace Domain.ValueObjects;
 
 public class Address
 {
     public string Street { get; private init; } = string.Empty;
     public int Number { get; private init; }
-    public string City { get; private init; } = string.Empty;
+    public City City { get; private init; } = new City();
     public string Zip { get; private init; } = string.Empty;
 
-    public static Address CreateNew(string street, int number, string city, string zip)
+    public static Address CreateNew(string street, int number, City city, string zip)
     {
         return new Address
         {

@@ -10,7 +10,7 @@ namespace Application.Extensions.Response
             return new AdvertisementResponse()
             {
                 Id = advertisement.Id,
-                City = advertisement.Building.Address.City,
+                City = advertisement.Building.Address.City.Name,
                 Description = advertisement.Description,
                 Name = advertisement.Title,
                 IsRent = advertisement.IsRent,

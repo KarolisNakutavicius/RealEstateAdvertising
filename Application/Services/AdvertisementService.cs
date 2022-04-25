@@ -14,12 +14,14 @@ namespace Application.Services;
 internal class AdvertisementService : IAdvertisementService
 {
     private readonly IRepository<Advertisement> _advertisementRepository;
+    private readonly IRepository<City> _cityRepository;
     private readonly IContextService _contextService;
 
-    public AdvertisementService(IContextService contextService, IRepository<Advertisement> adRepository)
+    public AdvertisementService(IContextService contextService, IRepository<Advertisement> adRepository, IRepository<City> cityRepository)
     {
         _contextService = contextService;
         _advertisementRepository = adRepository;
+        _cityRepository = cityRepository;
     }
 
     public async Task<Result<AdvertisementResponse>> CreateNewAdvertisement(CreateAdvertisementRequest request, CancellationToken cancellationToken)
@@ -28,7 +30,14 @@ internal class AdvertisementService : IAdvertisementService
         {
             var user = await _contextService.GetCurrentUser();
 
-            var address = Address.CreateNew(request.Street, request.Number, request.City, request.Zip);
+            var city = await _cityRepository.GetAll(c => c.Name.ToLower() == request.City.ToLower()).FirstOrDefaultAsync(cancellationToken);
+
+            if(city == null)
+            {
+                city = City.CreateNew(request.City);
+            }
+
+            var address = Address.CreateNew(request.Street, request.Number, city, request.Zip);
             var building = Building.CreateNew(address, request.Type, request.Size);
 
 
