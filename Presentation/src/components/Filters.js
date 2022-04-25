@@ -5,7 +5,8 @@ import ValidationHelper from '../Helpers/ValidationHelper'
 import Form from "react-validation/build/form";
 import Col from 'react-bootstrap/Col';
 
-export default class Filters extends Component {
+export default class Filters extends Component {    
+
     constructor(props) {
         super(props);
         this.onMaxPriceChange = this.onMaxPriceChange.bind(this)
@@ -14,7 +15,8 @@ export default class Filters extends Component {
         this.state =
         {
             minPrice: 1000,
-            maxPrice: 500000
+            maxPrice: 500000,
+            cities:[]
         }
     }
 
@@ -34,6 +36,16 @@ export default class Filters extends Component {
             maxPrice: parseInt(e.target.value)
         })
     }
+
+    componentDidMount() {
+        fetch("/api/Cities").then(response => {
+            response.json().then(data => {
+                this.setState({
+                    cities: data
+                })
+            })
+        })
+    }    
 
     render() {
         return (
@@ -80,7 +92,7 @@ export default class Filters extends Component {
                     <div className='p-2 filter-block'>
                         <h4>City</h4>
                         <select className='mt-4 form-select'>
-                            <option>Vilnius</option>
+                            {this.state.cities.map(c => <option value={c.id}>{c.name}</option>)}
                         </select>
                     </div>
                     </div>                
