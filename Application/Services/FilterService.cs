@@ -5,7 +5,7 @@ using Domain.Entities;
 
 namespace Application.Services
 {
-    public class FilterService : IFilterService
+    internal class FilterService : IFilterService
     {
         public Result<IQueryable<Advertisement>> FilterDown(IQueryable<Advertisement> advertisements, FilterRequest request)
         {
@@ -16,7 +16,7 @@ namespace Application.Services
                     return Result<IQueryable<Advertisement>>.Fail("Min price cannot be higher than max price");
                 }
 
-                advertisements = advertisements.Where(a => a.Price >= request.MaxPrice && a.Price <= request.MinPrice);
+                advertisements = advertisements.Where(a => a.Price <= request.MaxPrice && a.Price >= request.MinPrice);
             }
 
             if (request.CityId != null)

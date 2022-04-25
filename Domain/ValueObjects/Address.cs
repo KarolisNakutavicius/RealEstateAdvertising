@@ -6,7 +6,7 @@ public class Address
 {
     public string Street { get; private init; } = string.Empty;
     public int Number { get; private init; }
-    public City City { get; private init; } = new City();
+    public City City { get; init; } = new City();
     public string Zip { get; private init; } = string.Empty;
 
     public static Address CreateNew(string street, int number, City city, string zip)

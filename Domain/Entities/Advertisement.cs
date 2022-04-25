@@ -15,7 +15,7 @@ public class Advertisement : IAggregateRoot
 
     public string Title { get; set; } = string.Empty;
 
-    public Building Building { get; private init; } = new Building();
+    public Building Building { get; init; } = new Building();
 
     public User Owner { get; set; } = new User();
 
