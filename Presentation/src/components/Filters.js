@@ -11,17 +11,26 @@ export default class Filters extends Component {
         super(props);
         this.onMaxPriceChange = this.onMaxPriceChange.bind(this)
         this.onMinPriceChange = this.onMinPriceChange.bind(this)
+        this.onSelectedCityChange = this.onSelectedCityChange.bind(this)
 
         this.state =
         {
             minPrice: 1000,
             maxPrice: 500000,
-            cities:[]
+            selectedCity:1,
+            cities:[],
+            message: ""
         }
     }
 
-    componentDidUpdate(prevProps) {
-        this.props.filtersChanged();
+    componentDidMount() {
+        fetch("/api/Cities").then(response => {
+            response.json().then(data => {
+                this.setState({
+                    cities: data
+                })
+            })
+        })
     }
 
     onMinPriceChange(e) {
@@ -37,15 +46,22 @@ export default class Filters extends Component {
         })
     }
 
-    componentDidMount() {
-        fetch("/api/Cities").then(response => {
-            response.json().then(data => {
-                this.setState({
-                    cities: data
-                })
-            })
+    onSelectedCityChange(e){
+        this.setState({
+            selectedCity: parseInt(e.target.value)
         })
-    }    
+    }
+
+    filterDown(e){
+
+        if(this.state.minPrice > this.state.maxPrice){
+            this.setState({
+                message:'Min price cannot be higher thet max price'
+            })
+        }
+
+        this.props.filtersChanged();
+    }
 
     render() {
         return (
@@ -91,14 +107,22 @@ export default class Filters extends Component {
                     </div>
                     <div className='p-2 filter-block'>
                         <h4>City</h4>
-                        <select className='mt-4 form-select'>
+                        <select className='mt-4 form-select' onChange={this.onSelectedCityChange} value={this.state.selectedCity}>
                             {this.state.cities.map(c => <option value={c.id}>{c.name}</option>)}
                         </select>
                     </div>
                     </div>                
                 </Form>
 
-                <button type="button" className="mb-3 btn btn-primary">Filter down</button>
+                {this.state.message && (
+                    <div className="form-group mt-3">
+                        <div className="alert alert-danger"role="alert">
+                            {this.state.message}
+                        </div>
+                    </div>
+                )}
+
+                <button type="button" className="mb-3 btn btn-primary" onClick={this.filterDown.bind(this)}>Filter down</button>
 
             </div>
         )
