@@ -51,6 +51,13 @@ export default class AddAdvertisement extends Component {
       return;
     }
 
+    if(!this.state.selectedImages){
+      this.setState({
+        message: 'You must add images',
+        successful: false
+      });
+    }
+
     var request = new FormData();
     request.append('Name', this.state.name)
     request.append('IsRent', !!this.state.purpose)
@@ -63,7 +70,6 @@ export default class AddAdvertisement extends Component {
     request.append('Price', this.state.price)
     request.append('Description', this.state.description)
     request.append('Files', this.state.selectedImages[0])
-    
 
     AdvertisementService.createNewAdvertisement(request).then(
       response => {
@@ -91,7 +97,7 @@ export default class AddAdvertisement extends Component {
   onPurposeChange(e) {
     this.setState(
       {
-        purpose: e.target.value
+        purpose: parseInt(e.target.value)
       });
   }
 

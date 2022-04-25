@@ -17,6 +17,7 @@ export default class Layout extends Component {
   constructor(props) {
     super(props)
     this.handleAuthenticationUpdated = this.handleAuthenticationUpdated.bind(this);
+    this.homeRef = React.createRef()
     this.state =
     {
       currentUser: undefined
@@ -27,6 +28,10 @@ export default class Layout extends Component {
     this.setState({
       currentUser: AuthService.getCurrentUser()
     });
+
+    const home = this.homeRef.current;
+
+    home.getAds();
   }
 
   componentDidMount() {
@@ -46,13 +51,12 @@ export default class Layout extends Component {
       )
     }
     return (
-
       <div>
         <Topbar authenticationUpdated={this.handleAuthenticationUpdated} />
         <div className="container mt-3">
           <Routes>
-            <Route index element={<Home />} />
-            <Route path={"/home"} element={<Home />} />
+            <Route index element={<Home ref={this.homeRef} />} />
+            <Route path={"/home"} element={<Home ref={this.homeRef} />} />
             <Route path={"/my-advertisements"} element={
               this.state.currentUser
                 ? (

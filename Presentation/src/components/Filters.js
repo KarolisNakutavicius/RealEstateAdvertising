@@ -72,10 +72,6 @@ export default class Filters extends Component {
         return (
             <div style={{position:'relative', backgroundColor:'rgba(210, 215,211,1)', borderRadius:'6px', textAlign:'center'}}>
 
-                <div style={{position:"absolute", right:'5px', top:"5px"}}>
-                    <button type="button" class="btn-close" aria-label="Close"></button>
-                </div>
-
                 <h3>Filters</h3>
 
                 <Form className="p-3">
@@ -111,8 +107,9 @@ export default class Filters extends Component {
                         </Row>
                     </div>
                     <div className='p-2 filter-block'>
-                        <h4>City</h4>
+                        <h4 >City</h4>
                         <select className='mt-4 form-select' onChange={this.onSelectedCityChange} value={this.state.selectedCity}>
+                            <option value='0'>All</option>
                             {this.state.cities.map(c => <option value={c.id}>{c.name}</option>)}
                         </select>
                     </div>

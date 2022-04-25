@@ -2,38 +2,41 @@ import React, { Component } from 'react'
 import AdvertisementService from '../Services/AdvertisementService'
 import Advertisment from './Advertisment';
 import Filters from './Filters';
+import Collapse from "react-bootstrap/Collapse";
+import Button from 'react-bootstrap/Button'
 
 export default class Home extends Component {
 
   constructor(props) {
     super(props);
     this.onFiltersChange = this.onFiltersChange.bind(this)
+    this.handleOpen = this.handleOpen.bind(this)
 
     this.filtersRef = React.createRef()
 
     this.state = {
       advertisements: [],
-      message: 'Loading ...'
+      message: 'Loading ...',
+      open: false
     }
   }
 
-  async componentDidMount() {
-    await this.getAds();
-  }
-  
-  async onFiltersChange(e){
+  async onFiltersChange(e) {
     const filters = this.filtersRef.current;
 
     var request = {
       MinPrice: filters.state.minPrice,
       MaxPrice: filters.state.maxPrice,
-      CityId: filters.state.selectedCity
+    }
+
+    if(filters.state.selectedCity > 0){
+      request.CityId = filters.state.selectedCity
     }
 
     await this.getAds(request)
   }
 
-  async getAds(request){
+  async getAds(request) {
     var ads = await AdvertisementService.getAllAdvertisments(request);
 
     if (ads.length > 0) {
@@ -49,13 +52,32 @@ export default class Home extends Component {
       message: "There are no advertisements posted yet",
       advertisements: []
     })
-  }  
+  }
+
+  handleOpen() {
+    this.setState({
+      open: !this.state.open
+    })
+  }
 
   render() {
     return (
-      <>       
+      <>
+        <Button
+          onClick={this.handleOpen}
+          aria-controls="dropdown"
+          aria-expanded={this.state.open}
+        >
+          Open filters 
+          <i className={!this.state.open ? "fa fa-angle-double-down" : "fa fa-angle-double-up"} style={{fontSize:'24px', margin:"3px 0 0 6px"}}></i>
+        </Button>
+        <Collapse in={this.state.open}>
+          <div className='mt-1' id="dropdown">
+            <Filters ref={this.filtersRef} filtersChanged={this.onFiltersChange} />
+          </div>
+        </Collapse>
 
-       <Filters ref={this.filtersRef} filtersChanged={this.onFiltersChange}/>
+
 
         {this.state.advertisements.length == 0 && (
           <h3>{this.state.message}</h3>
