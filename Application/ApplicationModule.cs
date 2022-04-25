@@ -10,7 +10,8 @@ namespace Application
             services.AddHttpContextAccessor();
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-            services.AddScoped<IAdvertisementService, AdvertisementService>();         
+            services.AddScoped<IAdvertisementService, AdvertisementService>();
+            services.AddScoped<ICityService, CityService>();
             services.AddScoped<IContextService, ContextService>();
 
             return services;

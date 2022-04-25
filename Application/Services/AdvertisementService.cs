@@ -30,7 +30,7 @@ internal class AdvertisementService : IAdvertisementService
         {
             var user = await _contextService.GetCurrentUser();
 
-            var city = await _cityRepository.GetAll(c => c.Name.ToLower() == request.City.ToLower()).FirstOrDefaultAsync(cancellationToken);
+            var city = await _cityRepository.GetAll(c => c.Name.ToLower() == request.City.ToLower(), true).FirstOrDefaultAsync(cancellationToken);
 
             if(city == null)
             {
@@ -62,7 +62,7 @@ internal class AdvertisementService : IAdvertisementService
     {
         var user = await _contextService.GetCurrentUser();
 
-        var advertisements = await _advertisementRepository.GetAll(a => a.Owner.Id == user.Id)
+        var advertisements = await _advertisementRepository.GetAll(a => a.Owner.Id == user.Id, true)
             .Include(a => a.Building)
             .ThenInclude(b => b.Address.City)
             .Select(c => c.ToResponse())
@@ -84,7 +84,7 @@ internal class AdvertisementService : IAdvertisementService
 
         }
 
-        var advertisements = await _advertisementRepository.GetAll(a => user == null || a.Owner.Id != user.Id)
+        var advertisements = await _advertisementRepository.GetAll(a => user == null || a.Owner.Id != user.Id, true)
             .Include(a => a.Building)
             .ThenInclude(b => b.Address.City)
             .Include(a => a.Owner)
