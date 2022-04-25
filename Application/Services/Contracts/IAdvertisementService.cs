@@ -11,5 +11,5 @@ public interface IAdvertisementService
 
     Task<IList<AdvertisementResponse>> GetAllUsersAdvertisements(CancellationToken cancellationToken);
 
-    Task<IList<AdvertisementResponse>> GetAll(CancellationToken cancellationToken);
+    Task<Result<IList<AdvertisementResponse>>> GetAll(FilterRequest request, CancellationToken cancellationToken);
 }

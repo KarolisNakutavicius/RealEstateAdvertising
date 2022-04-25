@@ -12,6 +12,7 @@ namespace Application
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IAdvertisementService, AdvertisementService>();
             services.AddScoped<ICityService, CityService>();
+            services.AddScoped<IFilterService, FilterService>();
             services.AddScoped<IContextService, ContextService>();
 
             return services;

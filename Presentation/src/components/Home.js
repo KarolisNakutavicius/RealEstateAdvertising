@@ -18,7 +18,23 @@ export default class Home extends Component {
   }
 
   async componentDidMount() {
-    var ads = await AdvertisementService.getAllAdvertisments();
+    await this.getAds();
+  }
+  
+  async onFiltersChange(e){
+    const filters = this.filtersRef.current;
+
+    var request = {
+      MinPrice: filters.state.minPrice,
+      MaxPrice: filters.state.maxPrice,
+      CityId: filters.state.selectedCity
+    }
+
+    await this.getAds(request)
+  }
+
+  async getAds(request){
+    var ads = await AdvertisementService.getAllAdvertisments(request);
 
     if (ads.length > 0) {
       this.setState({
@@ -29,16 +45,10 @@ export default class Home extends Component {
     }
 
     this.setState({
-      message: "There are no advertisements posted yet"
+      message: "There are no advertisements posted yet",
+      advertisements: []
     })
-  }
-  
-  onFiltersChange(e){
-    const filters = this.filtersRef.current;
-
-    console.log(filters.state.minPrice);
-    console.log(filters.state.maxPrice)
-  }
+  }  
 
   render() {
     return (

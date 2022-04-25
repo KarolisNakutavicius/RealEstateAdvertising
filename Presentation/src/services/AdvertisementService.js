@@ -47,14 +47,16 @@ class AdvertisementService {
             });
     }
 
-    async getAllAdvertisments()
+    async getAllAdvertisments(request)
     {
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'Authorization': AuthService.getAuthHeader() }
+            headers: { 'Content-Type': 'application/json', 'Authorization': AuthService.getAuthHeader() },
         };
 
-        return await fetch(`/api/Advertisements`, requestOptions)
+        var filterParams = new URLSearchParams(request)
+        
+        return await fetch(`/api/Advertisements${request ? `?${filterParams}` : ""}`, requestOptions)
             .then(async response => {
                 if (response.status !== 200) {
                     await response.json().then(data => {

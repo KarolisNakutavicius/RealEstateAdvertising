@@ -37,13 +37,12 @@ namespace Application.Controllers
             return Ok(result);
         }
 
-        [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetAllAds(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllAds([FromQuery] FilterRequest request, CancellationToken cancellationToken)
         {
-            var result = await _advertisementService.GetAll(cancellationToken);
+            var result = await _advertisementService.GetAll(request, cancellationToken);
 
-            return Ok(result);
+            return result.ToHttpResponse();
         }
     }
 }
