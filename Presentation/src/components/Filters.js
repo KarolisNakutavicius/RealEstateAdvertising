@@ -77,20 +77,13 @@ export default class Filters extends Component {
                             </div>
                         </Row>
                     </div>
-
                     <div className='p-2 filter-block'>
                         <h4>City</h4>
                         <select className='mt-4 form-select'>
                             <option>Vilnius</option>
                         </select>
                     </div>
-
-
-                    </div>
-
-                   
-
-
+                    </div>                
                 </Form>
 
                 <button type="button" className="mb-3 btn btn-primary">Filter down</button>

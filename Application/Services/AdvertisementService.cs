@@ -64,6 +64,7 @@ internal class AdvertisementService : IAdvertisementService
 
         var advertisements = await _advertisementRepository.GetAll(a => a.Owner.Id == user.Id)
             .Include(a => a.Building)
+            .ThenInclude(b => b.Address.City)
             .Select(c => c.ToResponse())
             .ToListAsync(cancellationToken);
 
@@ -85,6 +86,7 @@ internal class AdvertisementService : IAdvertisementService
 
         var advertisements = await _advertisementRepository.GetAll(a => user == null || a.Owner.Id != user.Id)
             .Include(a => a.Building)
+            .ThenInclude(b => b.Address.City)
             .Include(a => a.Owner)
             .Select(c => c.ToResponse())
             .ToListAsync(cancellationToken);
