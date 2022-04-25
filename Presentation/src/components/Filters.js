@@ -58,9 +58,14 @@ export default class Filters extends Component {
             this.setState({
                 message:'Min price cannot be higher thet max price'
             })
+            return;
         }
 
         this.props.filtersChanged();
+
+        this.setState({
+            message:''
+        })
     }
 
     render() {

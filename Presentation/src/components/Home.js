@@ -38,7 +38,8 @@ export default class Home extends Component {
 
     if (ads.length > 0) {
       this.setState({
-        advertisements: ads
+        advertisements: ads,
+        message: "",
       })
 
       return;
