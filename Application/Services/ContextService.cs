@@ -22,7 +22,7 @@ public class ContextService : IContextService
 
     public async Task<User> GetCurrentUserAsync()
     {
-        if (IsAuthenticated())
+        if (_user != null)
         {
             return _user;
         }
