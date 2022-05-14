@@ -8,28 +8,49 @@ namespace Application.Services;
 
 public class ContextService : IContextService
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly UserManager<User> _userManager;
+    private User? _user;
 
-    public ContextService(IHttpContextAccessor httpContextAccessor, UserManager<User> userManager)
+    private readonly UserManager<User> _userManager;
+    private readonly HttpContext _context;
+    
+    public ContextService(UserManager<User> userManager, HttpContext contextService)
     {
-        _httpContextAccessor = httpContextAccessor;
         _userManager = userManager;
+        _context = contextService;
     }
 
-    public async Task<User> GetCurrentUser()
+    public async Task<User?> GetCurrentUserAsync()
     {
-        var identity = (ClaimsIdentity)_httpContextAccessor.HttpContext?.User.Identity!;
+        if (IsAuthenticated())
+        {
+            return _user;
+        }
+        
+        var identity = _context.User.Identity;
 
-        if (!identity?.IsAuthenticated ?? false) throw new AuthenticationException();
+        if (identity == null || !identity.IsAuthenticated)
+        {
+            return null;
+        }
+        
+        var userId = _context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
-        var userId = identity!.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ??
-                     throw new AuthenticationException();
-
+        if (string.IsNullOrEmpty(userId))
+        {
+            return null;
+        }
+        
         var user = await _userManager.FindByIdAsync(userId);
 
-        if (user == null) throw new AuthenticationException();
+        if (user == null)
+        {
+            return null;
+        }
+
+        _user = user;
 
         return user;
     }
+
+    public bool IsAuthenticated() => _user != null;
 }
