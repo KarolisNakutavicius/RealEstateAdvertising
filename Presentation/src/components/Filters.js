@@ -54,7 +54,7 @@ export default class Filters extends Component {
 
         if (this.state.minPrice > this.state.maxPrice) {
             this.setState({
-                message: 'Min price cannot be higher thet max price'
+                message: 'Min price cannot be higher than max price'
             })
             return;
         }
