@@ -1,4 +1,5 @@
 using Application;
+using Application.Middlewares;
 using Domain;
 using Infrastructure;
 
