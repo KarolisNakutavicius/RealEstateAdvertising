@@ -1,12 +1,14 @@
 label {
     display: block;
     margin-top: 10px;
-  }
-  .card-container.card {
+}
+
+.card-container.card {
     max-width: 350px !important;
     padding: 40px 40px;
-  }
-  .card {
+}
+
+.card {
     background-color: #f7f7f7;
     padding: 20px 25px 30px;
     margin: 0 auto 25px;
@@ -17,25 +19,23 @@ label {
     -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
     -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  }
+}
 
-  .advertisement
-  {
+.advertisement {
     border-radius: 2px;
-    border:rgba(0, 0, 0, 0.3) 1px solid;
+    border: rgba(0, 0, 0, 0.3) 1px solid;
     margin: 6px
-  }
+}
 
-  .filter-block
-  {
+.filter-block {
     border-radius: 2px;
     margin: 6px;
-    background-color:rgba(236, 236, 236);
+    background-color: rgba(236, 236, 236);
     border-radius: 6px;
     width: 200px;
-  }
-  
-  .profile-img-card {
+}
+
+.profile-img-card {
     width: 96px;
     height: 96px;
     margin: 0 auto 10px;
@@ -43,14 +43,12 @@ label {
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;
-  }
+}
 
-  div input
-  {
-    margin-top:6px
-  }
+div input {
+    margin-top: 6px
+}
 
-  div select
-  {
-    margin-top:6px
-  }
+div select {
+    margin-top: 6px
+}

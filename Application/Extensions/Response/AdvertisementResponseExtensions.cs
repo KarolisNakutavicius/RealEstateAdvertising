@@ -1,28 +1,27 @@
 ﻿using Application.DTOs.ViewModels;
 using Domain.Entities;
 
-namespace Application.Extensions.Response
+namespace Application.Extensions.Response;
+
+internal static class AdvertisementResponseExtensions
 {
-    internal static class AdvertisementResponseExtensions
+    public static AdvertisementResponse ToResponse(this Advertisement advertisement)
     {
-        public static AdvertisementResponse ToResponse(this Advertisement advertisement)
+        return new AdvertisementResponse
         {
-            return new AdvertisementResponse()
-            {
-                Id = advertisement.Id,
-                City = advertisement.Building.Address.City.Name,
-                Description = advertisement.Description,
-                Name = advertisement.Title,
-                IsRent = advertisement.IsRent,
-                Number = advertisement.Building.Address.Number,
-                Size = advertisement.Building.Size,
-                Type = advertisement.Building.Category,
-                Zip = advertisement.Building.Address.Zip,
-                Price = advertisement.Price,
-                Image = advertisement.Image,
-                Street = advertisement.Building.Address.Street,
-                OwnerEmail = advertisement.Owner.Email
-            };
-        }
+            Id = advertisement.Id,
+            City = advertisement.Building.Address.City.Name,
+            Description = advertisement.Description,
+            Name = advertisement.Title,
+            IsRent = advertisement.IsRent,
+            Number = advertisement.Building.Address.Number,
+            Size = advertisement.Building.Size,
+            Type = advertisement.Building.Category,
+            Zip = advertisement.Building.Address.Zip,
+            Price = advertisement.Price,
+            Image = advertisement.Image,
+            Street = advertisement.Building.Address.Street,
+            OwnerEmail = advertisement.Owner.Email
+        };
     }
 }

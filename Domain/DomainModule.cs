@@ -1,12 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Domain
+namespace Domain;
+
+public static class DomainModule
 {
-    public static class DomainModule
+    public static IServiceCollection AddDomainModule(this IServiceCollection services)
     {
-        public static IServiceCollection AddDomainModule(this IServiceCollection services)
-        {
-            return services;
-        }
+        return services;
     }
 }

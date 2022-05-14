@@ -1,4 +1,4 @@
-import { isEmail } from "validator";
+import {isEmail} from "validator";
 
 export default class ValidationHelper {
     static required = value => {
@@ -41,11 +41,11 @@ export default class ValidationHelper {
     static passwordMustMatch = (value, props, components) => {
         if (value !== components['password'][0].value) {
 
-          return (
-            <div className="alert alert-danger" role="alert">
-                Passwords don't match
-            </div>
-        );
+            return (
+                <div className="alert alert-danger" role="alert">
+                    Passwords don't match
+                </div>
+            );
         }
-      };
+    };
 }

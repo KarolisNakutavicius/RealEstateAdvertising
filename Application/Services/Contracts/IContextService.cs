@@ -1,9 +1,8 @@
 ﻿using Domain.Entities;
 
-namespace Application.Services.Contracts
+namespace Application.Services.Contracts;
+
+public interface IContextService
 {
-    public interface IContextService
-    {
-        Task<User> GetCurrentUser();
-    }
+    Task<User> GetCurrentUser();
 }

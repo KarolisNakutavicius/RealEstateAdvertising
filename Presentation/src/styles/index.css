@@ -1,55 +1,53 @@
 .center-horizontal {
-  margin: auto;
-  display: block;
+    margin: auto;
+    display: block;
 }
 
 
 .center-vertical {
-  position: absolute;
-  top: 50%;
-  transform: translate(0, -50%);
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
 }
 
-#login-box
-{
-  margin: auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 2px solid black;
-  width: 450px;
+#login-box {
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid black;
+    width: 450px;
 }
 
 
-html, body{
-  height: 100%;
+html, body {
+    height: 100%;
 }
 
-.full-height{
-  height: 100%;
+.full-height {
+    height: 100%;
 }
 
-.flexbox-container-center
-{
-  display: flex;
-  /* X axis */
-  justify-content: center;
+.flexbox-container-center {
+    display: flex;
+    /* X axis */
+    justify-content: center;
 
-  /* Y axis */
-  align-items: center;
-  height: 100%;
+    /* Y axis */
+    align-items: center;
+    height: 100%;
 
-  /* Only for multiline items */
-  /* align-content: space-around; */
+    /* Only for multiline items */
+    /* align-content: space-around; */
 }
 
 .center-children-margin > * {
-  margin-left:auto;
-  margin-right:auto;
-  margin-top: 12px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 12px;
 }
 
-.your-class input{
-  float:left;
+.your-class input {
+    float: left;
 }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import AdvertisementService from '../Services/AdvertisementService'
 import Advertisment from './Advertisment';
 import Filters from './Filters';
@@ -7,91 +7,91 @@ import Button from 'react-bootstrap/Button'
 
 export default class Home extends Component {
 
-  constructor(props) {
-    super(props);
-    this.onFiltersChange = this.onFiltersChange.bind(this)
-    this.handleOpen = this.handleOpen.bind(this)
+    constructor(props) {
+        super(props);
+        this.onFiltersChange = this.onFiltersChange.bind(this)
+        this.handleOpen = this.handleOpen.bind(this)
 
-    this.filtersRef = React.createRef()
+        this.filtersRef = React.createRef()
 
-    this.state = {
-      advertisements: [],
-      message: 'Loading ...',
-      open: false
-    }
-  }
-
-  async onFiltersChange(e) {
-    const filters = this.filtersRef.current;
-
-    var request = {
-      MinPrice: filters.state.minPrice,
-      MaxPrice: filters.state.maxPrice,
+        this.state = {
+            advertisements: [],
+            message: 'Loading ...',
+            open: false
+        }
     }
 
-    if(filters.state.selectedCity > 0){
-      request.CityId = filters.state.selectedCity
+    async onFiltersChange(e) {
+        const filters = this.filtersRef.current;
+
+        var request = {
+            MinPrice: filters.state.minPrice,
+            MaxPrice: filters.state.maxPrice,
+        }
+
+        if (filters.state.selectedCity > 0) {
+            request.CityId = filters.state.selectedCity
+        }
+
+        await this.getAds(request)
     }
 
-    await this.getAds(request)
-  }
+    async getAds(request) {
+        var ads = await AdvertisementService.getAllAdvertisments(request);
 
-  async getAds(request) {
-    var ads = await AdvertisementService.getAllAdvertisments(request);
+        if (ads.length > 0) {
+            this.setState({
+                advertisements: ads,
+                message: "",
+            })
 
-    if (ads.length > 0) {
-      this.setState({
-        advertisements: ads,
-        message: "",
-      })
+            return;
+        }
 
-      return;
+        this.setState({
+            message: "There are no advertisements posted yet",
+            advertisements: []
+        })
     }
 
-    this.setState({
-      message: "There are no advertisements posted yet",
-      advertisements: []
-    })
-  }
+    handleOpen() {
+        this.setState({
+            open: !this.state.open
+        })
+    }
 
-  handleOpen() {
-    this.setState({
-      open: !this.state.open
-    })
-  }
+    componentDidMount() {
+        this.getAds();
+    }
 
-  componentDidMount(){
-    this.getAds();
-  }
-
-  render() {
-    return (
-      <>
-        <Button
-          onClick={this.handleOpen}
-          aria-controls="dropdown"
-          aria-expanded={this.state.open}
-        >
-          Open filters 
-          <i className={!this.state.open ? "fa fa-angle-double-down" : "fa fa-angle-double-up"} style={{fontSize:'24px', margin:"3px 0 0 6px"}}></i>
-        </Button>
-        <Collapse in={this.state.open}>
-          <div className='mt-1' id="dropdown">
-            <Filters ref={this.filtersRef} filtersChanged={this.onFiltersChange} />
-          </div>
-        </Collapse>
+    render() {
+        return (
+            <>
+                <Button
+                    onClick={this.handleOpen}
+                    aria-controls="dropdown"
+                    aria-expanded={this.state.open}
+                >
+                    Open filters
+                    <i className={!this.state.open ? "fa fa-angle-double-down" : "fa fa-angle-double-up"}
+                       style={{fontSize: '24px', margin: "3px 0 0 6px"}}></i>
+                </Button>
+                <Collapse in={this.state.open}>
+                    <div className='mt-1' id="dropdown">
+                        <Filters ref={this.filtersRef} filtersChanged={this.onFiltersChange}/>
+                    </div>
+                </Collapse>
 
 
-
-        {this.state.advertisements.length == 0 && (
-          <h3>{this.state.message}</h3>
-        )}
-        <div className='mt-4 d-flex justify-content-start flex-wrap'>
-          {this.state.advertisements.map(ad => {
-            return <Advertisment ad={ad} isPersonal={true} />
-          })}
-        </div>
-      </>
-    )
-  }
+                {this.state.advertisements.length == 0 && (
+                    <h3>{this.state.message}</h3>
+                )}
+                <div className='mt-4 d-flex justify-content-start flex-wrap'>
+                    {this.state.advertisements.map(ad => {
+                        return <Advertisment ad={ad} isPersonal={true}/>
+                    })}
+                </div>
+            </>
+        )
+    }
 }

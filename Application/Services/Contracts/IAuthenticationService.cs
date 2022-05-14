@@ -2,11 +2,10 @@
 using Application.DTOs.InputModels;
 using Application.DTOs.ViewModels;
 
-namespace Application.Services.Contracts
+namespace Application.Services.Contracts;
+
+public interface IAuthenticationService
 {
-    public interface IAuthenticationService
-    {
-        Task<Result<AuthenticateResponse>> Login(AuthenticateRequest request);
-        Task<Result<AuthenticateResponse>> Register(AuthenticateRequest request);
-    }
+    Task<Result<AuthenticateResponse>> Login(AuthenticateRequest request);
+    Task<Result<AuthenticateResponse>> Register(AuthenticateRequest request);
 }

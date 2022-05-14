@@ -1,11 +1,11 @@
-﻿using Domain.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Domain.Enums;
 
 namespace Application.DTOs.InputModels;
 
 public class CreateAdvertisementRequest
 {
-    [Required(ErrorMessage = $"{nameof(CreateAdvertisementRequest.Name)} is required")]
+    [Required(ErrorMessage = $"{nameof(Name)} is required")]
     public string Name { get; set; } = string.Empty;
 
     public bool IsRent { get; set; }
@@ -17,13 +17,13 @@ public class CreateAdvertisementRequest
     [RegularExpression("([0-9]+)", ErrorMessage = "Please enter valid number")]
     public int Number { get; set; }
 
-    [Required(ErrorMessage = $"{nameof(CreateAdvertisementRequest.City)} is required")]
+    [Required(ErrorMessage = $"{nameof(City)} is required")]
     public string City { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = $"{nameof(CreateAdvertisementRequest.Zip)} is required")]
+    [Required(ErrorMessage = $"{nameof(Zip)} is required")]
     public string Zip { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = $"{nameof(CreateAdvertisementRequest.Street)} is required")]
+    [Required(ErrorMessage = $"{nameof(Street)} is required")]
     public string Street { get; set; } = string.Empty;
 
 

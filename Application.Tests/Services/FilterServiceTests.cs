@@ -1,140 +1,135 @@
-﻿using Application.DTOs.InputModels;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Application.DTOs.InputModels;
 using Application.Services;
 using Domain.Entities;
 using Domain.ValueObjects;
 using FluentAssertions;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.Tests.Services
+namespace Application.Tests.Services;
+
+internal class FilterServiceTests
 {
-    internal class FilterServiceTests
+    private IQueryable<Advertisement> _advertisements;
+    private FilterService _sut;
+
+    [SetUp]
+    public void Setup()
     {
-        private FilterService _sut;
+        _sut = new FilterService();
 
-        private IQueryable<Advertisement> _advertisements;
-
-        [SetUp]
-        public void Setup()
+        _advertisements = new List<Advertisement>
         {
-            _sut = new FilterService();
-
-            _advertisements = new List<Advertisement>
+            new()
             {
-                new Advertisement()
+                Building = new Building
                 {
-                    Building = new Building()
+                    Address = new Address
                     {
-                        Address = new Address
+                        City = new City
                         {
-                            City = new City()
-                            {
-                                Id = 1
-                            }
+                            Id = 1
                         }
-                    },
-                    Id = 1,
-                    Price = 1500
+                    }
                 },
-                new Advertisement()
+                Id = 1,
+                Price = 1500
+            },
+            new()
+            {
+                Id = 2,
+                Price = 1000,
+                Building = new Building
                 {
-                    Id = 2,
-                    Price = 1000,
-                    Building = new Building()
+                    Address = new Address
                     {
-                        Address = new Address
+                        City = new City
                         {
-                            City = new City()
-                            {
-                                Id = 2
-                            }
+                            Id = 2
                         }
-                    },
-                },
-                new Advertisement()
+                    }
+                }
+            },
+            new()
+            {
+                Id = 3,
+                Price = 2000,
+                Building = new Building
                 {
-                    Id = 3,
-                    Price = 2000,
-                    Building = new Building()
+                    Address = new Address
                     {
-                        Address = new Address
+                        City = new City
                         {
-                            City = new City()
-                            {
-                                Id = 3
-                            }
+                            Id = 3
                         }
-                    },
-                },
-                new Advertisement()
+                    }
+                }
+            },
+            new()
+            {
+                Id = 4,
+                Price = 3000,
+                Building = new Building
                 {
-                    Id = 4,
-                    Price = 3000,
-                    Building = new Building()
+                    Address = new Address
                     {
-                        Address = new Address
+                        City = new City
                         {
-                            City = new City()
-                            {
-                                Id = 4
-                            }
+                            Id = 4
                         }
-                    },
-                },
-            }.AsQueryable();
-        }
+                    }
+                }
+            }
+        }.AsQueryable();
+    }
 
-        [Test]
-        public void FilterDown_MaxAndMinPriceSet_FilterCorrectly()
+    [Test]
+    public void FilterDown_MaxAndMinPriceSet_FilterCorrectly()
+    {
+        var request = new FilterRequest
         {
-            var request = new FilterRequest()
-            {
-                MinPrice = 1000,
-                MaxPrice = 2000,
-            };
+            MinPrice = 1000,
+            MaxPrice = 2000
+        };
 
-            var result = _sut.FilterDown(_advertisements, request);
-            
-            result.Success.Should().BeTrue();
-            result.Data.Should().HaveCount(3);
-        }
+        var result = _sut.FilterDown(_advertisements, request);
 
-        [Test]
-        public void FilterDown_CityIdAndPricesSet_FilterCorrectly()
+        result.Success.Should().BeTrue();
+        result.Data.Should().HaveCount(3);
+    }
+
+    [Test]
+    public void FilterDown_CityIdAndPricesSet_FilterCorrectly()
+    {
+        var request = new FilterRequest
         {
-            var request = new FilterRequest()
-            {
-                CityId = 1,
-                MinPrice = 1000,
-                MaxPrice = 2000,
-            };
+            CityId = 1,
+            MinPrice = 1000,
+            MaxPrice = 2000
+        };
 
-            var result = _sut.FilterDown(_advertisements, request);
+        var result = _sut.FilterDown(_advertisements, request);
 
-            result.Success.Should().BeTrue();
-            result.Data.Should().HaveCount(1);
-            result.Data.Single().Id.Should().Be(1);
-        }
+        result.Success.Should().BeTrue();
+        result.Data.Should().HaveCount(1);
+        result.Data.Single().Id.Should().Be(1);
+    }
 
 
-        [Test]
-        public void FilterDown_FiltersDontMatch_ReturnsEmpty()
+    [Test]
+    public void FilterDown_FiltersDontMatch_ReturnsEmpty()
+    {
+        var request = new FilterRequest
         {
-            var request = new FilterRequest()
-            {
-                CityId = 1,
-                MinPrice = 4000,
-                MaxPrice = 8000,
-            };
+            CityId = 1,
+            MinPrice = 4000,
+            MaxPrice = 8000
+        };
 
-            var result = _sut.FilterDown(_advertisements, request);
+        var result = _sut.FilterDown(_advertisements, request);
 
-            result.Success.Should().BeTrue();
-            result.Data.Should().BeEmpty();
-        }
+        result.Success.Should().BeTrue();
+        result.Data.Should().BeEmpty();
     }
 }

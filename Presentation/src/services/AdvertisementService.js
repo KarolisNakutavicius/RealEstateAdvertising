@@ -4,7 +4,7 @@ class AdvertisementService {
     async createNewAdvertisement(request) {
         const requestOptions = {
             method: 'POST',
-            headers: { 'Authorization': AuthService.getAuthHeader() },
+            headers: {'Authorization': AuthService.getAuthHeader()},
             body: request
         };
 
@@ -12,12 +12,12 @@ class AdvertisementService {
             .then(async response => {
                 if (response.status !== 200) {
                     await response.json().then(data => {
-                        if(data[0].error){
-                            throw data[0].error
-                        }
+                            if (data[0].error) {
+                                throw data[0].error
+                            }
 
-                        throw data.errors[0];
-                    },
+                            throw data.errors[0];
+                        },
                         error => {
                             throw response.statusText;
                         }
@@ -28,19 +28,18 @@ class AdvertisementService {
             });
     }
 
-    async getMyAdvertisments()
-    {
+    async getMyAdvertisments() {
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'Authorization': AuthService.getAuthHeader() }
+            headers: {'Content-Type': 'application/json', 'Authorization': AuthService.getAuthHeader()}
         };
 
         return await fetch(`/api/Advertisements/mine`, requestOptions)
             .then(async response => {
                 if (response.status !== 200) {
                     await response.json().then(data => {
-                        throw data[0].error;
-                    },
+                            throw data[0].error;
+                        },
                         error => {
                             throw response.statusText;
                         }
@@ -51,21 +50,20 @@ class AdvertisementService {
             });
     }
 
-    async getAllAdvertisments(request)
-    {
+    async getAllAdvertisments(request) {
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'Authorization': AuthService.getAuthHeader() },
+            headers: {'Content-Type': 'application/json', 'Authorization': AuthService.getAuthHeader()},
         };
 
         var filterParams = new URLSearchParams(request)
-        
+
         return await fetch(`/api/Advertisements${request ? `?${filterParams}` : ""}`, requestOptions)
             .then(async response => {
                 if (response.status !== 200) {
                     await response.json().then(data => {
-                        throw data[0].error;
-                    },
+                            throw data[0].error;
+                        },
                         error => {
                             throw response.statusText;
                         }
@@ -77,4 +75,5 @@ class AdvertisementService {
     }
 
 }
+
 export default new AdvertisementService();

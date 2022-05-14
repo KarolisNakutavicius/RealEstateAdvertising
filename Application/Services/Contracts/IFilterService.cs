@@ -2,10 +2,9 @@
 using Application.DTOs.InputModels;
 using Domain.Entities;
 
-namespace Application.Services.Contracts
+namespace Application.Services.Contracts;
+
+internal interface IFilterService
 {
-    internal interface IFilterService
-    {
-        Result<IQueryable<Advertisement>> FilterDown(IQueryable<Advertisement> advertisements, FilterRequest request);
-    }
+    Result<IQueryable<Advertisement>> FilterDown(IQueryable<Advertisement> advertisements, FilterRequest request);
 }

@@ -1,5 +1,4 @@
 ﻿using Domain.Entities.Contracts;
-using Microsoft.AspNetCore.Http;
 
 namespace Domain.Entities;
 
@@ -15,13 +14,14 @@ public class Advertisement : IAggregateRoot
 
     public string Title { get; set; } = string.Empty;
 
-    public Building Building { get; init; } = new Building();
+    public Building Building { get; init; } = new();
 
-    public User Owner { get; set; } = new User();
+    public User Owner { get; set; } = new();
 
     public byte[] Image { get; set; }
 
-    public static Advertisement CreateNew(User owner, Building building, byte[] image, string title, bool isRent, decimal price, string description)
+    public static Advertisement CreateNew(User owner, Building building, byte[] image, string title, bool isRent,
+        decimal price, string description)
     {
         return new Advertisement
         {

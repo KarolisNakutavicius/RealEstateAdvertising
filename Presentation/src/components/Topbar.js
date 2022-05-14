@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Link } from "react-router-dom";
+import React, {Component} from 'react'
+import {Link} from "react-router-dom";
 import AuthService from "../Services/AuthService"
 
 export default class Topbar extends Component {
@@ -26,20 +26,20 @@ export default class Topbar extends Component {
                     </li>
                     {currentUser && (
                         <>
-                    <li className="nav-item">
-                        <Link to={"/my-advertisements"} className="nav-link">
-                            My advertisements
-                        </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to={"/add-advertisement"} className="nav-link">
-                            Sell/Rent
-                        </Link>
-                    </li>
-                    </>)}
+                            <li className="nav-item">
+                                <Link to={"/my-advertisements"} className="nav-link">
+                                    My advertisements
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to={"/add-advertisement"} className="nav-link">
+                                    Sell/Rent
+                                </Link>
+                            </li>
+                        </>)}
                 </div>
 
-                <div style={{ position: "absolute", right: "40px" }}>
+                <div style={{position: "absolute", right: "40px"}}>
                     {currentUser ?
                         (<div className="navbar-nav ml-auto">
                             <li className="nav-item">
@@ -64,7 +64,7 @@ export default class Topbar extends Component {
                         )
                     }
                 </div>
-            </nav >
+            </nav>
         )
     }
 }

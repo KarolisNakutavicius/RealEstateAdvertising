@@ -11,16 +11,15 @@ public class Building
 
     public int Size { get; init; }
 
-    public Address Address { get; init; } = new Address();
+    public Address Address { get; init; } = new();
 
     public static Building CreateNew(Address address, BuildingType category, int size)
     {
-        return new Building()
+        return new Building
         {
             Address = address,
             Category = category,
             Size = size
-            
         };
     }
 }
