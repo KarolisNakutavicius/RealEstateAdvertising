@@ -32,17 +32,17 @@ internal class AdvertisementService : IAdvertisementService
     {
         try
         {
-            var user = await _contextService.GetCurrentUser();
+            var user = await _contextService.GetCurrentUserAsync();
 
             var city = await _cityRepository.GetAll(c => c.Name.ToLower() == request.City.ToLower())
                 .FirstOrDefaultAsync(cancellationToken);
 
-            if (city == null) city = City.CreateNew(request.City);
+            if (city == null)
+                city = City.CreateNew(request.City);
 
             var address = Address.CreateNew(request.Street, request.Number, city, request.Zip);
             var building = Building.CreateNew(address, request.Type, request.Size);
-
-
+            
             var file = request.Files.First();
             using var ms = new MemoryStream();
             await file.CopyToAsync(ms);
@@ -63,7 +63,7 @@ internal class AdvertisementService : IAdvertisementService
 
     public async Task<IList<AdvertisementResponse>> GetAllUsersAdvertisements(CancellationToken cancellationToken)
     {
-        var user = await _contextService.GetCurrentUser();
+        var user = await _contextService.GetCurrentUserAsync();
 
         var advertisements = await _advertisementRepository.GetAll(a => a.Owner.Id == user.Id, true)
             .Include(a => a.Building)
@@ -77,15 +77,7 @@ internal class AdvertisementService : IAdvertisementService
     public async Task<Result<IList<AdvertisementResponse>>> GetAll(FilterRequest request,
         CancellationToken cancellationToken)
     {
-        User user = null;
-
-        try
-        {
-            user = await _contextService.GetCurrentUser();
-        }
-        catch (AuthenticationException)
-        {
-        }
+        var user = await _contextService.GetCurrentUserAsync();
 
         var advertisements = _advertisementRepository.GetAll(a => user == null || a.Owner.Id != user.Id, true);
 

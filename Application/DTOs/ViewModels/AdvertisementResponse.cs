@@ -18,7 +18,7 @@ public class AdvertisementResponse
 
     public string City { get; set; } = string.Empty;
 
-    public string Street { get; set; }
+    public string Street { get; set; } = string.Empty;
 
     public string Zip { get; set; } = string.Empty;
 
@@ -26,7 +26,7 @@ public class AdvertisementResponse
 
     public decimal Price { get; set; }
 
-    public byte[] Image { get; set; }
+    public byte[] Image { get; set; } = Array.Empty<byte>();
 
-    public string OwnerEmail { get; set; }
+    public string OwnerEmail { get; set; } = string.Empty;
 }
