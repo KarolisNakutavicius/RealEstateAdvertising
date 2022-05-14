@@ -17,7 +17,7 @@ export default class Filters extends Component {
         {
             minPrice: 1000,
             maxPrice: 500000,
-            selectedCity:1,
+            selectedCity:0,
             cities:[],
             message: ""
         }

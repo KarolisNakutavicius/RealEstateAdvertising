@@ -32,7 +32,7 @@ internal class AdvertisementService : IAdvertisementService
         {
             var user = await _contextService.GetCurrentUser();
 
-            var city = await _cityRepository.GetAll(c => c.Name.ToLower() == request.City.ToLower(), true).FirstOrDefaultAsync(cancellationToken);
+            var city = await _cityRepository.GetAll(c => c.Name.ToLower() == request.City.ToLower()).FirstOrDefaultAsync(cancellationToken);
 
             if(city == null)
             {

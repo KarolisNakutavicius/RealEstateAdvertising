@@ -60,6 +60,10 @@ export default class Home extends Component {
     })
   }
 
+  componentDidMount(){
+    this.getAds();
+  }
+
   render() {
     return (
       <>
