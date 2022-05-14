@@ -2,7 +2,7 @@
 
 public class AuthenticateResponse
 {
-    public string Token { get; set; }
+    public string Token { get; set; } = string.Empty;
 
-    public DateTime Expiration { get; set; }
+    public DateTime Expiration { get; set; } = new DateTime();
 }
