@@ -1,5 +1,6 @@
 ﻿using System.Security.Authentication;
 using System.Security.Claims;
+using Application.Resources;
 using Application.Services.Contracts;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -19,7 +20,7 @@ public class ContextService : IContextService
         _context = contextService;
     }
 
-    public async Task<User?> GetCurrentUserAsync()
+    public async Task<User> GetCurrentUserAsync()
     {
         if (IsAuthenticated())
         {
@@ -30,21 +31,21 @@ public class ContextService : IContextService
 
         if (identity == null || !identity.IsAuthenticated)
         {
-            return null;
+            throw new AuthenticationException(ErrorMessages.UserNotAuthenticated);
         }
         
         var userId = _context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
         if (string.IsNullOrEmpty(userId))
         {
-            return null;
+            throw new AuthenticationException(ErrorMessages.UserNotAuthenticated);
         }
         
         var user = await _userManager.FindByIdAsync(userId);
 
         if (user == null)
         {
-            return null;
+            throw new AuthenticationException(ErrorMessages.UserNotAuthenticated);
         }
 
         _user = user;

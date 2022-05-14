@@ -1,3 +1,4 @@
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using Application.Middlewares;
 using Application.Services.Contracts;
@@ -9,20 +10,29 @@ namespace Application.Tests.Middlewares;
 public class ContextMiddlewareTests
 {
     private ContextMiddleware _sut;
+    private Mock<IContextService> _contextServiceMock;
 
     [SetUp]
     public void Setup()
     {
+        _contextServiceMock = new Mock<IContextService>();
+        
         _sut = new ContextMiddleware();
     }
 
     [Test]
     public async Task InvokeAsync_Called_GetCurrentUserCalled()
     {
-        var context = new Mock<IContextService>();
+        await _sut.InvokeAsync(_contextServiceMock.Object);
 
-        await _sut.InvokeAsync(context.Object);
-
-        context.Verify(c => c.GetCurrentUserAsync(), Times.Once);
+        _contextServiceMock.Verify(c => c.GetCurrentUserAsync(), Times.Once);
+    }
+    
+    [Test]
+    public async Task InvokeAsync_Throws_DoesNotCrash()
+    {
+        _contextServiceMock.Setup(m => m.GetCurrentUserAsync()).ThrowsAsync(new AuthenticationException());
+        
+        await _sut.InvokeAsync(_contextServiceMock.Object);
     }
 }

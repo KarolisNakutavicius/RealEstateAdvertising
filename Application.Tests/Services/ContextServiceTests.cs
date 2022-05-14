@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Security.Authentication;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Application.Resources;
 using Application.Services;
 using Domain.Entities;
 using FluentAssertions;
@@ -56,23 +58,23 @@ public class ContextServiceTests
     }
     
     [Test]
-    public async Task GetCurrentUserAsync_NotAuthenticated_UserContextNotCalled()
+    public void GetCurrentUserAsync_NotAuthenticated_Throws()
     {
         _identity.Setup(i => i.IsAuthenticated).Returns(false);
 
-        var result = await _sut.GetCurrentUserAsync();
+        var result = async () => await _sut.GetCurrentUserAsync();
         
-        result.Should().BeNull();
+        result.Should().ThrowAsync<AuthenticationException>().Result.Which.Message.Should().Be(ErrorMessages.UserNotAuthenticated);
     }
     
     [Test]
-    public async Task GetCurrentUserAsync_UserWithIdNotFound_UserContextNotCalled()
+    public void GetCurrentUserAsync_UserWithIdNotFound_Throws()
     {
         _userManagerMock.Setup(m => m.FindByIdAsync(It.IsAny<string>())).ReturnsAsync((User)null);
         
-        var result = await _sut.GetCurrentUserAsync();
-        
-        result.Should().BeNull();
+        var result = async () => await _sut.GetCurrentUserAsync();
+
+        result.Should().ThrowAsync<AuthenticationException>().Result.Which.Message.Should().Be(ErrorMessages.UserNotAuthenticated);
     }
 
     [Test]
