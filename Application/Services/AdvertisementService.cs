@@ -33,13 +33,10 @@ internal class AdvertisementService : IAdvertisementService
             var user = await _contextService.GetCurrentUserAsync();
 
             var city = await _cityRepository.GetAll(c => c.Name.ToLower() == request.City.ToLower(), true)
-                .FirstOrDefaultAsync(cancellationToken);
+                .FirstOrDefaultAsync(cancellationToken) ?? City.CreateNew(request.City);
 
-            if (city == null)
-            {
-                city = City.CreateNew(request.City);
-            }
-
+            // Open question. According to DDD should I create those in application layer or should they be created in domain layer
+            // because I shouldn't be allowed to access those entities not from aggregateRoot
             var address = Address.CreateNew(request.Street, request.Number, city, request.Zip);
             var building = Building.CreateNew(address, request.Type, request.Size);
 
