@@ -1,5 +1,7 @@
 ﻿using Application.Services;
 using Application.Services.Contracts;
+using Application.Services.QueryServices;
+using Application.Services.QueryServices.QueryContracts;
 
 namespace Application;
 
@@ -11,6 +13,7 @@ public static class ApplicationModule
 
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IAdvertisementService, AdvertisementService>();
+        services.AddScoped<IAdvertisementQueryService, AdvertisementQueryService>();
         services.AddScoped<ICityService, CityService>();
         services.AddScoped<IFilterService, FilterService>();
         services.AddScoped<IContextService, ContextService>();

@@ -16,15 +16,13 @@ internal class AdvertisementService : IAdvertisementService
     private readonly IRepository<Advertisement> _advertisementRepository;
     private readonly IRepository<City> _cityRepository;
     private readonly IContextService _contextService;
-    private readonly IFilterService _filterService;
-
+    
     public AdvertisementService(IContextService contextService, IRepository<Advertisement> adRepository,
-        IRepository<City> cityRepository, IFilterService filterDownService)
+        IRepository<City> cityRepository)
     {
         _contextService = contextService;
         _advertisementRepository = adRepository;
         _cityRepository = cityRepository;
-        _filterService = filterDownService;
     }
 
     public async Task<Result<AdvertisementResponse>> CreateNewAdvertisement(CreateAdvertisementRequest request,
@@ -59,41 +57,5 @@ internal class AdvertisementService : IAdvertisementService
         {
             return Result<AdvertisementResponse>.Fail(e.Message);
         }
-    }
-
-    public async Task<IList<AdvertisementResponse>> GetAllUsersAdvertisements(CancellationToken cancellationToken)
-    {
-        var user = await _contextService.GetCurrentUserAsync();
-
-        var advertisements = await _advertisementRepository.GetAll(a => a.Owner.Id == user.Id, true)
-            .Include(a => a.Building)
-            .ThenInclude(b => b.Address.City)
-            .Select(c => c.ToResponse())
-            .ToListAsync(cancellationToken);
-
-        return advertisements;
-    }
-
-    public async Task<Result<IList<AdvertisementResponse>>> GetAll(FilterRequest request,
-        CancellationToken cancellationToken)
-    {
-        var user = await _contextService.GetCurrentUserAsync();
-
-        var advertisements = _advertisementRepository.GetAll(a => user == null || a.Owner.Id != user.Id, true);
-
-        var filterResult = _filterService.FilterDown(advertisements, request);
-
-        if (!filterResult.Success)
-            return Result<IList<AdvertisementResponse>>.Fail(filterResult.Errors.Select(e => e.Error).ToList());
-
-        advertisements = filterResult.Data ?? advertisements;
-
-        var result = await advertisements.Include(a => a.Building)
-            .ThenInclude(b => b.Address.City)
-            .Include(a => a.Owner)
-            .Select(c => c.ToResponse())
-            .ToListAsync(cancellationToken);
-
-        return Result<IList<AdvertisementResponse>>.Ok(result);
     }
 }
