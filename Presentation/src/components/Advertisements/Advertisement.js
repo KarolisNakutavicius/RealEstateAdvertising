@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-export default class Advertisment extends Component {
+export default class Advertisement extends Component {
     render() {
         return (
             <div className="advertisement" style={{width: "18rem"}}>

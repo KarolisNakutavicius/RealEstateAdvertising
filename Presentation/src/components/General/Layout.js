@@ -7,7 +7,7 @@ import Login from "../Onboarding/Login";
 import Register from "../Onboarding/Register";
 import Home from "../Home/Home";
 import AddAdvertisement from '../Advertisements/AddAdvertisement';
-import MyAdvertisments from '../Advertisements/MyAdvertisments';
+import MyAdvertisements from '../Advertisements/MyAdvertisements';
 import {Navigate, Route, Routes} from "react-router-dom";
 import AuthService from '../../Services/AuthService';
 import {ErrorBoundary} from 'react-error-boundary'
@@ -62,7 +62,7 @@ export default class Layout extends Component {
                             this.state.currentUser
                                 ? (
                                     <ErrorBoundary FallbackComponent={ErrorFallback}>
-                                        <MyAdvertisments/>
+                                        <MyAdvertisements/>
                                     </ErrorBoundary>
                                 )
                                 : (<Navigate to="/home" replace/>)}/>

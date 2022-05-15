@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
+import React, {Component, useState, useEffect} from 'react'
 import AdvertisementService from '../../Services/AdvertisementService'
-import Advertisement from '../Advertisements/Advertisment';
+import Advertisement from '../Advertisements/Advertisement';
 import Filters from './Filters';
 import Collapse from "react-bootstrap/Collapse";
 import Button from 'react-bootstrap/Button'

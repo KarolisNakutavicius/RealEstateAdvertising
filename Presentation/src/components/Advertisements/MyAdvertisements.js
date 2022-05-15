@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import AdvertisementService from '../../Services/AdvertisementService'
-import Advertisment from './Advertisment';
+import Advertisement from './Advertisement';
 
-export default class MyAdvertisments extends Component {
+export default class MyAdvertisements extends Component {
 
     constructor(props) {
         super(props);
@@ -14,7 +14,7 @@ export default class MyAdvertisments extends Component {
     }
 
     async componentDidMount() {
-        var ads = await AdvertisementService.getMyAdvertisments();
+        let ads = await AdvertisementService.getMyAdvertisments();
 
         if (ads.length > 0) {
             this.setState({
@@ -37,7 +37,7 @@ export default class MyAdvertisments extends Component {
                 )}
                 <div className='d-flex justify-content-start flex-wrap'>
                     {this.state.advertisements.map(ad => {
-                        return <Advertisment ad={ad} isPersonal={false}/>
+                        return <Advertisement ad={ad} isPersonal={false}/>
                     })}
                 </div>
             </>

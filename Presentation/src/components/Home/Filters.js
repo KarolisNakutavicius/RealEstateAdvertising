@@ -50,7 +50,7 @@ export default class Filters extends Component {
         })
     }
 
-    filterDown(e) {
+    filterDown() {
 
         if (this.state.minPrice > this.state.maxPrice) {
             this.setState({
