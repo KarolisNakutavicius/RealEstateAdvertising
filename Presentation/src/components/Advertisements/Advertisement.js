@@ -3,7 +3,7 @@ import React from 'react'
 export default function Advertisement(props) {
         return (
             <div className="advertisement" style={{width: "18rem"}}>
-                <img className="card-img-top" src={`data:image/png;base64,${prsasops.ad.image}`}
+                <img className="card-img-top" src={`data:image/png;base64,${props.ad.image}`}
                      alt="Image cannot be loaded"/>
                 <div className="card-body">
                     <h5 className="card-title">{props.ad.name}</h5>
