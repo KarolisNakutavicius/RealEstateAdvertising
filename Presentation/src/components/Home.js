@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import AdvertisementService from '../Services/AdvertisementService'
-import Advertisment from './Advertisment';
+import Advertisement from './Advertisment';
 import Filters from './Filters';
 import Collapse from "react-bootstrap/Collapse";
 import Button from 'react-bootstrap/Button'
@@ -21,10 +21,10 @@ export default class Home extends Component {
         }
     }
 
-    async onFiltersChange(e) {
+    async onFiltersChange() {
         const filters = this.filtersRef.current;
 
-        var request = {
+        let request = {
             MinPrice: filters.state.minPrice,
             MaxPrice: filters.state.maxPrice,
         }
@@ -37,7 +37,7 @@ export default class Home extends Component {
     }
 
     async getAds(request) {
-        var ads = await AdvertisementService.getAllAdvertisments(request);
+        let ads = await AdvertisementService.getAllAdvertisments(request);
 
         if (ads.length > 0) {
             this.setState({
@@ -83,12 +83,12 @@ export default class Home extends Component {
                 </Collapse>
 
 
-                {this.state.advertisements.length == 0 && (
+                {this.state.advertisements.length === 0 && (
                     <h3>{this.state.message}</h3>
                 )}
                 <div className='mt-4 d-flex justify-content-start flex-wrap'>
                     {this.state.advertisements.map(ad => {
-                        return <Advertisment ad={ad} isPersonal={true}/>
+                        return <Advertisement ad={ad} isPersonal={true}/>
                     })}
                 </div>
             </>
