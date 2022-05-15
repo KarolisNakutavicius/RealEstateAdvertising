@@ -1,46 +1,33 @@
-import React, {Component} from 'react'
-import AdvertisementService from '../../Services/AdvertisementService'
+import React, {useEffect, useState} from 'react'
 import Advertisement from './Advertisement';
+import AdvertisementService from '../../Services/AdvertisementService'
 
-export default class MyAdvertisements extends Component {
+export default function MyAdvertisements() {
 
-    constructor(props) {
-        super(props);
+    const [ads, setAds] = useState([]);
 
-        this.state = {
-            advertisements: [],
-            message: 'Loading ...'
-        }
-    }
+    const [message, setMessage] = useState("Loading...");
 
-    async componentDidMount() {
+    useEffect(async () => {
         let ads = await AdvertisementService.getMyAdvertisments();
 
         if (ads.length > 0) {
-            this.setState({
-                advertisements: ads
-            })
-
+            setAds(ads)
             return;
         }
-
-        this.setState({
-            message: "You don't have any advertisements posted"
-        })
-    }
-
-    render() {
-        return (
-            <>
-                {this.state.advertisements.length == 0 && (
-                    <h3>{this.state.message}</h3>
-                )}
-                <div className='d-flex justify-content-start flex-wrap'>
-                    {this.state.advertisements.map(ad => {
-                        return <Advertisement ad={ad} isPersonal={false}/>
-                    })}
-                </div>
-            </>
-        )
-    }
+        setMessage("You don't have any advertisements posted");
+    }, [])
+    
+    return (
+        <>
+            {ads.length === 0 && (
+                <h3>{message}</h3>
+            )}
+            <div className='d-flex justify-content-start flex-wrap'>
+                {ads.map(ad => {
+                    return <Advertisement ad={ad} isPersonal={false}/>
+                })}
+            </div>
+        </>
+    )
 }
