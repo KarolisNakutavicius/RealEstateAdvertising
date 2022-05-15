@@ -1,26 +1,24 @@
-import React, {Component} from 'react'
+import React from 'react'
 
-export default class Advertisement extends Component {
-    render() {
+export default function Advertisement(props) {
         return (
             <div className="advertisement" style={{width: "18rem"}}>
-                <img className="card-img-top" src={`data:image/png;base64,${this.props.ad.image}`}
+                <img className="card-img-top" src={`data:image/png;base64,${prsasops.ad.image}`}
                      alt="Image cannot be loaded"/>
                 <div className="card-body">
-                    <h5 className="card-title">{this.props.ad.name}</h5>
+                    <h5 className="card-title">{props.ad.name}</h5>
 
-                    <label>{`${this.props.ad.street} ${this.props.ad.number}, ${this.props.ad.city}`}</label>
-                    <label>{this.props.ad.size} m²</label>
+                    <label>{`${props.ad.street} ${props.ad.number}, ${props.ad.city}`}</label>
+                    <label>{props.ad.size} m²</label>
 
-                    <label className='mt-5' style={{position: "relative", right: "0px"}}><b>{this.props.ad.price}</b> €</label>
+                    <label className='mt-5' style={{position: "relative", right: "0px"}}><b>{props.ad.price}</b> €</label>
 
-                    {this.props.isPersonal && (
-                        <label className='mt-3'><em>Owner: {this.props.ad.ownerEmail} </em></label>
+                    {props.isPersonal && (
+                        <label className='mt-3'><em>Owner: {props.ad.ownerEmail} </em></label>
                     )}
 
-                    <p className="card-text mt-4">{this.props.ad.description}</p>
+                    <p className="card-text mt-4">{props.ad.description}</p>
                 </div>
             </div>
         )
-    }
 }
