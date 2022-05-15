@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.DTOs.InputModels;
+using Application.Resources;
 using Application.Services.Contracts;
 using Domain.Entities;
 
@@ -12,14 +13,18 @@ internal class FilterService : IFilterService
         if (request.MinPrice != null && request.MaxPrice != null)
         {
             if (request.MinPrice > request.MaxPrice)
-                return Result<IQueryable<Advertisement>>.Fail("Min price cannot be higher than max price");
-
+            {
+                return Result<IQueryable<Advertisement>>.Fail(ErrorMessages.MinPriceHigherThanMax);
+            }
+            
             advertisements = advertisements.Where(a => a.Price <= request.MaxPrice && a.Price >= request.MinPrice);
         }
 
         if (request.CityId != null)
+        {
             advertisements = advertisements.Where(a => a.Building.Address.City.Id == request.CityId);
-
+        }
+        
         return Result<IQueryable<Advertisement>>.Ok(advertisements);
     }
 }

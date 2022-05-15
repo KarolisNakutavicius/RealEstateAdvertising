@@ -21,4 +21,7 @@
     <data name="UserNotAuthenticated" xml:space="preserve">
         <value>User is not logged in.</value>
     </data>
+    <data name="MinPriceHigherThanMax" xml:space="preserve">
+        <value>Min price cannot be higher than max price</value>
+    </data>
 </root>

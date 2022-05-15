@@ -61,6 +61,15 @@ namespace Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Min price cannot be higher than max price.
+        /// </summary>
+        internal static string MinPriceHigherThanMax {
+            get {
+                return ResourceManager.GetString("MinPriceHigherThanMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User is not logged in..
         /// </summary>
         internal static string UserNotAuthenticated {
