@@ -16,7 +16,8 @@ namespace Application.Tests.Services;
 public class ContextServiceTests
 {
     private ContextService _sut;
-    
+
+    private Mock<IHttpContextAccessor> _contextAccessorMock;
     private Mock<HttpContext> _httpContextMock;
     private Mock<UserManager<User>> _userManagerMock;
 
@@ -27,8 +28,10 @@ public class ContextServiceTests
     [SetUp]
     public void Setup()
     {
+        _contextAccessorMock = new Mock<IHttpContextAccessor>();
         _httpContextMock = new Mock<HttpContext>();
-
+        _contextAccessorMock.Setup(m => m.HttpContext).Returns(_httpContextMock.Object);
+        
         var store = new Mock<IUserStore<User>>();
         _userManagerMock = new Mock<UserManager<User>>(store.Object, null, null, null, null, null, null, null, null);
         
@@ -44,7 +47,7 @@ public class ContextServiceTests
         _httpContextMock.Setup(m => m.User.Identity).Returns(_identity.Object);
         _httpContextMock.Setup(m => m.User.Claims).Returns(claims);
         
-        _sut = new ContextService(_userManagerMock.Object, _httpContextMock.Object);
+        _sut = new ContextService(_userManagerMock.Object, _contextAccessorMock.Object);
     }
     
     [Test]
@@ -54,7 +57,7 @@ public class ContextServiceTests
 
         result.Should().NotBeNull();
         result.Should().Be(_user);
-        _sut.IsAuthenticated().Should().BeTrue();
+        _sut.IsAuthenticated.Should().BeTrue();
     }
     
     [Test]
@@ -80,7 +83,7 @@ public class ContextServiceTests
     [Test]
     public void IsUserAuthenticated_UserNotSet_ReturnFalse()
     {
-        var result = _sut.IsAuthenticated();
+        var result = _sut.IsAuthenticated;
 
         result.Should().BeFalse();
     }
@@ -90,7 +93,7 @@ public class ContextServiceTests
     {
         await _sut.GetCurrentUserAsync();
 
-        var result = _sut.IsAuthenticated();
+        var result = _sut.IsAuthenticated;
         
         result.Should().BeTrue();
     }

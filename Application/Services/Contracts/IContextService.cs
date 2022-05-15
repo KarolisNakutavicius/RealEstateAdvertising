@@ -6,5 +6,5 @@ public interface IContextService
 {
     Task<User> GetCurrentUserAsync();
     
-    bool IsAuthenticated();
+    bool IsAuthenticated { get; }
 }
