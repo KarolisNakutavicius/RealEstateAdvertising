@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import ValidationHelper from '../Helpers/ValidationHelper'
-import AdvertisementService from '../Services/AdvertisementService';
+import ValidationHelper from '../../Helpers/ValidationHelper'
+import AdvertisementService from '../../Services/AdvertisementService';
 import Row from 'react-bootstrap/Row';
 
 export default class AddAdvertisement extends Component {

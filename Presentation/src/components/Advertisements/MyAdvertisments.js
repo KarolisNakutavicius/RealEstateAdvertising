@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import AdvertisementService from '../Services/AdvertisementService'
+import AdvertisementService from '../../Services/AdvertisementService'
 import Advertisment from './Advertisment';
 
 export default class MyAdvertisments extends Component {

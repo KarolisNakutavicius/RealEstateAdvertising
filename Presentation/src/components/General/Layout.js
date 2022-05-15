@@ -1,15 +1,15 @@
 import React, {Component} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/index.css'
-import '../styles/Layout.css'
+import '../../Styles/index.css'
+import '../../Styles/Layout.css'
 import Topbar from './Topbar';
-import Login from "./Login";
-import Register from "./Register";
-import Home from "./Home";
-import AddAdvertisement from './AddAdvertisement';
-import MyAdvertisments from './MyAdvertisments';
+import Login from "../Onboarding/Login";
+import Register from "../Onboarding/Register";
+import Home from "../Home/Home";
+import AddAdvertisement from '../Advertisements/AddAdvertisement';
+import MyAdvertisments from '../Advertisements/MyAdvertisments';
 import {Navigate, Route, Routes} from "react-router-dom";
-import AuthService from '../Services/AuthService';
+import AuthService from '../../Services/AuthService';
 import {ErrorBoundary} from 'react-error-boundary'
 
 export default class Layout extends Component {
