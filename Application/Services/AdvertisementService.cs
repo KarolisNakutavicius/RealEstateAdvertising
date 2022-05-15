@@ -32,20 +32,29 @@ internal class AdvertisementService : IAdvertisementService
         {
             var user = await _contextService.GetCurrentUserAsync();
 
-            var city = await _cityRepository.GetAll(c => c.Name.ToLower() == request.City.ToLower())
+            var city = await _cityRepository.GetAll(c => c.Name.ToLower() == request.City.ToLower(), true)
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (city == null)
+            {
                 city = City.CreateNew(request.City);
+            }
 
             var address = Address.CreateNew(request.Street, request.Number, city, request.Zip);
             var building = Building.CreateNew(address, request.Type, request.Size);
-            
-            var file = request.Files.First();
-            using var ms = new MemoryStream();
-            await file.CopyToAsync(ms);
-            var imageBytes = ms.ToArray();
 
+            //TODO: import multiple files to db functionality
+            var file = request.Files.FirstOrDefault();
+            
+            byte[]? imageBytes = null;
+            
+            if (file != null)
+            {
+                using var ms = new MemoryStream();
+                await file.CopyToAsync(ms, cancellationToken);
+                imageBytes = ms.ToArray();
+            }
+            
             var advertisement = Advertisement.CreateNew(user, building, imageBytes, request.Name, request.IsRent,
                 request.Price, request.Description);
 

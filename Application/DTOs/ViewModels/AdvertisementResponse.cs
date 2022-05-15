@@ -26,7 +26,7 @@ public class AdvertisementResponse
 
     public decimal Price { get; set; }
 
-    public byte[] Image { get; set; } = Array.Empty<byte>();
+    public byte[]? Image { get; set; } = Array.Empty<byte>();
 
     public string OwnerEmail { get; set; } = string.Empty;
 }

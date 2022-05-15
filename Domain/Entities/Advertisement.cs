@@ -18,9 +18,9 @@ public class Advertisement : IAggregateRoot
 
     public User Owner { get; set; } = new();
 
-    public byte[] Image { get; set; }
+    public byte[]? Image { get; set; }
 
-    public static Advertisement CreateNew(User owner, Building building, byte[] image, string title, bool isRent,
+    public static Advertisement CreateNew(User owner, Building building, byte[]? image, string title, bool isRent,
         decimal price, string description)
     {
         return new Advertisement
