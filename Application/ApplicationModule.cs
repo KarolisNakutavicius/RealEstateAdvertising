@@ -14,7 +14,7 @@ public static class ApplicationModule
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IAdvertisementService, AdvertisementService>();
         services.AddScoped<IAdvertisementQueryService, AdvertisementQueryService>();
-        services.AddScoped<ICityService, CityService>();
+        services.AddScoped<ICityQueryService, CityQueryService>();
         services.AddScoped<IFilterService, FilterService>();
         services.AddScoped<IContextService, ContextService>();
 

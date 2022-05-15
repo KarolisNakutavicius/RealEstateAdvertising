@@ -1,8 +1,8 @@
 ﻿using Domain.Entities;
 
-namespace Application.Services.Contracts;
+namespace Application.Services.QueryServices.QueryContracts;
 
-public interface ICityService
+public interface ICityQueryService
 {
     Task<List<City>> GetAll(CancellationToken cancellationToken);
 }
