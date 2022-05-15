@@ -12,12 +12,12 @@ public class ContextService : IContextService
     private User? _user;
 
     private readonly UserManager<User> _userManager;
-    private readonly HttpContext _context;
-    
-    public ContextService(UserManager<User> userManager, HttpContext contextService)
+    private readonly IHttpContextAccessor _contextAccessor;
+
+    public ContextService(UserManager<User> userManager, IHttpContextAccessor  contextAccessorService)
     {
         _userManager = userManager;
-        _context = contextService;
+        _contextAccessor = contextAccessorService;
     }
 
     public async Task<User> GetCurrentUserAsync()
@@ -26,15 +26,22 @@ public class ContextService : IContextService
         {
             return _user;
         }
+
+        var context = _contextAccessor.HttpContext;
+
+        if (context == null)
+        {
+            throw new Exception("There is no handled http context attached");
+        }
         
-        var identity = _context.User.Identity;
+        var identity = context.User.Identity;
 
         if (identity == null || !identity.IsAuthenticated)
         {
             throw new AuthenticationException(ErrorMessages.UserNotAuthenticated);
         }
         
-        var userId = _context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+        var userId = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
         if (string.IsNullOrEmpty(userId))
         {
@@ -43,15 +50,10 @@ public class ContextService : IContextService
         
         var user = await _userManager.FindByIdAsync(userId);
 
-        if (user == null)
-        {
-            throw new AuthenticationException(ErrorMessages.UserNotAuthenticated);
-        }
-
-        _user = user;
+        _user = user ?? throw new AuthenticationException(ErrorMessages.UserNotAuthenticated);
 
         return user;
     }
 
-    public bool IsAuthenticated() => _user != null;
+    public bool IsAuthenticated => _user != null;
 }
