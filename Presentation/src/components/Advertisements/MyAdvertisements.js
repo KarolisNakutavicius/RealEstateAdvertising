@@ -17,7 +17,7 @@ export default function MyAdvertisements() {
         }
         setMessage("You don't have any advertisements posted");
     }, [])
-    
+
     return (
         <>
             {ads.length === 0 && (
