@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../Styles/index.css'
 import '../../Styles/Layout.css'
@@ -12,88 +12,72 @@ import {Navigate, Route, Routes} from "react-router-dom";
 import AuthService from '../../Services/AuthService';
 import {ErrorBoundary} from 'react-error-boundary'
 
-export default class Layout extends Component {
+export default function Layout() {
 
-    constructor(props) {
-        super(props)
-        this.handleAuthenticationUpdated = this.handleAuthenticationUpdated.bind(this);
-        this.homeRef = React.createRef()
-        this.state =
-            {
-                currentUser: undefined
-            }
+    const [currentUser, setCurrentUser] = useState(undefined);
+    const homeRef = useRef();
+
+    useEffect(() => {
+        handleAuthenticationUpdated()
+    })
+
+    function handleAuthenticationUpdated() {
+        setCurrentUser(AuthService.getCurrentUser())
+        homeRef.current.getAds();
     }
 
-    handleAuthenticationUpdated() {
-        this.setState({
-            currentUser: AuthService.getCurrentUser()
-        });
-
-        const home = this.homeRef.current;
-
-        home.getAds();
-    }
-
-    componentDidMount() {
-        this.handleAuthenticationUpdated();
-    }
-
-
-    render() {
-
-        function ErrorFallback({error, resetErrorBoundary}) {
-            return (
-                <div role="alert">
-                    <p>Something went wrong:</p>
-                    <pre>{error.message}</pre>
-                    <button onClick={resetErrorBoundary}>Try again</button>
-                </div>
-            )
-        }
-
+    function ErrorFallback({error, resetErrorBoundary}) {
         return (
-            <div>
-                <Topbar authenticationUpdated={this.handleAuthenticationUpdated}/>
-                <div className="container mt-3">
-                    <Routes>
-                        <Route index element={<Home ref={this.homeRef}/>}/>
-                        <Route path={"/home"} element={<Home ref={this.homeRef}/>}/>
-                        <Route path={"/my-advertisements"} element={
-                            this.state.currentUser
-                                ? (
-                                    <ErrorBoundary FallbackComponent={ErrorFallback}>
-                                        <MyAdvertisements/>
-                                    </ErrorBoundary>
-                                )
-                                : (<Navigate to="/home" replace/>)}/>
-                        <Route path={"/add-advertisement"} element={
-                            this.state.currentUser
-                                ? (
-                                    <ErrorBoundary FallbackComponent={ErrorFallback}>
-                                        <AddAdvertisement/>
-                                    </ErrorBoundary>
-                                )
-                                : (<Navigate to="/home" replace/>)}/>
-                        <Route path="*" element={<Navigate to="/home" replace/>}/>
-                        <Route path="/login" element={
-                            !this.state.currentUser
-                                ? (
-                                    <ErrorBoundary FallbackComponent={ErrorFallback}>
-                                        <Login authenticationUpdated={this.handleAuthenticationUpdated}/>
-                                    </ErrorBoundary>
-                                )
-                                : (<Navigate to="/home" replace/>)}/>
-                        <Route path="/register" element={
-                            !this.state.currentUser
-                                ? (
-                                    <ErrorBoundary FallbackComponent={ErrorFallback}>
-                                        <Register authenticationUpdated={this.handleAuthenticationUpdated}/>
-                                    </ErrorBoundary>
-                                )
-                                : (<Navigate to="/home" replace/>)}/>
-                    </Routes>
-                </div>
+            <div role="alert">
+                <p>Something went wrong:</p>
+                <pre>{error.message}</pre>
+                <button onClick={resetErrorBoundary}>Try again</button>
             </div>
         )
     }
+
+    return (
+        <div>
+            <Topbar authenticationUpdated={handleAuthenticationUpdated}/>
+            <div className="container mt-3">
+                <Routes>
+                    <Route index element={<Home ref={homeRef}/>}/>
+                    <Route path={"/home"} element={<Home ref={homeRef}/>}/>
+                    <Route path={"/my-advertisements"} element={
+                        currentUser
+                            ? (
+                                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                                    <MyAdvertisements/>
+                                </ErrorBoundary>
+                            )
+                            : (<Navigate to="/home" replace/>)}/>
+                    <Route path={"/add-advertisement"} element={
+                        currentUser
+                            ? (
+                                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                                    <AddAdvertisement/>
+                                </ErrorBoundary>
+                            )
+                            : (<Navigate to="/home" replace/>)}/>
+                    <Route path="*" element={<Navigate to="/home" replace/>}/>
+                    <Route path="/login" element={
+                        !currentUser
+                            ? (
+                                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                                    <Login authenticationUpdated={handleAuthenticationUpdated}/>
+                                </ErrorBoundary>
+                            )
+                            : (<Navigate to="/home" replace/>)}/>
+                    <Route path="/register" element={
+                        !currentUser
+                            ? (
+                                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                                    <Register authenticationUpdated={handleAuthenticationUpdated}/>
+                                </ErrorBoundary>
+                            )
+                            : (<Navigate to="/home" replace/>)}/>
+                </Routes>
+            </div>
+        </div>
+    )
 }
