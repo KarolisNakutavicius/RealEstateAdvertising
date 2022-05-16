@@ -8,8 +8,6 @@ export default function Home({ads, getAds}) {
     
     const [message, setMessage] = useState("Loading ...");
     const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-
-    const filtersRef = useRef();
     
     useEffect(async () => {
         await getAds()
@@ -23,22 +21,6 @@ export default function Home({ads, getAds}) {
 
         setMessage("There are no advertisements posted yet");
     }, [ads])
-    
-    
-    async function onFiltersChange() {
-        const filters = filtersRef.current;
-
-        let request = {
-            MinPrice: filters.state.minPrice,
-            MaxPrice: filters.state.maxPrice,
-        }
-
-        if (filters.state.selectedCity > 0) {
-            request.CityId = filters.state.selectedCity
-        }
-        
-        await getAds(request);
-    }
     
     function handleOpen() {
         setIsFiltersOpen(!isFiltersOpen);
@@ -54,7 +36,7 @@ export default function Home({ads, getAds}) {
             </Button>
             <Collapse in={isFiltersOpen}>
                 <div className='mt-1' id="dropdown">
-                    <Filters ref={filtersRef} filtersChanged={onFiltersChange}/>
+                    <Filters getAds={getAds}/>
                 </div>
             </Collapse>
             
