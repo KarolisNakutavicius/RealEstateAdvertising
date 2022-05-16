@@ -37,7 +37,7 @@ export default function Filters({getAds}) {
             request.CityId = filters.selectedCity
         }
         
-        getAds(request);
+        getAds(request, 1);
         
         setMessage("")
     }

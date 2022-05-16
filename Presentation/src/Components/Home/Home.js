@@ -3,24 +3,26 @@ import Advertisement from '../Advertisements/Advertisement';
 import Filters from './Filters';
 import Collapse from "react-bootstrap/Collapse";
 import Button from 'react-bootstrap/Button'
+import PagingBar from "../General/PagingBar";
 
 export default function Home({ads, getAds}) {
     
     const [message, setMessage] = useState("Loading ...");
     const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+    const [pageIndex, setPageIndex] = useState(ads.currentPage)
     
     useEffect(async () => {
-        await getAds()
-    },[]);
+        await getAds(null, pageIndex, ads.pageSize)
+    },[pageIndex]);
     
     useEffect(() => {
-        if(ads.length > 0){
+        if(ads.items.length > 0){
             setMessage("")
             return;
         }
 
         setMessage("There are no advertisements posted yet");
-    }, [ads])
+    }, [ads.items])
     
     function handleOpen() {
         setIsFiltersOpen(!isFiltersOpen);
@@ -40,17 +42,19 @@ export default function Home({ads, getAds}) {
                 </div>
             </Collapse>
             
-            {ads.length === 0 && (
+            {ads.items.length === 0 && (
                 <h3>{message}</h3>
             )}
-            {ads.length > 0 &&
+            {ads.items.length > 0 &&
                 (
                     <div className='mt-4 d-flex justify-content-start flex-wrap'>
-                        {ads.map(ad => {
+                        {ads.items.map(ad => {
                             return <Advertisement key={ad.id} ad={ad} isPersonal={true}/>
                         })}
                     </div>   
                 )}
+            
+            <PagingBar setPageIndex={setPageIndex} totalPages={ads.totalPages} pageIndex={pageIndex}/>
         </>
     )
 }

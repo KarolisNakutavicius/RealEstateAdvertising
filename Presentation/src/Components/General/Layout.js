@@ -16,7 +16,13 @@ import AdvertisementService from "../../Services/AdvertisementService";
 export default function Layout() {
 
     const [currentUser, setCurrentUser] = useState(undefined);
-    const [ads, setAds] = useState([]);
+    const [ads, setAds] = useState({
+        totalPages:0,
+        pageSize:2,
+        totalRecordsCount:0,
+        items:[],
+        currentPage:1
+    });
 
     useEffect(async () => {
         await handleAuthenticationUpdated()
@@ -28,9 +34,12 @@ export default function Layout() {
         await getAds();
     }
 
-    async function getAds(request) {
-        let ads = await AdvertisementService.getAllAdvertisments(request);
-        setAds(ads);
+    async function getAds(request, pageIndex, pageSize) {
+        let tempAds = await AdvertisementService.getAllAdvertisments(request,
+            pageIndex === undefined ? ads.currentPage : pageIndex,
+            pageSize === undefined ? ads.pageSize : pageSize
+        );
+        setAds(tempAds);
     }
 
     function ErrorFallback({error, resetErrorBoundary}) {
