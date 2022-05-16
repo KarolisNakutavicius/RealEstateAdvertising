@@ -67,8 +67,7 @@ export default function Layout() {
             <Topbar authenticationUpdated={handleAuthenticationUpdated}/>
             <div className="container mt-3">
                 <Routes>
-                    <Route index element={<Home ads={ads} getAds={getAds} filters={filters} setFilters={setFilters} setAds={setAds}/>}/>
-                    <Route path={"/home"} element={<Home ads={ads} getAds={getAds} filters={filters} setFilters={setFilters} setAds={setAds}/>}/>
+                    <Route index path={"/home"} element={<Home ads={ads} getAds={getAds} filters={filters} setFilters={setFilters} setAds={setAds}/>}/>
                     <Route path={"/my-advertisements"} element={
                         currentUser
                             ? (
