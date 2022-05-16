@@ -56,8 +56,8 @@ class AdvertisementService {
             headers: {'Content-Type': 'application/json', 'Authorization': AuthService.getAuthHeader()},
         };
 
-        var filterParams = new URLSearchParams(request)
-
+        let filterParams = new URLSearchParams(request)
+        
         return await fetch(`/api/Advertisements${request ? `?${filterParams}` : ""}`, requestOptions)
             .then(async response => {
                 if (response.status !== 200) {
@@ -71,7 +71,11 @@ class AdvertisementService {
                 }
 
                 return await response.json();
-            });
+            },
+                error =>{
+                console.log(error);
+                debugger;
+                });
     }
 
 }

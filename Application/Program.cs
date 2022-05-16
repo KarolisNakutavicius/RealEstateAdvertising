@@ -1,4 +1,5 @@
 using Application;
+using Application.Middlewares;
 using Domain;
 using Infrastructure;
 
@@ -28,6 +29,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<ContextMiddleware>();
 
 app.MapControllers();
 

@@ -4,5 +4,7 @@ namespace Application.Services.Contracts;
 
 public interface IContextService
 {
-    Task<User> GetCurrentUser();
+    Task<User> GetCurrentUserAsync();
+    
+    bool IsAuthenticated { get; }
 }

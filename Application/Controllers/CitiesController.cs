@@ -1,4 +1,5 @@
 ﻿using Application.Services.Contracts;
+using Application.Services.QueryServices.QueryContracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers;
@@ -7,17 +8,17 @@ namespace Application.Controllers;
 [Route("api/[controller]")]
 public class CitiesController : ControllerBase
 {
-    private readonly ICityService _cityService;
+    private readonly ICityQueryService _cityQueryService;
 
-    public CitiesController(ICityService cityService)
+    public CitiesController(ICityQueryService cityQueryService)
     {
-        _cityService = cityService;
+        _cityQueryService = cityQueryService;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAllCities(CancellationToken cancellationToken)
     {
-        var cities = await _cityService.GetAll(cancellationToken);
+        var cities = await _cityQueryService.GetAll(cancellationToken);
 
         return Ok(cities);
     }

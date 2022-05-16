@@ -1,15 +1,15 @@
-﻿using Application.Services.Contracts;
+﻿using Application.Services.QueryServices.QueryContracts;
 using Domain.Entities;
 using Domain.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Services;
+namespace Application.Services.QueryServices;
 
-public class CityService : ICityService
+public class CityQueryService : ICityQueryService
 {
     private readonly IRepository<City> _cityRepository;
 
-    public CityService(IRepository<City> cityRepository)
+    public CityQueryService(IRepository<City> cityRepository)
     {
         _cityRepository = cityRepository;
     }

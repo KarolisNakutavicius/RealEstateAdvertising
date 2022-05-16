@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from "react-router-dom";
-import AuthService from "../Services/AuthService"
+import AuthService from "../../Services/AuthService"
 
 export default class Topbar extends Component {
 
