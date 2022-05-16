@@ -14,6 +14,7 @@ export default function AddAdvertisement() {
             purpose: 0,
             type: 1,
             size: 44,
+            plotSize:30,
             city: "Vilnius",
             number: 4,
             street: "Latvių g.",
@@ -51,13 +52,14 @@ export default function AddAdvertisement() {
         request.append('Name', formInfo.name)
         request.append('IsRent', !!formInfo.purpose)
         request.append('Type', formInfo.type)
-        request.append('Size', formInfo.size)
+        request.append('BuildingSize', formInfo.size)
         request.append('City', formInfo.city)
         request.append('Number', formInfo.number)
         request.append('Street', formInfo.street)
         request.append('Zip', formInfo.zip)
         request.append('Price', formInfo.price)
         request.append('Description', formInfo.description)
+        request.append('PlotSize', formInfo.plotSize)
         request.append('Files', formInfo.selectedImages[0])
 
         AdvertisementService.createNewAdvertisement(request).then(
@@ -124,17 +126,6 @@ export default function AddAdvertisement() {
                                     <option value="5">SpecialPurpose</option>
                                 </select>
                             </div>
-
-                            <div className="form-group col-2">
-                                <label htmlFor='size'>Size (in m²)</label>
-                                <Input onChange={(e) => setFormInfo({...formInfo, size: e.target.value})}
-                                       value={formInfo.size}
-                                       id='size'
-                                       type="number" min="1"
-                                       className="form-control"
-                                       validations={[ValidationHelper.required]}
-                                />
-                            </div>
                             <div className="form-group col-2">
                                 <label htmlFor='price'>Price (in €)</label>
                                 <Input onChange={(e) => setFormInfo({...formInfo, price: e.target.value})}
@@ -146,6 +137,34 @@ export default function AddAdvertisement() {
                                 />
                             </div>
                         </div>
+
+                        <h4 className='mt-4'>Size </h4>
+
+                        <div className="d-flex justify-content-start">
+                            <div className="form-group col-4">
+                                <label htmlFor='size'>Building Size (in m²)</label>
+                                <Input onChange={(e) => setFormInfo({...formInfo, size: e.target.value})}
+                                       value={formInfo.size}
+                                       id='size'
+                                       type="number" min="1"
+                                       className="form-control"
+                                       validations={[ValidationHelper.required]}
+                                />
+                            </div>
+
+                            <div className="form-group col-4 mx-4">
+                                <label htmlFor='size'>Plot Size (in m²)</label>
+                                <Input onChange={(e) => setFormInfo({...formInfo, plotSize: e.target.value})}
+                                       value={formInfo.plotSize}
+                                       id='size'
+                                       type="number" min="1"
+                                       className="form-control"
+                                       validations={[ValidationHelper.required]}
+                                />
+                            </div>
+                        </div>
+
+                        
                         
                                     <h4 className='mt-4'>Address</h4>
                         
