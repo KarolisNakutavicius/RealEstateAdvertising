@@ -32,7 +32,7 @@ internal class AdvertisementService : IAdvertisementService
         {
             var user = await _contextService.GetCurrentUserAsync();
 
-            var city = await _cityRepository.GetAll(c => c.Name.ToLower() == request.City.ToLower(), true)
+            var city = await _cityRepository.GetAll(c => c.Name.ToLower() == request.City.ToLower(), false)
                 .FirstOrDefaultAsync(cancellationToken) ?? City.CreateNew(request.City);
 
             // Open question. According to DDD should I create those in application layer or should they be created in domain layer

@@ -21,7 +21,6 @@ export default function AddAdvertisement() {
             description: "Nu jau žiauriai puikus namelis yra čia",
             price: 260000,
             selectedImages: null,
-
         })
     
     const [successState, setSuccessState] = useState({
@@ -220,7 +219,7 @@ export default function AddAdvertisement() {
                                             <h4 className='mt-4'>Images</h4>
                                         </label>
                                         <Input type="file" className="form-control-file mt-2" id="image"
-                                               onChange={(e) => setFormInfo({...formInfo, selectedImages: e.target.value})}/>
+                                               onChange={(e) => setFormInfo({...formInfo, selectedImages: e.target.files})}/>
                                     </div>
                         
                                     <div className="form-group mt-4">

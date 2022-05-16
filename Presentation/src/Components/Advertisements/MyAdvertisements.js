@@ -11,8 +11,9 @@ export default function MyAdvertisements() {
     useEffect(async () => {
         let ads = await AdvertisementService.getMyAdvertisments();
 
-        if (ads.length > 0) {
-            setAds(ads)
+        debugger;
+        if (ads.items.length > 0) {
+            setAds(ads.items)
             return;
         }
         setMessage("You don't have any advertisements posted");
