@@ -1,16 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Infrastructure.Database.Migrations
 {
-    public partial class addCity : Migration
+    public partial class AddCity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
+            migrationBuilder.RenameColumn(
+                name: "Size",
+                table: "Buildings",
+                newName: "Size_PlotSize");
+
+            migrationBuilder.RenameColumn(
                 name: "Address_City",
-                table: "Buildings");
+                table: "Buildings",
+                newName: "Size_MeasurementUnit");
 
             migrationBuilder.AddColumn<int>(
                 name: "Address_CityId",
@@ -18,6 +25,21 @@ namespace Infrastructure.Database.Migrations
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
+
+            migrationBuilder.AddColumn<int>(
+                name: "Size_BuildingSize",
+                table: "Buildings",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.AlterColumn<byte[]>(
+                name: "Image",
+                table: "Advertisements",
+                type: "varbinary(max)",
+                nullable: true,
+                oldClrType: typeof(byte[]),
+                oldType: "varbinary(max)");
 
             migrationBuilder.CreateTable(
                 name: "Cities",
@@ -63,12 +85,29 @@ namespace Infrastructure.Database.Migrations
                 name: "Address_CityId",
                 table: "Buildings");
 
-            migrationBuilder.AddColumn<string>(
-                name: "Address_City",
+            migrationBuilder.DropColumn(
+                name: "Size_BuildingSize",
+                table: "Buildings");
+
+            migrationBuilder.RenameColumn(
+                name: "Size_PlotSize",
                 table: "Buildings",
-                type: "nvarchar(max)",
+                newName: "Size");
+
+            migrationBuilder.RenameColumn(
+                name: "Size_MeasurementUnit",
+                table: "Buildings",
+                newName: "Address_City");
+
+            migrationBuilder.AlterColumn<byte[]>(
+                name: "Image",
+                table: "Advertisements",
+                type: "varbinary(max)",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: new byte[0],
+                oldClrType: typeof(byte[]),
+                oldType: "varbinary(max)",
+                oldNullable: true);
         }
     }
 }

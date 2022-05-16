@@ -38,7 +38,6 @@ namespace Infrastructure.Database.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Image")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<bool>("IsRent")
@@ -73,9 +72,6 @@ namespace Infrastructure.Database.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Category")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Size")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -369,7 +365,33 @@ namespace Infrastructure.Database.Migrations
                             b1.Navigation("City");
                         });
 
+                    b.OwnsOne("Domain.ValueObjects.Size", "Size", b1 =>
+                        {
+                            b1.Property<int>("BuildingId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("BuildingSize")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("MeasurementUnit")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<int>("PlotSize")
+                                .HasColumnType("int");
+
+                            b1.HasKey("BuildingId");
+
+                            b1.ToTable("Buildings");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BuildingId");
+                        });
+
                     b.Navigation("Address")
+                        .IsRequired();
+
+                    b.Navigation("Size")
                         .IsRequired();
                 });
 
