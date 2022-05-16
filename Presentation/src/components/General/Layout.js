@@ -11,20 +11,26 @@ import MyAdvertisements from '../Advertisements/MyAdvertisements';
 import {Navigate, Route, Routes} from "react-router-dom";
 import AuthService from '../../Services/AuthService';
 import {ErrorBoundary} from 'react-error-boundary'
+import AdvertisementService from "../../Services/AdvertisementService";
 
 export default function Layout() {
 
     const [currentUser, setCurrentUser] = useState(undefined);
-    const homeRef = useRef();
+    const [ads, setAds] = useState([]);
 
-    useEffect(() => {
-        handleAuthenticationUpdated()
+    useEffect(async () => {
+        await handleAuthenticationUpdated()
     },[])
 
-    function handleAuthenticationUpdated() {
+    async function handleAuthenticationUpdated() {
         setCurrentUser(AuthService.getCurrentUser())
-        // debugger;
-        // homeRef.current();
+        
+        await getAds();
+    }
+
+    async function getAds(request) {
+        let ads = await AdvertisementService.getAllAdvertisments(request);
+        setAds(ads);
     }
 
     function ErrorFallback({error, resetErrorBoundary}) {
@@ -42,8 +48,8 @@ export default function Layout() {
             <Topbar authenticationUpdated={handleAuthenticationUpdated}/>
             <div className="container mt-3">
                 <Routes>
-                    <Route index element={<Home ref={homeRef}/>}/>
-                    <Route path={"/home"} element={<Home ref={homeRef}/>}/>
+                    <Route index element={<Home ads={ads} getAds={getAds}/>}/>
+                    <Route path={"/home"} element={<Home ads={ads} getAds={getAds}/>}/>
                     <Route path={"/my-advertisements"} element={
                         currentUser
                             ? (

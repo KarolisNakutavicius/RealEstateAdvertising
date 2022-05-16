@@ -1,13 +1,11 @@
 import React, {Component, useState, useEffect, useRef} from 'react'
-import AdvertisementService from '../../Services/AdvertisementService'
 import Advertisement from '../Advertisements/Advertisement';
 import Filters from './Filters';
 import Collapse from "react-bootstrap/Collapse";
 import Button from 'react-bootstrap/Button'
 
-export default function Home() {
-
-    const [ads, setAds] = useState([]);
+export default function Home({ads, getAds}) {
+    
     const [message, setMessage] = useState("Loading ...");
     const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
@@ -15,10 +13,19 @@ export default function Home() {
     
     useEffect(async () => {
         await getAds()
-    }, [])
+    },[]);
+    
+    useEffect(() => {
+        if(ads.length > 0){
+            setMessage("")
+            return;
+        }
+
+        setMessage("There are no advertisements posted yet");
+    }, [ads])
+    
     
     async function onFiltersChange() {
-        
         const filters = filtersRef.current;
 
         let request = {
@@ -29,20 +36,8 @@ export default function Home() {
         if (filters.state.selectedCity > 0) {
             request.CityId = filters.state.selectedCity
         }
-
-        await getAds(request)
-    }
-    
-    async function getAds(request) {
-        let ads = await AdvertisementService.getAllAdvertisments(request);
-
-        if (ads.length > 0) {
-            setAds(ads);
-            setMessage("");
-            return;
-        }
-
-        setMessage("There are no advertisements posted yet");
+        
+        await getAds(request);
     }
     
     function handleOpen() {
@@ -66,11 +61,14 @@ export default function Home() {
             {ads.length === 0 && (
                 <h3>{message}</h3>
             )}
-            <div className='mt-4 d-flex justify-content-start flex-wrap'>
-                {ads.map(ad => {
-                    return <Advertisement ad={ad} isPersonal={true}/>
-                })}
-            </div>
+            {ads.length > 0 &&
+                (
+                    <div className='mt-4 d-flex justify-content-start flex-wrap'>
+                        {ads.map(ad => {
+                            return <Advertisement ad={ad} isPersonal={true}/>
+                        })}
+                    </div>   
+                )}
         </>
     )
 }
