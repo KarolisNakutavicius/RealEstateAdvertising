@@ -1,5 +1,6 @@
 using Application.DTOs;
 using Application.DTOs.InputModels;
+using Application.Enums;
 using Domain.Entities.Contracts;
 using Microsoft.EntityFrameworkCore;
 

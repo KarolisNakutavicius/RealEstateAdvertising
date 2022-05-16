@@ -33,7 +33,7 @@ internal class AdvertisementQueryService : IAdvertisementQueryService
             .Include(a => a.Building)
             .ThenInclude(b => b.Address.City);
 
-        return await PagingHelper.AddPaging(advertisements, ad => ad.ToResponse(), pagingRequest);
+        return (await PagingHelper.AddPaging(advertisements, ad => ad.ToResponse(), pagingRequest)).SortAds(pagingRequest.SortBy);
     }
 
     public async Task<Result<PageDto<AdvertisementResponse>>> GetAll(FilterRequest request,
@@ -64,6 +64,6 @@ internal class AdvertisementQueryService : IAdvertisementQueryService
         
         var pagedResult = await PagingHelper.AddPaging(advertisements, ad => ad.ToResponse(), pagingRequest);
 
-        return Result<PageDto<AdvertisementResponse>>.Ok(pagedResult);
+        return Result<PageDto<AdvertisementResponse>>.Ok(pagedResult.SortAds(pagingRequest.SortBy));
     }
 }

@@ -118,7 +118,7 @@ internal class FilterServiceTests
 
         result.Success.Should().BeTrue();
         result.Data.Should().HaveCount(1);
-        result.Data.Single().Id.Should().Be(1);
+        result.Data!.Single().Id.Should().Be(1);
     }
 
 
