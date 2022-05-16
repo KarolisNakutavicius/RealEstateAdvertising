@@ -1,15 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import { Link, useParams } from "react-router-dom";
 import Advertisement from './Advertisement';
 import AdvertisementService from '../../Services/AdvertisementService'
 
 export default function MyAdvertisements() {
     
     const [ads, setAds] = useState([]);
-    
-    let { id } = useParams();
-    const [pageIndex,setPageIndex] = useState(parseInt(id));
-    
+    const [pageIndex,setPageIndex] = useState(1);
     const [pageInfo, setPageInfo] = useState({
         totalPages:0,
         pageSize:2,
@@ -19,7 +15,6 @@ export default function MyAdvertisements() {
     const [message, setMessage] = useState("Loading...");
 
     useEffect(async () => {
-        debugger;
         let pagedAds = await AdvertisementService.getMyAdvertisments(pageIndex, pageInfo.pageSize);
 
         if (pagedAds.items.length > 0) {
@@ -34,6 +29,18 @@ export default function MyAdvertisements() {
         setMessage("You don't have any advertisements posted");
     }, [pageIndex])
 
+    function handleClickPrevious() {
+        let nextValue = pageIndex - 1;
+        if(nextValue  > 0){
+            setPageIndex(nextValue)}
+    }
+
+    function handleClickNext() {
+        let nextValue = pageIndex + 1;
+        if(nextValue <= pageInfo.totalPages){
+            setPageIndex(nextValue)}
+    }
+
     return (
         <>
             {ads.length === 0 && (
@@ -47,17 +54,16 @@ export default function MyAdvertisements() {
 
             <nav aria-label="Page navigation example">
                 <ul className="pagination">
-                    <li className="page-item"><a className="page-link" href="#">Previous</a></li>
+                    <li role="button" className="page-item"><a className="page-link" onClick={handleClickPrevious}>Previous</a></li>
                     {Array(pageInfo.totalPages).fill(null).map((value, index) =>
-                        <li className="page-item" key={index+1} onClick={(e) => setPageIndex(index + 1 )}
-                        > 
-                            <Link to={'/my-advertisements/' + (index + 1)} className="nav-link" >
-                                <a>{index + 1}</a>
-                            </Link>
+                        <li role="button" className={pageIndex === index +1 ? "page-item active" : "page-item" }
+                            key={index+1} 
+                            onClick={(e) => setPageIndex(index + 1)}>
+                            <a className="page-link">{index + 1}</a>
                         </li>
                         )
                     }
-                    <li className="page-item"><a className="page-link" href="#">Next</a></li>
+                    <li role="button" className="page-item" onClick={handleClickNext}><a className="page-link" >Next</a></li>
                 </ul>
             </nav>
         </>
