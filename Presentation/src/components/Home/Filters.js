@@ -83,7 +83,7 @@ export default class Filters extends Component {
                         <div className='p-2 filter-block'>
                             <h5>Price</h5>
                             <Row className='p-2'>
-                                <label for="from" className="col-3">From:</label>
+                                <label htmlFor="from" className="col-3">From:</label>
                                 <div className='col'>
                                     <Input
                                         min="0" max="999999999999" step="1000"
@@ -96,7 +96,7 @@ export default class Filters extends Component {
                                 </div>
                             </Row>
                             <Row className='p-2'>
-                                <label for="to" className="col-3">To:</label>
+                                <label htmlFor="to" className="col-3">To:</label>
                                 <div className='col'>
                                     <Input
                                         min="5000" max="999999999999" step="1000"
@@ -114,7 +114,7 @@ export default class Filters extends Component {
                             <select className='mt-4 form-select' onChange={this.onSelectedCityChange}
                                     value={this.state.selectedCity}>
                                 <option value='0'>All</option>
-                                {this.state.cities.map(c => <option value={c.id}>{c.name}</option>)}
+                                {this.state.cities.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                             </select>
                         </div>
                     </div>

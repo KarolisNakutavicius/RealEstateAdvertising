@@ -65,7 +65,7 @@ export default function Home({ads, getAds}) {
                 (
                     <div className='mt-4 d-flex justify-content-start flex-wrap'>
                         {ads.map(ad => {
-                            return <Advertisement ad={ad} isPersonal={true}/>
+                            return <Advertisement key={ad.id} ad={ad} isPersonal={true}/>
                         })}
                     </div>   
                 )}
