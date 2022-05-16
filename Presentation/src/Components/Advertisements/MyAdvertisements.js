@@ -52,7 +52,7 @@ export default function MyAdvertisements() {
                 })}
             </div>
 
-            <nav aria-label="Page navigation example">
+            <nav aria-label="Page navigation example" className="pagingBar">
                 <ul className="pagination">
                     <li role="button" className="page-item"><a className="page-link" onClick={handleClickPrevious}>Previous</a></li>
                     {Array(pageInfo.totalPages).fill(null).map((value, index) =>

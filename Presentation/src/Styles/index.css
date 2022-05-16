@@ -51,3 +51,11 @@ html, body {
 .your-class input {
     float: left;
 }
+
+.pagingBar{
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    bottom:3%;
+}
