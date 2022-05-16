@@ -50,15 +50,17 @@ class AdvertisementService {
             });
     }
 
-    async getAllAdvertisments(request) {
+    async getAllAdvertisments(request, pageIndex = 1, pageSize = 10) {
         const requestOptions = {
             method: 'GET',
             headers: {'Content-Type': 'application/json', 'Authorization': AuthService.getAuthHeader()},
         };
-
-        let filterParams = new URLSearchParams(request)
         
-        return await fetch(`/api/Advertisements${request ? `?${filterParams}` : ""}`, requestOptions)
+        let filterParams = request == null ? new URLSearchParams() : new URLSearchParams(request);
+        filterParams.append("PageIndex", pageIndex);
+        filterParams.append("PageSize", pageSize);
+        
+        return await fetch(`/api/Advertisements?${filterParams}`, requestOptions)
             .then(async response => {
                 if (response.status !== 200) {
                     await response.json().then(data => {

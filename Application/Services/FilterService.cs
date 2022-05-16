@@ -21,7 +21,7 @@ internal class FilterService : IFilterService
             advertisements = advertisements.Where(a => a.Price <= request.MaxPrice && a.Price >= request.MinPrice);
         }
 
-        if (request.CityId != null)
+        if (request.CityId is > 0)
         {
             advertisements = advertisements.Where(a => a.Building.Address.City.Id == request.CityId);
         }

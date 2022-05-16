@@ -24,21 +24,31 @@ export default function Layout() {
         currentPage:1
     });
 
+    const [filters, setFilters] = useState({
+        minPrice: 1000,
+        maxPrice: 500000,
+        cityId: 0,
+    })
+
     useEffect(async () => {
-        await handleAuthenticationUpdated()
+        await getAds()
+    },[ads.currentPage]);
+
+    useEffect(async () => {
+        setCurrentUser(AuthService.getCurrentUser())
     },[])
 
     async function handleAuthenticationUpdated() {
         setCurrentUser(AuthService.getCurrentUser())
-        
         await getAds();
     }
 
-    async function getAds(request, pageIndex, pageSize) {
-        let tempAds = await AdvertisementService.getAllAdvertisments(request,
-            pageIndex === undefined ? ads.currentPage : pageIndex,
-            pageSize === undefined ? ads.pageSize : pageSize
+    async function getAds(getStartingPage = false) {
+        let tempAds = await AdvertisementService.getAllAdvertisments(filters,
+            getStartingPage ? 1 : ads.currentPage,
+             ads.pageSize
         );
+        debugger;
         setAds(tempAds);
     }
 
@@ -57,8 +67,8 @@ export default function Layout() {
             <Topbar authenticationUpdated={handleAuthenticationUpdated}/>
             <div className="container mt-3">
                 <Routes>
-                    <Route index element={<Home ads={ads} getAds={getAds}/>}/>
-                    <Route path={"/home"} element={<Home ads={ads} getAds={getAds}/>}/>
+                    <Route index element={<Home ads={ads} getAds={getAds} filters={filters} setFilters={setFilters} setAds={setAds}/>}/>
+                    <Route path={"/home"} element={<Home ads={ads} getAds={getAds} filters={filters} setFilters={setFilters} setAds={setAds}/>}/>
                     <Route path={"/my-advertisements"} element={
                         currentUser
                             ? (

@@ -3,14 +3,9 @@ import Row from 'react-bootstrap/Row';
 import Input from "react-validation/build/input";
 import Form from "react-validation/build/form";
 
-export default function Filters({getAds}) {
+export default function Filters({getAds, setFilters, filters}) {
     
     const [cities, setCities] = useState([])
-    const [filters, setFilters] = useState({
-        minPrice: 1000,
-        maxPrice: 500000,
-        selectedCity: 0,
-    })
     const [message,setMessage] = useState("")
     
     useEffect(() => {
@@ -22,22 +17,12 @@ export default function Filters({getAds}) {
          
 
     function filterDown() {
-                
         if (filters.minPrice > filters.maxPrice) {
             setMessage('Min price cannot be higher than max price')
             return;
         }
-
-        let request = {
-            MinPrice: filters.minPrice,
-            MaxPrice: filters.maxPrice,
-        }
         
-        if (filters.selectedCity > 0) {
-            request.CityId = filters.selectedCity
-        }
-        
-        getAds(request, 1);
+        getAds(true);
         
         setMessage("")
     }
@@ -87,8 +72,8 @@ export default function Filters({getAds}) {
                         <div className='p-2 filter-block'>
                             <h4>City</h4>
                             <select className='mt-4 form-select'
-                                    value={filters.selectedCity}
-                                    onChange={(e) => setFilters({...filters, selectedCity: e.target.value})}>
+                                    value={filters.cityId}
+                                    onChange={(e) => setFilters({...filters, cityId: parseInt(e.target.value)})}>
                                 <option value='0'>All</option>
                                 {cities.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                             </select>

@@ -5,15 +5,16 @@ import Collapse from "react-bootstrap/Collapse";
 import Button from 'react-bootstrap/Button'
 import PagingBar from "../General/PagingBar";
 
-export default function Home({ads, getAds}) {
+export default function Home({ads, getAds, setAds, setFilters, filters}) {
     
     const [message, setMessage] = useState("Loading ...");
-    const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-    const [pageIndex, setPageIndex] = useState(ads.currentPage)
+    const [isFiltersOpen, setIsFiltersOpen] = useState(false)
     
-    useEffect(async () => {
-        await getAds(null, pageIndex, ads.pageSize)
-    },[pageIndex]);
+    const [pageIndex, setPageIndex] = useState(ads.currentPage);
+    
+    useEffect(() => {
+        setAds({...ads,currentPage:pageIndex});
+    }, [pageIndex])
     
     useEffect(() => {
         if(ads.items.length > 0){
@@ -38,7 +39,7 @@ export default function Home({ads, getAds}) {
             </Button>
             <Collapse in={isFiltersOpen}>
                 <div className='mt-1' id="dropdown">
-                    <Filters getAds={getAds}/>
+                    <Filters getAds={getAds} setFilters={setFilters} filters={filters}/>
                 </div>
             </Collapse>
             
