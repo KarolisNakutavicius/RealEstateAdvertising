@@ -46,7 +46,8 @@ public class AdvertisementServiceTests
             Type = BuildingType.Residential,
             Zip = "08611",
             Number = 5,
-            Size = 44,
+            BuildingSize = 44,
+            PlotSize = 20,
         };
 
         _sut = new AdvertisementService(_contextServiceMock.Object,
@@ -70,7 +71,8 @@ public class AdvertisementServiceTests
                  && x.Building.Category == _request.Type
                  && x.Building.Address.Zip == _request.Zip
                  && x.Building.Address.Number == _request.Number
-                 && x.Building.Size == _request.Size
+                 && x.Building.Size.BuildingSize == _request.BuildingSize
+                 && x.Building.Size.PlotSize == _request.PlotSize
                  && x.Image == null
         ), It.IsAny<CancellationToken>()), Times.Once);
     }

@@ -2,6 +2,7 @@ using Application.DTOs;
 using Application.DTOs.InputModels;
 using Application.DTOs.ViewModels;
 using Application.Extensions.Response;
+using Application.Helpers;
 using Application.Services.Contracts;
 using Application.Services.QueryServices.QueryContracts;
 using Domain.Entities;
@@ -23,20 +24,20 @@ internal class AdvertisementQueryService : IAdvertisementQueryService
         _filterService = filterDownService;
     }
 
-    public async Task<IList<AdvertisementResponse>> GetAllUsersAdvertisements(CancellationToken cancellationToken)
+    public async Task<PageDto<AdvertisementResponse>> GetAllUsersAdvertisements(PagingRequest pagingRequest,
+        CancellationToken cancellationToken)
     {
         var user = await _contextService.GetCurrentUserAsync();
 
-        var advertisements = await _advertisementRepository.GetAll(a => a.Owner.Id == user.Id, true)
+        var advertisements = _advertisementRepository.GetAll(a => a.Owner.Id == user.Id, true)
             .Include(a => a.Building)
-            .ThenInclude(b => b.Address.City)
-            .Select(c => c.ToResponse())
-            .ToListAsync(cancellationToken);
+            .ThenInclude(b => b.Address.City);
 
-        return advertisements;
+        return await PagingHelper.AddPaging(advertisements, ad => ad.ToResponse(), pagingRequest);
     }
 
-    public async Task<Result<IList<AdvertisementResponse>>> GetAll(FilterRequest request,
+    public async Task<Result<PageDto<AdvertisementResponse>>> GetAll(FilterRequest request,
+        PagingRequest pagingRequest,
         CancellationToken cancellationToken)
     {
         var advertisements = _advertisementRepository.GetAll(true);
@@ -52,17 +53,17 @@ internal class AdvertisementQueryService : IAdvertisementQueryService
 
         if (!filterResult.Success)
         {
-            return Result<IList<AdvertisementResponse>>.Fail(filterResult.Errors.Select(e => e.Error).ToList());
+            return Result<PageDto<AdvertisementResponse>>.Fail(filterResult.Errors.Select(e => e.Error).ToList());
         }
         
         advertisements = filterResult.Data ?? advertisements;
 
-        var result = await advertisements.Include(a => a.Building)
+        var result = advertisements.Include(a => a.Building)
             .ThenInclude(b => b.Address.City)
-            .Include(a => a.Owner)
-            .Select(c => c.ToResponse())
-            .ToListAsync(cancellationToken);
+            .Include(a => a.Owner);
+        
+        var pagedResult = await PagingHelper.AddPaging(advertisements, ad => ad.ToResponse(), pagingRequest);
 
-        return Result<IList<AdvertisementResponse>>.Ok(result);
+        return Result<PageDto<AdvertisementResponse>>.Ok(pagedResult);
     }
 }

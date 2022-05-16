@@ -38,7 +38,8 @@ internal class AdvertisementService : IAdvertisementService
             // Open question. According to DDD should I create those in application layer or should they be created in domain layer
             // because I shouldn't be allowed to access those entities not from aggregateRoot
             var address = Address.CreateNew(request.Street, request.Number, city, request.Zip);
-            var building = Building.CreateNew(address, request.Type, request.Size);
+            var size = Size.CreateNew(request.BuildingSize, request.PlotSize);
+            var building = Building.CreateNew(address, request.Type, size);
 
             //TODO: import multiple files to db functionality
             var file = request.Files.FirstOrDefault();

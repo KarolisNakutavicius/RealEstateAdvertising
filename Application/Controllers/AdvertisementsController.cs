@@ -1,4 +1,6 @@
-﻿using Application.DTOs.InputModels;
+﻿using Application.DTOs;
+using Application.DTOs.InputModels;
+using Application.DTOs.ViewModels;
 using Application.Extensions;
 using Application.Services.Contracts;
 using Application.Services.QueryServices.QueryContracts;
@@ -32,18 +34,22 @@ public class Advertisements : ControllerBase
     }
 
     [HttpGet("mine")]
+    [ProducesResponseType(typeof(PageDto<AdvertisementResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [Authorize]
-    public async Task<IActionResult> GetCurrentUserAds(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetCurrentUserAds([FromQuery] PagingRequest paging, CancellationToken cancellationToken)
     {
-        var result = await _queryService.GetAllUsersAdvertisements(cancellationToken);
+        var result = await _queryService.GetAllUsersAdvertisements(paging, cancellationToken);
 
         return Ok(result);
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllAds([FromQuery] FilterRequest request, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(PageDto<AdvertisementResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetAllAds([FromQuery] FilterRequest request, [FromQuery] PagingRequest paging, CancellationToken cancellationToken)
     {
-        var result = await _queryService.GetAll(request, cancellationToken);
+        var result = await _queryService.GetAll(request, paging, cancellationToken);
 
         return result.ToHttpResponse();
     }

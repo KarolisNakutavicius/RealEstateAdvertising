@@ -6,8 +6,10 @@ namespace Application.Services.QueryServices.QueryContracts;
 
 public interface IAdvertisementQueryService
 {
-    Task<IList<AdvertisementResponse>> GetAllUsersAdvertisements(CancellationToken cancellationToken);
+    Task<PageDto<AdvertisementResponse>> GetAllUsersAdvertisements(PagingRequest pagingRequest,
+        CancellationToken cancellationToken);
 
-    Task<Result<IList<AdvertisementResponse>>> GetAll(FilterRequest request,
+    Task<Result<PageDto<AdvertisementResponse>>> GetAll(FilterRequest request,
+        PagingRequest pagingRequest,
         CancellationToken cancellationToken);
 }

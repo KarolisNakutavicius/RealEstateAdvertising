@@ -56,7 +56,10 @@ public class AdvertisementQueryServiceTests
                     Id = 2,
                     Address = Address.CreateNew("Latvių g.", 5, new City { Id = 1, Name = "Vilnius" }, "08611"),
                     Category = BuildingType.Residential,
-                    Size = 44
+                    Size = new Size()
+                    {
+                        BuildingSize = 15
+                    }
                 }
             },
             new() { Id = 2, Owner = _user },
@@ -78,11 +81,11 @@ public class AdvertisementQueryServiceTests
     public async Task GetAllUsersAdvertisements_UserLoggedIn_OnlyUsersAdsReturned()
     {
         _advertisements.Add(new() { Id = 3, Owner = new User { Id = "404" } });
-        var result = await _sut.GetAllUsersAdvertisements(CancellationToken.None);
+        var result = await _sut.GetAllUsersAdvertisements(new PagingRequest(), CancellationToken.None);
 
-        result.Should().HaveCount(2);
-        result.Should().Contain(r => r.Id == 1);
-        result.Should().Contain(r => r.Id == 2);
+        result.Items.Should().HaveCount(2);
+        result.Items.Should().Contain(r => r.Id == 1);
+        result.Items.Should().Contain(r => r.Id == 2);
     }
 
     [Test]
@@ -91,12 +94,12 @@ public class AdvertisementQueryServiceTests
         _filterServiceMock.Setup(m => m.FilterDown(It.IsAny<IQueryable<Advertisement>>(), It.IsAny<FilterRequest>()))
             .Returns(Result<IQueryable<Advertisement>>.Ok(_advertisements.AsQueryable().BuildMock()));
         
-        var result = await _sut.GetAll(new FilterRequest(), CancellationToken.None);
+        var result = await _sut.GetAll(new FilterRequest(), new PagingRequest(), CancellationToken.None);
 
         result.Success.Should().BeTrue();
-        result.Data.Should().HaveCount(2);
-        result.Data.Should().Contain(r => r.Id == 1);
-        result.Data.Should().Contain(r => r.Id == 2);
+        result.Data.Items.Should().HaveCount(2);
+        result.Data.Items.Should().Contain(r => r.Id == 1);
+        result.Data.Items.Should().Contain(r => r.Id == 2);
     }
     
     [Test]
@@ -112,13 +115,13 @@ public class AdvertisementQueryServiceTests
         _contextServiceMock.Setup(m => m.IsAuthenticated)
             .Returns(true);
         
-        var result = await _sut.GetAll(new FilterRequest(), CancellationToken.None);
+        var result = await _sut.GetAll(new FilterRequest(), new PagingRequest(), CancellationToken.None);
 
         result.Success.Should().BeTrue();
-        result.Data.Should().HaveCount(3);
-        result.Data.Should().Contain(r => r.Id == 4);
-        result.Data.Should().Contain(r => r.Id == 5);
-        result.Data.Should().Contain(r => r.Id == 6);
+        result.Data.Items.Should().HaveCount(3);
+        result.Data.Items.Should().Contain(r => r.Id == 4);
+        result.Data.Items.Should().Contain(r => r.Id == 5);
+        result.Data.Items.Should().Contain(r => r.Id == 6);
     }
 
     [Test]
@@ -131,13 +134,13 @@ public class AdvertisementQueryServiceTests
         _filterServiceMock.Setup(m => m.FilterDown(It.IsAny<IQueryable<Advertisement>>(), It.IsAny<FilterRequest>()))
             .Returns(Result<IQueryable<Advertisement>>.Ok(otherAds.AsQueryable().BuildMock()));
         
-        var result = await _sut.GetAll(new FilterRequest(), CancellationToken.None);
+        var result = await _sut.GetAll(new FilterRequest(), new PagingRequest(), CancellationToken.None);
 
         result.Success.Should().BeTrue();
-        result.Data.Should().HaveCount(3);
-        result.Data.Should().Contain(r => r.Id == 8);
-        result.Data.Should().Contain(r => r.Id == 9);
-        result.Data.Should().Contain(r => r.Id == 10);
+        result.Data.Items.Should().HaveCount(3);
+        result.Data.Items.Should().Contain(r => r.Id == 8);
+        result.Data.Items.Should().Contain(r => r.Id == 9);
+        result.Data.Items.Should().Contain(r => r.Id == 10);
     }
     
     [Test]
@@ -147,7 +150,7 @@ public class AdvertisementQueryServiceTests
         _filterServiceMock.Setup(m => m.FilterDown(It.IsAny<IQueryable<Advertisement>>(), It.IsAny<FilterRequest>()))
             .Returns(Result<IQueryable<Advertisement>>.Fail(error));
         
-        var result = await _sut.GetAll(new FilterRequest(), CancellationToken.None);
+        var result = await _sut.GetAll(new FilterRequest(), new PagingRequest(), CancellationToken.None);
 
         result.Success.Should().BeFalse();
         result.Errors.Should().Contain(e => e.Error == error);

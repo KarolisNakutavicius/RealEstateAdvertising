@@ -28,7 +28,10 @@ public class CreateAdvertisementRequest
 
 
     [RegularExpression("([0-9]+)", ErrorMessage = "Please enter valid size")]
-    public int Size { get; set; }
+    public int BuildingSize { get; set; }
+    
+    [RegularExpression("([0-9]+)", ErrorMessage = "Please enter valid size")]
+    public int PlotSize { get; set; }
 
     [RegularExpression("([0-9]+)", ErrorMessage = "Please enter valid price")]
     public decimal Price { get; set; }

@@ -15,5 +15,7 @@ internal static class BuildingConfig
         builder.HasKey(u => u.Id);
 
         builder.OwnsOne(u => u.Address, a => { a.HasOne(u => u.City).WithMany(); });
+
+        builder.OwnsOne(u => u.Size);
     }
 }

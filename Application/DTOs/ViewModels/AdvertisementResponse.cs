@@ -22,7 +22,9 @@ public class AdvertisementResponse
 
     public string Zip { get; set; } = string.Empty;
 
-    public int Size { get; set; }
+    public int BuildingSize { get; set; }
+    
+    public int PlotSize { get; set; }
 
     public decimal Price { get; set; }
 
