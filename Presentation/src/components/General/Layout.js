@@ -19,11 +19,12 @@ export default function Layout() {
 
     useEffect(() => {
         handleAuthenticationUpdated()
-    })
+    },[])
 
     function handleAuthenticationUpdated() {
         setCurrentUser(AuthService.getCurrentUser())
-        homeRef.current.getAds();
+        // debugger;
+        // homeRef.current();
     }
 
     function ErrorFallback({error, resetErrorBoundary}) {
