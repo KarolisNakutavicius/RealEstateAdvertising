@@ -3,6 +3,7 @@ using Application.DTOs.InputModels;
 using Application.Resources;
 using Application.Services.Contracts;
 using Domain.Entities;
+using Domain.Enums;
 
 namespace Application.Services;
 
@@ -23,6 +24,16 @@ internal class FilterService : IFilterService
         if (request.CityId != null)
         {
             advertisements = advertisements.Where(a => a.Building.Address.City.Id == request.CityId);
+        }
+
+        if (request.Type != null)
+        {
+            advertisements = advertisements.Where(a => a.Building.Category == request.Type);
+        }
+
+        if (request.IsRent != null)
+        {
+            advertisements = advertisements.Where(a => a.IsRent == request.IsRent);
         }
         
         return Result<IQueryable<Advertisement>>.Ok(advertisements);
