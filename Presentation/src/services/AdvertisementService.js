@@ -28,13 +28,13 @@ class AdvertisementService {
             });
     }
 
-    async getMyAdvertisments() {
+    async getMyAdvertisments(pageIndex, pageSize = 10) {
         const requestOptions = {
             method: 'GET',
             headers: {'Content-Type': 'application/json', 'Authorization': AuthService.getAuthHeader()}
         };
 
-        return await fetch(`/api/Advertisements/mine`, requestOptions)
+        return await fetch(`/api/Advertisements/mine?PageIndex=${pageIndex}&PageSize=${pageSize}`, requestOptions)
             .then(async response => {
                 if (response.status !== 200) {
                     await response.json().then(data => {

@@ -50,7 +50,7 @@ export default function Layout() {
                 <Routes>
                     <Route index element={<Home ads={ads} getAds={getAds}/>}/>
                     <Route path={"/home"} element={<Home ads={ads} getAds={getAds}/>}/>
-                    <Route path={"/my-advertisements"} element={
+                    <Route path={"/my-advertisements/:id"} element={
                         currentUser
                             ? (
                                 <ErrorBoundary FallbackComponent={ErrorFallback}>

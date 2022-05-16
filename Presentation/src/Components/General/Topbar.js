@@ -27,7 +27,7 @@ export default class Topbar extends Component {
                     {currentUser && (
                         <>
                             <li className="nav-item">
-                                <Link to={"/my-advertisements"} className="nav-link">
+                                <Link to={"/my-advertisements/1"} className="nav-link">
                                     My advertisements
                                 </Link>
                             </li>
