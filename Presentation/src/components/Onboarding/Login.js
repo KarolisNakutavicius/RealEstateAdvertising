@@ -29,12 +29,10 @@ export default function Login(props) {
             loading: true,
             successful: false
         })
-        debugger;
         formRef.current.validateAll();
         if (checkBtnRef.current.context._errors.length === 0) {
             AuthService.login(loginInfo.email, loginInfo.password).then(
                 response => {
-                    debugger;
                     props.authenticationUpdated();
                     setPageInfo({
                         loading: false,
