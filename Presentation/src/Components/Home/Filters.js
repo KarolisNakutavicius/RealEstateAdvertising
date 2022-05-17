@@ -84,6 +84,7 @@ export default function Filters({getAds, setFilters, filters}) {
                             <select className='mt-4 form-select'
                                     value={filters.type}
                                     onChange={(e) => setFilters({...filters, type: parseInt(e.target.value)})}>
+                                <option value='0'>All</option>
                                 <option value='1'>Residential</option>
                                 <option value='2'>Commercial</option>
                                 <option value='3'>Industrial</option>

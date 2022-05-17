@@ -146,7 +146,7 @@ export default function AddAdvertisement() {
                                 <Input onChange={(e) => setFormInfo({...formInfo, size: e.target.value})}
                                        value={formInfo.size}
                                        id='size'
-                                       type="number" min="1"
+                                       type="number" min="0"
                                        className="form-control"
                                        validations={[ValidationHelper.required]}
                                 />
@@ -157,7 +157,7 @@ export default function AddAdvertisement() {
                                 <Input onChange={(e) => setFormInfo({...formInfo, plotSize: e.target.value})}
                                        value={formInfo.plotSize}
                                        id='size'
-                                       type="number" min="1"
+                                       type="number" min="0"
                                        className="form-control"
                                        validations={[ValidationHelper.required]}
                                 />

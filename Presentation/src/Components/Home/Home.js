@@ -72,7 +72,7 @@ export default function Home({ads, getAds, setAds, setFilters, filters, sortBy, 
 
             
             {ads.items.length === 0 && (
-                <h3>{message}</h3>
+                <h3 className="m-5">{message}</h3>
             )}
             {ads.items.length > 0 &&
                 (
