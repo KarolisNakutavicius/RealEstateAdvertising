@@ -62,7 +62,7 @@ internal class AdvertisementQueryService : IAdvertisementQueryService
             .ThenInclude(b => b.Address.City)
             .Include(a => a.Owner);
         
-        var pagedResult = await PagingHelper.AddPaging(advertisements, ad => ad.ToResponse(), pagingRequest);
+        var pagedResult = await PagingHelper.AddPaging(result, ad => ad.ToResponse(), pagingRequest);
 
         return Result<PageDto<AdvertisementResponse>>.Ok(pagedResult.SortAds(pagingRequest.SortBy));
     }

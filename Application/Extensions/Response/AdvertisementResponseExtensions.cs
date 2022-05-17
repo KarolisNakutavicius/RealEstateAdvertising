@@ -2,6 +2,7 @@
 using Application.DTOs.ViewModels;
 using Application.Enums;
 using Domain.Entities;
+using Domain.Enums;
 
 namespace Application.Extensions.Response;
 
@@ -19,7 +20,7 @@ internal static class AdvertisementResponseExtensions
             Number = advertisement.Building.Address.Number,
             BuildingSize = advertisement.Building.Size.BuildingSize,
             PlotSize = advertisement.Building.Size.PlotSize,
-            Type = advertisement.Building.Category.ToString(),
+            Type = Enum.GetName(typeof(BuildingType), advertisement.Building.Category) ?? string.Empty,
             Zip = advertisement.Building.Address.Zip,
             Price = advertisement.Price,
             Image = advertisement.Image,
