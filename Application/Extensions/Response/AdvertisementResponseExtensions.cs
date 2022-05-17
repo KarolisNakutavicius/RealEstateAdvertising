@@ -19,7 +19,7 @@ internal static class AdvertisementResponseExtensions
             Number = advertisement.Building.Address.Number,
             BuildingSize = advertisement.Building.Size.BuildingSize,
             PlotSize = advertisement.Building.Size.PlotSize,
-            Type = advertisement.Building.Category,
+            Type = advertisement.Building.Category.ToString(),
             Zip = advertisement.Building.Address.Zip,
             Price = advertisement.Price,
             Image = advertisement.Image,

@@ -10,7 +10,7 @@ public class AdvertisementResponse
 
     public bool IsRent { get; set; }
 
-    public BuildingType Type { get; set; }
+    public string Type { get; set; }
 
     public string Description { get; set; } = string.Empty;
 

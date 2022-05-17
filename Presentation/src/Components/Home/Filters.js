@@ -78,6 +78,31 @@ export default function Filters({getAds, setFilters, filters}) {
                                 {cities.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                             </select>
                         </div>
+
+                        <div className='p-2 filter-block'>
+                            <h4>Type</h4>
+                            <select className='mt-4 form-select'
+                                    value={filters.type}
+                                    onChange={(e) => setFilters({...filters, type: parseInt(e.target.value)})}>
+                                <option value='1'>Residential</option>
+                                <option value='2'>Commercial</option>
+                                <option value='3'>Industrial</option>
+                                <option value='4'>Land</option>
+                                <option value='5'>SpecialPurpose</option>
+                            </select>
+                        </div>
+
+                        <div className='p-2 filter-block'>
+                            <h4>Purpose</h4>
+                            <select className='mt-4 form-select'
+                                    value={filters.isRent}
+                                    onChange={(e) => setFilters({...filters, isRent: e.target.value})}>
+                                <option value="">All</option>
+                                <option value="0">Sell</option>
+                                <option value="1">Rent</option>
+                            </select>
+                        </div>
+                        
                     </div>
                 </Form>
 

@@ -56,9 +56,27 @@ class AdvertisementService {
             headers: {'Content-Type': 'application/json', 'Authorization': AuthService.getAuthHeader()},
         };
         
-        let filterParams = request == null ? new URLSearchParams() : new URLSearchParams(request);
+        let filterParams = new URLSearchParams();
         filterParams.append("PageIndex", pageIndex);
         filterParams.append("PageSize", pageSize);
+        if(request != null)
+        {
+            filterParams.append("MinPrice", request.minPrice);
+            filterParams.append("MaxPrice", request.maxPrice);
+            if(request.cityId > 0)
+            {
+                filterParams.append("CityId", request.cityId);
+            }
+            if(request.type > 0)
+            {
+                filterParams.append("Type", request.type);
+            }
+            if(request.isRent === "0" || request.isRent === "1")
+            {
+                filterParams.append("IsRent", !!parseInt(request.isRent));
+            }
+        }
+
         
         return await fetch(`/api/Advertisements?${filterParams}`, requestOptions)
             .then(async response => {

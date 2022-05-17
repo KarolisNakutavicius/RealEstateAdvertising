@@ -28,6 +28,8 @@ export default function Layout() {
         minPrice: 1000,
         maxPrice: 500000,
         cityId: 0,
+        type: 0,
+        isRent:null
     })
 
     useEffect(async () => {
@@ -48,7 +50,6 @@ export default function Layout() {
             getStartingPage ? 1 : ads.currentPage,
              ads.pageSize
         );
-        debugger;
         setAds(tempAds);
     }
 

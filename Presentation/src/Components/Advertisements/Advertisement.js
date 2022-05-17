@@ -9,6 +9,8 @@ export default function Advertisement(props) {
                     <h5 className="card-title">{props.ad.name}</h5>
 
                     <label>{`${props.ad.street} ${props.ad.number}, ${props.ad.city}`}</label>
+
+                    <label>{`${props.ad.type} for ${props.ad.isRent ? 'rent' : 'sale'}`}</label>
                     
                     <label className="mt-4"><b>Plot</b> : {props.ad.plotSize} m²</label>
                     <label><b>Building</b>: {props.ad.buildingSize} m²</label>

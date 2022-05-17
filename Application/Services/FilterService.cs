@@ -26,7 +26,7 @@ internal class FilterService : IFilterService
             advertisements = advertisements.Where(a => a.Building.Address.City.Id == request.CityId);
         }
 
-        if (request.Type != null)
+        if (request.Type is > 0)
         {
             advertisements = advertisements.Where(a => a.Building.Category == request.Type);
         }
