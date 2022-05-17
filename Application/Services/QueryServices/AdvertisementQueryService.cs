@@ -1,6 +1,7 @@
 using Application.DTOs;
 using Application.DTOs.InputModels;
 using Application.DTOs.ViewModels;
+using Application.Extensions;
 using Application.Extensions.Response;
 using Application.Helpers;
 using Application.Services.Contracts;
@@ -31,9 +32,10 @@ internal class AdvertisementQueryService : IAdvertisementQueryService
 
         var advertisements = _advertisementRepository.GetAll(a => a.Owner.Id == user.Id, true)
             .Include(a => a.Building)
-            .ThenInclude(b => b.Address.City);
+            .ThenInclude(b => b.Address.City)
+            .SortAds(pagingRequest.SortBy);
 
-        return (await PagingHelper.AddPaging(advertisements, ad => ad.ToResponse(), pagingRequest)).SortAds(pagingRequest.SortBy);
+        return await PagingHelper.AddPaging(advertisements, ad => ad.ToResponse(), pagingRequest);
     }
 
     public async Task<Result<PageDto<AdvertisementResponse>>> GetAll(FilterRequest request,
@@ -58,12 +60,13 @@ internal class AdvertisementQueryService : IAdvertisementQueryService
         
         advertisements = filterResult.Data ?? advertisements;
 
-        var result = advertisements.Include(a => a.Building)
+        advertisements = advertisements.Include(a => a.Building)
             .ThenInclude(b => b.Address.City)
-            .Include(a => a.Owner);
+            .Include(a => a.Owner)
+            .SortAds(pagingRequest.SortBy);
         
-        var pagedResult = await PagingHelper.AddPaging(result, ad => ad.ToResponse(), pagingRequest);
+        var pagedResult = await PagingHelper.AddPaging(advertisements, ad => ad.ToResponse(), pagingRequest);
 
-        return Result<PageDto<AdvertisementResponse>>.Ok(pagedResult.SortAds(pagingRequest.SortBy));
+        return Result<PageDto<AdvertisementResponse>>.Ok(pagedResult);
     }
 }

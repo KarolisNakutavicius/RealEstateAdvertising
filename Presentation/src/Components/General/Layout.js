@@ -31,10 +31,12 @@ export default function Layout() {
         type: 0,
         isRent:null
     })
+    
+    const[sortBy, setSortBy] = useState(0)
 
     useEffect(async () => {
         await getAds()
-    },[ads.currentPage]);
+    },[ads.currentPage, sortBy]);
 
     useEffect(async () => {
         setCurrentUser(AuthService.getCurrentUser())
@@ -48,7 +50,8 @@ export default function Layout() {
     async function getAds(getStartingPage = false) {
         let tempAds = await AdvertisementService.getAllAdvertisments(filters,
             getStartingPage ? 1 : ads.currentPage,
-             ads.pageSize
+             ads.pageSize,
+            sortBy
         );
         setAds(tempAds);
     }
@@ -68,7 +71,9 @@ export default function Layout() {
             <Topbar authenticationUpdated={handleAuthenticationUpdated}/>
             <div className="container mt-3">
                 <Routes>
-                    <Route index path={"/home"} element={<Home ads={ads} getAds={getAds} filters={filters} setFilters={setFilters} setAds={setAds}/>}/>
+                    <Route index path={"/home"} element={
+                        <Home ads={ads} getAds={getAds} filters={filters} setFilters={setFilters} setAds={setAds} sortBy={sortBy} setSortBy={setSortBy}/>
+                    }/>
                     <Route path={"/my-advertisements"} element={
                         currentUser
                             ? (

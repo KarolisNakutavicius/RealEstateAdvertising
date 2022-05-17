@@ -50,7 +50,7 @@ class AdvertisementService {
             });
     }
 
-    async getAllAdvertisments(request, pageIndex = 1, pageSize = 10) {
+    async getAllAdvertisments(request, pageIndex = 1, pageSize = 10, sortBy = 0) {
         const requestOptions = {
             method: 'GET',
             headers: {'Content-Type': 'application/json', 'Authorization': AuthService.getAuthHeader()},
@@ -59,6 +59,7 @@ class AdvertisementService {
         let filterParams = new URLSearchParams();
         filterParams.append("PageIndex", pageIndex);
         filterParams.append("PageSize", pageSize);
+        filterParams.append("SortBy", sortBy);
         if(request != null)
         {
             filterParams.append("MinPrice", request.minPrice);

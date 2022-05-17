@@ -35,7 +35,7 @@ internal static class AdvertisementResponseExtensions
         {
             SortBy.None => ads,
             SortBy.Price => ads.ConvertItems(ads.Items.OrderBy(i => i.Price).ToList()),
-            SortBy.Size => ads.ConvertItems(ads.Items.OrderBy(i => i.BuildingSize + i.PlotSize).ToList()),
+            SortBy.Size => ads.ConvertItems(ads.Items.OrderByDescending(i => i.BuildingSize + i.PlotSize).ToList()),
             _ => ads
         };
     }

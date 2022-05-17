@@ -5,7 +5,7 @@ import Collapse from "react-bootstrap/Collapse";
 import Button from 'react-bootstrap/Button'
 import PagingBar from "../General/PagingBar";
 
-export default function Home({ads, getAds, setAds, setFilters, filters}) {
+export default function Home({ads, getAds, setAds, setFilters, filters, sortBy, setSortBy}) {
     
     const [message, setMessage] = useState("Loading ...");
     const [isFiltersOpen, setIsFiltersOpen] = useState(false)
@@ -31,17 +31,45 @@ export default function Home({ads, getAds, setAds, setFilters, filters}) {
 
     return (
         <>
-            <Button
-                onClick={handleOpen}
-                aria-controls="dropdown"
-                aria-expanded={isFiltersOpen}>
-                Open filters <i className={!isFiltersOpen ? "fa fa-angle-double-down" : "fa fa-angle-double-up"} style={{fontSize: '24px', margin: "3px 0 0 6px"}}></i>
-            </Button>
+            <div className="row">
+                <div className="col-2 mx-4">
+                    
+                </div>
+                <div className="col-3 mx-1">
+                    <label> <b>Sort By :</b></label>
+                </div>
+            </div>
+            
+            <div className="row">
+                <Button className="col-2 mx-4"
+                    onClick={handleOpen}
+                    aria-controls="dropdown"
+                    aria-expanded={isFiltersOpen}>
+                    Open filters <i className={!isFiltersOpen ? "fa fa-angle-double-down" : "fa fa-angle-double-up"} style={{fontSize: '24px', margin: "3px 0 0 6px"}}></i>
+                </Button>
+
+                <div className="col-3">
+                    <select className="form-select"
+                             value={sortBy}
+                             onChange={(e) => setSortBy(parseInt(e.target.value))}
+                            style={{width:"auto", display:"inline-block"}}>
+                        <option value="0">Best Match</option>
+                        <option value="1">Price</option>
+                        <option value="2">Size</option>
+                    </select>
+                </div>
+            </div>
+
+            
             <Collapse in={isFiltersOpen}>
                 <div className='mt-1' id="dropdown">
                     <Filters getAds={getAds} setFilters={setFilters} filters={filters}/>
                 </div>
             </Collapse>
+            
+
+
+
             
             {ads.items.length === 0 && (
                 <h3>{message}</h3>
