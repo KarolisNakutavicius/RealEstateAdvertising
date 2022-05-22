@@ -17,12 +17,14 @@ internal class AdvertisementQueryService : IAdvertisementQueryService
     private readonly IRepository<Advertisement> _advertisementRepository;
     private readonly IContextService _contextService;
     private readonly IFilterService _filterService;
+    private readonly IRepository<User> _userRepo;
 
-    public AdvertisementQueryService(IContextService contextService, IRepository<Advertisement> adRepository, IFilterService filterDownService)
+    public AdvertisementQueryService(IContextService contextService, IRepository<Advertisement> adRepository, IFilterService filterDownService, IRepository<User> userRepo)
     {
         _contextService = contextService;
         _advertisementRepository = adRepository;
         _filterService = filterDownService;
+        _userRepo = userRepo;
     }
 
     public async Task<PageDto<AdvertisementResponse>> GetAllUsersAdvertisements(PagingRequest pagingRequest,
@@ -68,5 +70,16 @@ internal class AdvertisementQueryService : IAdvertisementQueryService
         var pagedResult = await PagingHelper.AddPaging(advertisements, ad => ad.ToResponse(), pagingRequest);
 
         return Result<PageDto<AdvertisementResponse>>.Ok(pagedResult);
+    }
+
+    public async Task<PageDto<AdvertisementResponse>> GetSavedAdvertisements(PagingRequest pagingRequest, CancellationToken cancellationToken)
+    {
+        var userSavedAds = _userRepo.GetAll(u => u.Id == _contextService.GetUserId())
+            .Include(u => u.Advertisements)
+            .ThenInclude(a => a.Advertisement)
+            .SelectMany(u => u.Advertisements.Select(a => a.Advertisement))
+            .SortAds(pagingRequest.SortBy);;
+        
+        return await PagingHelper.AddPaging(userSavedAds, ad => ad.ToResponse(), pagingRequest);
     }
 }

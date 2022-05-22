@@ -12,4 +12,6 @@ public interface IAdvertisementQueryService
     Task<Result<PageDto<AdvertisementResponse>>> GetAll(FilterRequest request,
         PagingRequest pagingRequest,
         CancellationToken cancellationToken);
+
+    Task<PageDto<AdvertisementResponse>> GetSavedAdvertisements(PagingRequest paging, CancellationToken cancellationToken);
 }

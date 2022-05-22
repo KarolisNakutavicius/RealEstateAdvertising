@@ -70,9 +70,9 @@ internal class AdvertisementService : IAdvertisementService
         }
     }
 
-    public async Task<Result> SaveAdvertisement(SaveAdvertisementRequest request, CancellationToken cancellationToken)
+    public async Task<Result> SaveAdvertisement(int advertisementId, CancellationToken cancellationToken)
     {
-        var ad = await _advertisementRepository.GetAll(a => a.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
+        var ad = await _advertisementRepository.GetAll(a => a.Id == advertisementId).FirstOrDefaultAsync(cancellationToken);
 
         if (ad == null)
         {
