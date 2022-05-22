@@ -72,8 +72,6 @@ internal class AdvertisementService : IAdvertisementService
 
     public async Task<Result> SaveAdvertisement(SaveAdvertisementRequest request, CancellationToken cancellationToken)
     {
-        var user = await _contextService.GetCurrentUserAsync();
-
         var ad = await _advertisementRepository.GetAll(a => a.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
 
         if (ad == null)
@@ -81,15 +79,18 @@ internal class AdvertisementService : IAdvertisementService
             return Result.Fail("There is not advertisement with specified id");
         }
 
+        var user = await _userRepository.GetAll(u => u.Id == _contextService.GetUserId())
+            .Include(u => u.Advertisements)
+            .SingleAsync(cancellationToken);
+
         user.Advertisements.Add(new UserSavedAdvertisement()
         {
-            Advertisement = ad,
-            User = user
+            Advertisement = ad
         });
 
         try
         {
-            await _userRepository.Save(user, cancellationToken);
+            await _userRepository.Commit(cancellationToken);
         }
         catch (SqlException e)
         {

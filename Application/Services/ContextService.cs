@@ -20,6 +20,8 @@ public class ContextService : IContextService
         _contextAccessor = contextAccessorService;
     }
 
+    public string GetUserId() => _user?.Id ?? string.Empty;
+
     public async Task<User> GetCurrentUserAsync()
     {
         if (_user != null)
