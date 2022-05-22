@@ -76,7 +76,12 @@ internal class AdvertisementQueryService : IAdvertisementQueryService
     {
         var userSavedAds = _userRepo.GetAll(u => u.Id == _contextService.GetUserId())
             .Include(u => u.Advertisements)
-            .ThenInclude(a => a.Advertisement)
+                .ThenInclude(a => a.Advertisement)
+                    .ThenInclude(a => a.Building)
+                        .ThenInclude(b => b.Address.City)
+            .Include(u => u.Advertisements)
+                .ThenInclude(a => a.Advertisement)
+                    .ThenInclude(a => a.Owner)
             .SelectMany(u => u.Advertisements.Select(a => a.Advertisement))
             .SortAds(pagingRequest.SortBy);;
         

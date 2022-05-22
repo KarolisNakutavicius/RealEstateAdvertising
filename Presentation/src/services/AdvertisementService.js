@@ -50,6 +50,28 @@ class AdvertisementService {
             });
     }
 
+    async getMySavedAdvertisments(pageIndex, pageSize = 10) {
+        const requestOptions = {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json', 'Authorization': AuthService.getAuthHeader()}
+        };
+
+        return await fetch(`/api/Advertisements/saved?PageIndex=${pageIndex}&PageSize=${pageSize}`, requestOptions)
+            .then(async response => {
+                if (response.status !== 200) {
+                    await response.json().then(data => {
+                            throw data[0].error;
+                        },
+                        error => {
+                            throw response.statusText;
+                        }
+                    )
+                }
+
+                return await response.json();
+            });
+    }
+
     async getAllAdvertisments(request, pageIndex = 1, pageSize = 10, sortBy = 0) {
         const requestOptions = {
             method: 'GET',
