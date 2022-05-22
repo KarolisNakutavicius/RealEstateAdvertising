@@ -36,6 +36,11 @@ export default class Topbar extends Component {
                                     Sell/Rent
                                 </Link>
                             </li>
+                            <li className="nav-item">
+                                <Link to={"/saved-advertisements"} className="nav-link">
+                                    Saved Advertisements
+                                </Link>
+                            </li>
                         </>)}
                 </div>
 
