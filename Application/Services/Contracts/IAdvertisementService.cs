@@ -8,4 +8,6 @@ public interface IAdvertisementService
 {
     Task<Result<AdvertisementResponse>> CreateNewAdvertisement(CreateAdvertisementRequest request,
         CancellationToken cancellationToken);
+
+    Task<Result> SaveAdvertisement(SaveAdvertisementRequest request, CancellationToken cancellationToken);
 }

@@ -53,4 +53,13 @@ public class Advertisements : ControllerBase
 
         return result.ToHttpResponse();
     }
+
+    [HttpPost("save")]
+    [Authorize]
+    public async Task<IActionResult> SaveAd([FromBody] SaveAdvertisementRequest request, CancellationToken cancellationToken)
+    {
+        var result = await _advertisementService.SaveAdvertisement(request, cancellationToken);
+
+        return result.ToHttpResponse();
+    }
 }
