@@ -57,7 +57,7 @@ internal class AdvertisementQueryService : IAdvertisementQueryService
             advertisements = advertisements.Where(a => a.Owner.Id != user.Id);
 
             userSavedAdsIds = await _userRepo.GetAll(u => u.Id == _contextService.GetUserId())
-                .Include(u => u.Advertisements).SelectMany(a => a.Advertisements.Select(x => x.Id))
+                .Include(u => u.Advertisements).SelectMany(a => a.Advertisements.Select(x => x.Advertisement.Id))
                 .ToListAsync(cancellationToken);
         }
 

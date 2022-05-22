@@ -1,15 +1,17 @@
 import React, {useState} from 'react'
+import AuthService from "../../Services/AuthService";
 
 export default function Advertisement(props) {
 
     const [isSaveSuccess, setSaveSuccess] = useState(false);
-
-    var canBeSaved = props.saveAd !== undefined;
+    
+    
+    var isUserLoggedIn = AuthService.getCurrentUser() !== null;
+    debugger;
+    var canBeSaved = props.saveAd !== undefined && isUserLoggedIn;
 
     async function handleSaveAd() {
-        let isSuccess = await props.saveAd(props.ad.id);
-
-        setSaveSuccess(isSuccess);
+        await props.saveAd(props.ad.id);
     }
 
     return (
@@ -36,7 +38,7 @@ export default function Advertisement(props) {
 
                 {canBeSaved && (
                     <button type="button" className="btn btn-primary" onClick={handleSaveAd} disabled={props.ad.isSaved}>
-                        {(isSaveSuccess || props.ad.isSaved)
+                        {props.ad.isSaved
                             ? (
                                 <div>
                                     Saved

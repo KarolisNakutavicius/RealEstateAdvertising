@@ -31,7 +31,9 @@ export default function Home({ads, getAds, setAds, setFilters, filters, sortBy, 
     }
 
     async function saveAd(id){
-        return await AdvertisementService.saveAdvertisement(id);
+        debugger;
+        await AdvertisementService.saveAdvertisement(id);
+        await getAds();
     }
 
     return (

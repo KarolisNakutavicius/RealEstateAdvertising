@@ -81,9 +81,10 @@ internal class AdvertisementService : IAdvertisementService
 
         var user = await _userRepository.GetAll(u => u.Id == _contextService.GetUserId())
             .Include(u => u.Advertisements)
+            .ThenInclude(u => u.Advertisement)
             .SingleAsync(cancellationToken);
 
-        if (user.Advertisements.Any(a => a.Id == advertisementId))
+        if (user.Advertisements.Any(a => a.Advertisement.Id == advertisementId))
         {
             return Result.Fail("This advertisement is already saved");
         }
