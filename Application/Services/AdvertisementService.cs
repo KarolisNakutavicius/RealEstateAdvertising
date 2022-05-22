@@ -83,6 +83,11 @@ internal class AdvertisementService : IAdvertisementService
             .Include(u => u.Advertisements)
             .SingleAsync(cancellationToken);
 
+        if (user.Advertisements.Any(a => a.Id == advertisementId))
+        {
+            return Result.Fail("This advertisement is already saved");
+        }
+
         user.Advertisements.Add(new UserSavedAdvertisement()
         {
             Advertisement = ad

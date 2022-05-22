@@ -31,4 +31,6 @@ public class AdvertisementResponse
     public byte[]? Image { get; set; } = Array.Empty<byte>();
 
     public string OwnerEmail { get; set; } = string.Empty;
+    
+    public bool IsSaved { get; set; }
 }

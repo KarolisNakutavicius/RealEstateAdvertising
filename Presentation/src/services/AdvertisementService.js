@@ -28,6 +28,18 @@ class AdvertisementService {
             });
     }
 
+    async saveAdvertisement(id) {
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Authorization': AuthService.getAuthHeader()},
+        };
+
+        return await fetch(`/api/Advertisements/${id}/save`, requestOptions)
+            .then(async response => {
+                return response.status === 200
+            });
+    }
+
     async getMyAdvertisments(pageIndex, pageSize = 10) {
         const requestOptions = {
             method: 'GET',
