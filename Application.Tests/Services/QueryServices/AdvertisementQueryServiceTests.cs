@@ -26,6 +26,7 @@ public class AdvertisementQueryServiceTests
     private Mock<IContextService> _contextServiceMock;
     private Mock<IFilterService> _filterServiceMock;
     private AdvertisementQueryService _sut;
+    private Mock<IRepository<User>> _userRepoMock;
 
     private User _user;
     private List<Advertisement> _advertisements;
@@ -36,6 +37,7 @@ public class AdvertisementQueryServiceTests
         _filterServiceMock = new Mock<IFilterService>();
         _contextServiceMock = new Mock<IContextService>();
         _advertisementRepoMock = new Mock<IRepository<Advertisement>>();
+        _userRepoMock = new Mock<IRepository<User>>();
         
         _user = new User
         {
@@ -73,8 +75,11 @@ public class AdvertisementQueryServiceTests
         _contextServiceMock.Setup(m => m.GetCurrentUserAsync()).ReturnsAsync(_user);
         
 
-        _sut = new AdvertisementQueryService(_contextServiceMock.Object, _advertisementRepoMock.Object,
-            _filterServiceMock.Object);
+        _sut = new AdvertisementQueryService(
+            _contextServiceMock.Object,
+            _advertisementRepoMock.Object,
+            _filterServiceMock.Object,
+            _userRepoMock.Object);
     }
 
     [Test]
