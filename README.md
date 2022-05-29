@@ -22,7 +22,7 @@ BE application starting project is **Application.csproj**
 
 If you have an IDE (Visual Studio or any other) you could build Application.csproj project and run it. (This would run BE application)
 
-## From command line
+#### From command line
 
 `dotnet build Application.csproj`
 
