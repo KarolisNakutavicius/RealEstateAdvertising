@@ -4,16 +4,18 @@ using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Database.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(RealEstateAdvertisingDbContext))]
-    partial class RealEstateAdvertisingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220522201457_AddUserSavedAds")]
+    partial class AddUserSavedAds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -430,7 +432,7 @@ namespace Infrastructure.Database.Migrations
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("Advertisements")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Advertisement");

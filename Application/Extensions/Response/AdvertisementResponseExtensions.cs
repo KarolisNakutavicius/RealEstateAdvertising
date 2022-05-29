@@ -8,7 +8,7 @@ namespace Application.Extensions.Response;
 
 internal static class AdvertisementResponseExtensions
 {
-    public static AdvertisementResponse ToResponse(this Advertisement advertisement)
+    public static AdvertisementResponse ToResponse(this Advertisement advertisement, IList<int>? savedIds = null)
     {
         return new AdvertisementResponse
         {
@@ -25,7 +25,8 @@ internal static class AdvertisementResponseExtensions
             Price = advertisement.Price,
             Image = advertisement.Image,
             Street = advertisement.Building.Address.Street,
-            OwnerEmail = advertisement.Owner.Email
+            OwnerEmail = advertisement.Owner.Email,
+            IsSaved = savedIds != null && savedIds.Contains(advertisement.Id)
         };
     }
     

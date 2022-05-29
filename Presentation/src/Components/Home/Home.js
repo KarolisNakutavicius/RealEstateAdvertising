@@ -4,6 +4,7 @@ import Filters from './Filters';
 import Collapse from "react-bootstrap/Collapse";
 import Button from 'react-bootstrap/Button'
 import PagingBar from "../General/PagingBar";
+import AdvertisementService from "../../Services/AdvertisementService";
 
 export default function Home({ads, getAds, setAds, setFilters, filters, sortBy, setSortBy}) {
     
@@ -27,6 +28,12 @@ export default function Home({ads, getAds, setAds, setFilters, filters, sortBy, 
     
     function handleOpen() {
         setIsFiltersOpen(!isFiltersOpen);
+    }
+
+    async function saveAd(id){
+        debugger;
+        await AdvertisementService.saveAdvertisement(id);
+        await getAds();
     }
 
     return (
@@ -78,7 +85,7 @@ export default function Home({ads, getAds, setAds, setFilters, filters, sortBy, 
                 (
                     <div className='mt-4 d-flex justify-content-start flex-wrap'>
                         {ads.items.map(ad => {
-                            return <Advertisement key={ad.id} ad={ad} isPersonal={true}/>
+                            return <Advertisement key={ad.id} ad={ad} isPersonal={true} saveAd={saveAd}/>
                         })}
                     </div>   
                 )}

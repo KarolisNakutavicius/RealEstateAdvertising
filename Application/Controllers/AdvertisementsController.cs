@@ -53,4 +53,22 @@ public class Advertisements : ControllerBase
 
         return result.ToHttpResponse();
     }
+
+    [HttpPost("{id}/save")]
+    [Authorize]
+    public async Task<IActionResult> SaveAd(int id, CancellationToken cancellationToken)
+    {
+        var result = await _advertisementService.SaveAdvertisement(id, cancellationToken);
+
+        return result.ToHttpResponse();
+    }
+    
+    [HttpGet("saved")]
+    [Authorize]
+    public async Task<IActionResult> GetAllSavedAds([FromQuery] PagingRequest paging, CancellationToken cancellationToken)
+    {
+        var result = await _queryService.GetSavedAdvertisements(paging, cancellationToken);
+
+        return Ok(result);
+    }
 }

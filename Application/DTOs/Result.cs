@@ -1,27 +1,25 @@
-﻿using Application.DTOs.ViewModels;
+using Application.DTOs.ViewModels;
 
 namespace Application.DTOs;
 
-public class Result<T>
+public class Result
 {
-    public T? Data { get; set; }
-
-    public bool Success { get; set; }
-
     public IList<ErrorResponse> Errors { get; set; } = new List<ErrorResponse>();
-
-    public static Result<T> Ok(T data)
+    
+    public bool Success { get; set; }
+    
+    public static Result Ok()
     {
-        return new Result<T> { Data = data, Success = true };
+        return new Result {Success = true };
     }
 
-    public static Result<T> Fail(string error)
+    public static Result Fail(string error)
     {
-        return new Result<T> { Success = false, Errors = new List<ErrorResponse> { new() { Error = error } } };
+        return new Result { Success = false, Errors = new List<ErrorResponse> { new() { Error = error } } };
     }
 
-    public static Result<T> Fail(IList<string> errors)
+    public static Result Fail(IList<string> errors)
     {
-        return new Result<T> { Success = false, Errors = errors.Select(e => new ErrorResponse { Error = e }).ToList() };
+        return new Result { Success = false, Errors = errors.Select(e => new ErrorResponse { Error = e }).ToList() };
     }
 }

@@ -21,6 +21,7 @@ public class AdvertisementServiceTests
     private Mock<IRepository<Advertisement>> _adRepoMock;
     private Mock<IRepository<City>> _cityRepoMock;
     private Mock<IContextService> _contextServiceMock;
+    private Mock<IRepository<User>> _userRepoMock;
 
     private CreateAdvertisementRequest _request;
     private AdvertisementService _sut;
@@ -31,6 +32,7 @@ public class AdvertisementServiceTests
         _adRepoMock = new Mock<IRepository<Advertisement>>();
         _cityRepoMock = new Mock<IRepository<City>>();
         _contextServiceMock = new Mock<IContextService>();
+        _userRepoMock = new Mock<IRepository<User>>();
 
         _contextServiceMock.Setup(c => c.GetCurrentUserAsync()).ReturnsAsync(new User { Id = "1" });
 
@@ -52,7 +54,8 @@ public class AdvertisementServiceTests
 
         _sut = new AdvertisementService(_contextServiceMock.Object,
             _adRepoMock.Object,
-            _cityRepoMock.Object);
+            _cityRepoMock.Object,
+            _userRepoMock.Object);
     }
 
     [Test]

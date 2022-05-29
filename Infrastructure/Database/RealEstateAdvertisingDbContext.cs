@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Entities.JoinedEntities;
 using Infrastructure.Database.DbContextConfigs;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,8 @@ public class RealEstateAdvertisingDbContext : IdentityDbContext<User>
     }
 
     public DbSet<User> Users { get; set; }
+    
+    public DbSet<UserSavedAdvertisement> SavedAdvertisements { get; set; }
 
     public DbSet<Advertisement> Advertisements { get; set; }
 
@@ -30,5 +33,7 @@ public class RealEstateAdvertisingDbContext : IdentityDbContext<User>
         builder.Entity<Building>(entityBuilder => entityBuilder.BuildModel());
         builder.Entity<BuildingCategory>(entityBuilder => entityBuilder.BuildModel());
         builder.Entity<City>(entityBuilder => entityBuilder.BuildModel());
+        builder.Entity<User>(entityBuilder => entityBuilder.BuildModel());
+        builder.Entity<UserSavedAdvertisement>(entityBuilder => entityBuilder.BuildModel());
     }
 }

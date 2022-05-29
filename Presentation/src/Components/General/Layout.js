@@ -12,16 +12,17 @@ import {Navigate, Route, Routes} from "react-router-dom";
 import AuthService from '../../Services/AuthService';
 import {ErrorBoundary} from 'react-error-boundary'
 import AdvertisementService from "../../Services/AdvertisementService";
+import SavedAdvertisements from "../Advertisements/SavedAdvertisements";
 
 export default function Layout() {
 
     const [currentUser, setCurrentUser] = useState(undefined);
     const [ads, setAds] = useState({
-        totalPages:0,
-        pageSize:2,
-        totalRecordsCount:0,
-        items:[],
-        currentPage:1
+        totalPages: 0,
+        pageSize: 2,
+        totalRecordsCount: 0,
+        items: [],
+        currentPage: 1
     });
 
     const [filters, setFilters] = useState({
@@ -29,18 +30,18 @@ export default function Layout() {
         maxPrice: 500000,
         cityId: 0,
         type: 0,
-        isRent:null
+        isRent: null
     })
-    
-    const[sortBy, setSortBy] = useState(0)
+
+    const [sortBy, setSortBy] = useState(0)
 
     useEffect(async () => {
         await getAds()
-    },[ads.currentPage, sortBy]);
+    }, [ads.currentPage, sortBy]);
 
     useEffect(async () => {
         setCurrentUser(AuthService.getCurrentUser())
-    },[])
+    }, [])
 
     async function handleAuthenticationUpdated() {
         setCurrentUser(AuthService.getCurrentUser())
@@ -50,7 +51,7 @@ export default function Layout() {
     async function getAds(getStartingPage = false) {
         let tempAds = await AdvertisementService.getAllAdvertisments(filters,
             getStartingPage ? 1 : ads.currentPage,
-             ads.pageSize,
+            ads.pageSize,
             sortBy
         );
         setAds(tempAds);
@@ -72,7 +73,8 @@ export default function Layout() {
             <div className="container mt-3">
                 <Routes>
                     <Route index path={"/home"} element={
-                        <Home ads={ads} getAds={getAds} filters={filters} setFilters={setFilters} setAds={setAds} sortBy={sortBy} setSortBy={setSortBy}/>
+                        <Home ads={ads} getAds={getAds} filters={filters} setFilters={setFilters} setAds={setAds}
+                              sortBy={sortBy} setSortBy={setSortBy}/>
                     }/>
                     <Route path={"/my-advertisements"} element={
                         currentUser
@@ -82,6 +84,9 @@ export default function Layout() {
                                 </ErrorBoundary>
                             )
                             : (<Navigate to="/home" replace/>)}/>
+
+                    <Route path={"/saved-advertisements"} element={<SavedAdvertisements/>}/>
+                    
                     <Route path={"/add-advertisement"} element={
                         currentUser
                             ? (
@@ -91,6 +96,7 @@ export default function Layout() {
                             )
                             : (<Navigate to="/home" replace/>)}/>
                     <Route path="*" element={<Navigate to="/home" replace/>}/>
+
                     <Route path="/login" element={
                         !currentUser
                             ? (

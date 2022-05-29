@@ -11,4 +11,11 @@ public static class ResultExtensions
 
         return new OkObjectResult(result.Data);
     }
+    
+    public static IActionResult ToHttpResponse(this Result result)
+    {
+        if (!result.Success) return new BadRequestObjectResult(result.Errors);
+
+        return new OkResult();
+    }
 }

@@ -28,6 +28,18 @@ class AdvertisementService {
             });
     }
 
+    async saveAdvertisement(id) {
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Authorization': AuthService.getAuthHeader()},
+        };
+
+        return await fetch(`/api/Advertisements/${id}/save`, requestOptions)
+            .then(async response => {
+                return response.status === 200
+            });
+    }
+
     async getMyAdvertisments(pageIndex, pageSize = 10) {
         const requestOptions = {
             method: 'GET',
@@ -35,6 +47,28 @@ class AdvertisementService {
         };
 
         return await fetch(`/api/Advertisements/mine?PageIndex=${pageIndex}&PageSize=${pageSize}`, requestOptions)
+            .then(async response => {
+                if (response.status !== 200) {
+                    await response.json().then(data => {
+                            throw data[0].error;
+                        },
+                        error => {
+                            throw response.statusText;
+                        }
+                    )
+                }
+
+                return await response.json();
+            });
+    }
+
+    async getMySavedAdvertisments(pageIndex, pageSize = 10) {
+        const requestOptions = {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json', 'Authorization': AuthService.getAuthHeader()}
+        };
+
+        return await fetch(`/api/Advertisements/saved?PageIndex=${pageIndex}&PageSize=${pageSize}`, requestOptions)
             .then(async response => {
                 if (response.status !== 200) {
                     await response.json().then(data => {

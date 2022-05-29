@@ -5,8 +5,10 @@ using Application.DTOs.ViewModels;
 using Application.Extensions.Response;
 using Application.Services.Contracts;
 using Domain.Entities;
+using Domain.Entities.JoinedEntities;
 using Domain.Services.Contracts;
 using Domain.ValueObjects;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services;
@@ -16,13 +18,15 @@ internal class AdvertisementService : IAdvertisementService
     private readonly IRepository<Advertisement> _advertisementRepository;
     private readonly IRepository<City> _cityRepository;
     private readonly IContextService _contextService;
-    
+    private readonly IRepository<User> _userRepository;
+
     public AdvertisementService(IContextService contextService, IRepository<Advertisement> adRepository,
-        IRepository<City> cityRepository)
+        IRepository<City> cityRepository, IRepository<User> userRepository)
     {
         _contextService = contextService;
         _advertisementRepository = adRepository;
         _cityRepository = cityRepository;
+        _userRepository = userRepository;
     }
 
     public async Task<Result<AdvertisementResponse>> CreateNewAdvertisement(CreateAdvertisementRequest request,
@@ -64,5 +68,41 @@ internal class AdvertisementService : IAdvertisementService
         {
             return Result<AdvertisementResponse>.Fail(e.Message);
         }
+    }
+
+    public async Task<Result> SaveAdvertisement(int advertisementId, CancellationToken cancellationToken)
+    {
+        var ad = await _advertisementRepository.GetAll(a => a.Id == advertisementId).FirstOrDefaultAsync(cancellationToken);
+
+        if (ad == null)
+        {
+            return Result.Fail("There is not advertisement with specified id");
+        }
+
+        var user = await _userRepository.GetAll(u => u.Id == _contextService.GetUserId())
+            .Include(u => u.Advertisements)
+            .ThenInclude(u => u.Advertisement)
+            .SingleAsync(cancellationToken);
+
+        if (user.Advertisements.Any(a => a.Advertisement.Id == advertisementId))
+        {
+            return Result.Fail("This advertisement is already saved");
+        }
+
+        user.Advertisements.Add(new UserSavedAdvertisement()
+        {
+            Advertisement = ad
+        });
+
+        try
+        {
+            await _userRepository.Commit(cancellationToken);
+        }
+        catch (SqlException e)
+        {
+            return Result.Fail("Failed to save advertisement : " + e.Message);
+        }
+        
+        return Result.Ok();
     }
 }
